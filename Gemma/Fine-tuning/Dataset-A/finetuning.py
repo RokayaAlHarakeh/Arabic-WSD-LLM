@@ -2,7 +2,6 @@
 import os, json, random, pathlib
 from dotenv import load_dotenv
 from datasets import Dataset
-from huggingface_hub import HfFolder
 
 from unsloth import FastLanguageModel, is_bfloat16_supported
 from trl import SFTTrainer
@@ -10,9 +9,7 @@ from transformers import TrainingArguments
 
 # Load your HF token from .env and save to the HF cache
 load_dotenv()
-HF_TOKEN = os.environ.get("HF_TOKEN")          # optional for public Unsloth weights
-if HF_TOKEN:
-    HfFolder.save_token(HF_TOKEN)
+HF_TOKEN = os.environ.get("HF_TOKEN")          # optional for public Unsloth weights (passed to from_pretrained)
 
 # ── CONFIG (override via env vars so the SAME script serves both phases) ──
 # Phase 1:  WSD_BASE_MODEL=unsloth/gemma-2-2b      WSD_MODEL_TAG=gemma2_2b

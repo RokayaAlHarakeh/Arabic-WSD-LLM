@@ -2,13 +2,10 @@
 import os, re, json
 from tqdm import tqdm
 from dotenv import load_dotenv
-from huggingface_hub import HfFolder
 from unsloth import FastLanguageModel
 from transformers import GenerationConfig
 load_dotenv()
-HF_TOKEN = os.environ.get("HF_TOKEN")
-if HF_TOKEN:
-    HfFolder.save_token(HF_TOKEN)
+HF_TOKEN = os.environ.get("HF_TOKEN")          # optional; passed to from_pretrained
 
 # ── CONFIG (same scheme as finetuning.py; override via env vars) ──────────
 PROJECT_DIR = os.environ.get("WSD_PROJECT_DIR", "/content/drive/MyDrive/WSD_Project")
