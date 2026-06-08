@@ -31,14 +31,21 @@ WSD_Project/
 
 ## How to run
 
-1. **Commit & push** these fixed scripts to your GitHub fork (the Colab notebook clones it).
+The fixed scripts + notebooks are committed on branch **`phase1-gemma2-2b-datasetA`**. `origin` is the
+team lead's repo, so push to **your own fork** (the Colab notebook clones it):
+
+1. Create a fork on GitHub (web UI): `https://github.com/<your-username>/Arabic-WSD-LLM`.
+2. Add it as a remote and push the branch:
    ```
-   git add Gemma/Fine-tuning/Dataset-A
-   git commit -m "Adapt Gemma WSD pipeline for 2B/Gemma-4 on Colab"
-   git push
+   git remote add fork https://github.com/<your-username>/Arabic-WSD-LLM.git
+   git push -u fork phase1-gemma2-2b-datasetA
    ```
-2. Open **`Gemma2_2B_DatasetA.ipynb`** in Colab → set GPU runtime → set `REPO_URL` to your fork → Run all.
-3. Repeat with **`Gemma4_E4B_DatasetA.ipynb`** (confirm the exact Unsloth Gemma-4 id via the discovery cell; the only difference is the Config cell).
+3. Open **`Gemma2_2B_DatasetA.ipynb`** in Colab → GPU runtime → set `REPO_URL` to your fork
+   (`BRANCH` is already `phase1-gemma2-2b-datasetA`) → Run all.
+4. Repeat with **`Gemma4_E4B_DatasetA.ipynb`** (confirm the exact Unsloth Gemma-4 id via the discovery
+   cell; the only difference is the Config cell).
+
+> Tip: if you merge the branch into your fork's `main`, set `BRANCH = 'main'` in the clone cell.
 
 ## Hyperparameters (kept from the paper's recipe)
 
