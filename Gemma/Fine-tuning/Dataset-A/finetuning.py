@@ -109,6 +109,8 @@ training_args = TrainingArguments(
     logging_steps              = 20,
     eval_strategy              = "steps",
     eval_steps                 = int(os.environ.get("WSD_EVAL_STEPS", 100)),  # raise to 500 to spend less time on eval
+    save_strategy              = "steps",
+    save_steps                 = int(os.environ.get("WSD_SAVE_STEPS", 500)),  # resumable ckpts written to Drive
     save_total_limit           = 2,
     optim                      = "adamw_8bit",
     weight_decay               = 0.01,
@@ -130,7 +132,20 @@ trainer = SFTTrainer(
 )
 
 # ── 5. Train ─────────────────────────────────────────────────────────────
-trainer.train()
+# Unsloth's compiled cache creates a *duplicate* SFTConfig class, so saving a
+# checkpoint crashes when torch.save pickles the training args ("not the same
+# object as trl.trainer.sft_config.SFTConfig"). Re-point the instance at the
+# canonical class so checkpoints — and resume_from_checkpoint — work.
+import trl.trainer.sft_config as _sftcfg
+trainer.args.__class__ = _sftcfg.SFTConfig
+
+# Auto-resume from the last checkpoint on Drive (survives Colab disconnects).
+_ckpt_root = os.path.join(OUTPUT_DIR, "checkpoints")
+_resume = os.path.isdir(_ckpt_root) and any(
+    d.startswith("checkpoint-") for d in os.listdir(_ckpt_root)
+)
+print("▶ Resuming from last checkpoint" if _resume else "▶ Starting fresh")
+trainer.train(resume_from_checkpoint=_resume)
 
 # ── 6. Save merged 16-bit weights (this is what infer_model.py loads) ─────
 MERGED_DIR = os.path.join(OUTPUT_DIR, "merged_16bit")
