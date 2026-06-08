@@ -1,5 +1,11 @@
 from sklearn.metrics import precision_recall_fscore_support, accuracy_score
-import json
+import json, os
+
+# ── CONFIG (same scheme as finetuning.py / infer_model.py) ───────────────
+PROJECT_DIR = os.environ.get("WSD_PROJECT_DIR", "/content/drive/MyDrive/WSD_Project")
+DATA_DIR    = os.path.join(PROJECT_DIR, "data")
+MODEL_TAG   = os.environ.get("WSD_MODEL_TAG", "gemma2_2b")
+OUTPUT_DIR  = os.path.join(PROJECT_DIR, "outputs", MODEL_TAG)
 
 def evaluate_predictions(predictions_path, ground_truth_path, report_path):
     with open(predictions_path, "r", encoding="utf-8") as pred_file:
@@ -36,7 +42,7 @@ def evaluate_predictions(predictions_path, ground_truth_path, report_path):
 
 # Example run
 evaluate_predictions(
-    predictions_path="",
-    ground_truth_path="",
-    report_path=""
+    predictions_path = os.path.join(OUTPUT_DIR, f"predictions_{MODEL_TAG}.json"),
+    ground_truth_path = os.path.join(DATA_DIR, "test_truth.json"),
+    report_path = os.path.join(OUTPUT_DIR, f"report_{MODEL_TAG}.json"),
 )

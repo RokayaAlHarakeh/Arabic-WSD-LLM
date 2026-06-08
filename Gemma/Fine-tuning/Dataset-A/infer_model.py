@@ -6,15 +6,21 @@ from huggingface_hub import HfFolder
 from unsloth import FastLanguageModel
 from transformers import GenerationConfig
 load_dotenv()
-HF_TOKEN = os.environ["HF_TOKEN"]
-HfFolder.save_token(HF_TOKEN)
-# MODEL_DIR = "gemma_9b_elrazzaz_merged_16bit"   # merged weights dir
-# model, tokenizer = FastLanguageModel.from_pretrained(
-#     MODEL_DIR, local_files_only=True, load_in_4bit=True
-# )
+HF_TOKEN = os.environ.get("HF_TOKEN")
+if HF_TOKEN:
+    HfFolder.save_token(HF_TOKEN)
+
+# ── CONFIG (same scheme as finetuning.py; override via env vars) ──────────
+PROJECT_DIR = os.environ.get("WSD_PROJECT_DIR", "/content/drive/MyDrive/WSD_Project")
+DATA_DIR    = os.path.join(PROJECT_DIR, "data")
+MODEL_TAG   = os.environ.get("WSD_MODEL_TAG", "gemma2_2b")
+OUTPUT_DIR  = os.path.join(PROJECT_DIR, "outputs", MODEL_TAG)
+# The merged 16-bit dir written by finetuning.py:
+MODEL_DIR   = os.environ.get("WSD_MODEL_DIR", os.path.join(OUTPUT_DIR, "merged_16bit"))
+
 model, tokenizer = FastLanguageModel.from_pretrained(
-    model_name="../outputs_gemma_elrazzaz/checkpoint-711",  # path to adapter
-    max_seq_length=1024,
+    model_name=MODEL_DIR,
+    max_seq_length=int(os.environ.get("WSD_MAX_SEQ_LEN", 1024)),
     load_in_4bit=True,
     dtype=None,
     token=HF_TOKEN,
@@ -93,8 +99,8 @@ def predict_sense(sentence, word, senses, dictionary):
     inputs = tokenizer(
         prompt,
         return_tensors="pt",
-        add_special_tokens=True     # this adds <|begin_of_text|>
-    ).to("cuda")   
+        add_special_tokens=True     # adds Gemma's <bos>
+    ).to("cuda")
     outputs = model.generate(**inputs, generation_config=GEN_CONFIG)
     # response = tokenizer.decode(outputs[0], skip_special_tokens=False).strip()
     response = tokenizer.batch_decode(outputs, skip_special_tokens=False)[0]
@@ -148,9 +154,10 @@ def run_prediction(test_path, dict_path, output_path, debug_path):
     print(f"🪵 Debug log saved to {debug_path}")
 
 # ── 5. Run! ──────────────────────────────────────────────────────────────
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 run_prediction(
-    test_path   = "",
-    dict_path   = "",
-    output_path = "",
-    debug_path  = "",
+    test_path   = os.path.join(DATA_DIR, "test_set.json"),
+    dict_path   = os.path.join(DATA_DIR, "test_dictionary.json"),
+    output_path = os.path.join(OUTPUT_DIR, f"predictions_{MODEL_TAG}.json"),
+    debug_path  = os.path.join(OUTPUT_DIR, f"debug_{MODEL_TAG}.txt"),
 )

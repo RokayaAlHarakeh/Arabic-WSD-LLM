@@ -10,14 +10,27 @@ from transformers import TrainingArguments
 
 # Load your HF token from .env and save to the HF cache
 load_dotenv()
-HF_TOKEN = os.environ["HF_TOKEN"]
-HfFolder.save_token(HF_TOKEN)
+HF_TOKEN = os.environ.get("HF_TOKEN")          # optional for public Unsloth weights
+if HF_TOKEN:
+    HfFolder.save_token(HF_TOKEN)
+
+# ── CONFIG (override via env vars so the SAME script serves both phases) ──
+# Phase 1:  WSD_BASE_MODEL=unsloth/gemma-2-2b      WSD_MODEL_TAG=gemma2_2b
+# Phase 2:  WSD_BASE_MODEL=unsloth/gemma-4-e4b-it  WSD_MODEL_TAG=gemma4_e4b
+PROJECT_DIR = os.environ.get("WSD_PROJECT_DIR", "/content/drive/MyDrive/WSD_Project")
+DATA_DIR    = os.path.join(PROJECT_DIR, "data")
+BASE_MODEL  = os.environ.get("WSD_BASE_MODEL", "unsloth/gemma-2-2b")
+MODEL_TAG   = os.environ.get("WSD_MODEL_TAG", "gemma2_2b")
+OUTPUT_DIR  = os.path.join(PROJECT_DIR, "outputs", MODEL_TAG)
+DATA_JSONL  = os.path.join(DATA_DIR, "fine_tuning_dataset_elrazzaz.jsonl")
+PUSH_TO_HUB = os.environ.get("WSD_PUSH_TO_HUB", "0") == "1"
 
 # ── 1. Model + LoRA setup (Unsloth style) ────────────────────────────────
-BASE_MODEL      = "unsloth/gemma-2-9b"
-MAX_SEQ_LEN     =  1024    # go larger if your GPU allows
+MAX_SEQ_LEN     =  int(os.environ.get("WSD_MAX_SEQ_LEN", 1024))  # lower to 768 if a T4 OOMs on 4B
 LOAD_IN_4BIT    = True          # memory-friendly
 DTYPE           = None          # auto-detect (fp16 on T4/V100, bf16 on A100+)
+print(f"▶ Base model: {BASE_MODEL}  |  tag: {MODEL_TAG}")
+print(f"▶ Data: {DATA_JSONL}\n▶ Outputs: {OUTPUT_DIR}")
 
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name       = BASE_MODEL,
@@ -46,7 +59,7 @@ def load_jsonl(path):
     return [json.loads(l) for l in pathlib.Path(path)
                                .read_text(encoding="utf-8").splitlines()]
 
-records = load_jsonl("fine_tuning_dataset_elrazzaz.jsonl")
+records = load_jsonl(DATA_JSONL)
 random.seed(42); random.shuffle(records)
 cut = int(len(records) * 0.9)
 train_records, eval_records = records[:cut], records[cut:]
@@ -87,7 +100,7 @@ print("🔎 Sample formatted text:\n", train_ds[0]["text"][:500], "...")
 
 # ── 4. TrainingArguments + SFTTrainer ────────────────────────────────────
 training_args = TrainingArguments(
-    output_dir                 = "outputs_gemma_elrazzaz",
+    output_dir                 = os.path.join(OUTPUT_DIR, "checkpoints"),
     per_device_train_batch_size= 1,
     per_device_eval_batch_size = 1,
     gradient_accumulation_steps= 8,
@@ -122,15 +135,20 @@ trainer = SFTTrainer(
 # ── 5. Train ─────────────────────────────────────────────────────────────
 trainer.train()
 
-# ── 6. Save & push LoRA-merged weights ───────────────────────────────────
-MERGED_DIR = "gemma_9b_elrazzaz_merged_16bit"
+# ── 6. Save merged 16-bit weights (this is what infer_model.py loads) ─────
+MERGED_DIR = os.path.join(OUTPUT_DIR, "merged_16bit")
 model.save_pretrained_merged(MERGED_DIR, tokenizer, save_method="merged_16bit")
+print(f"💾 Merged model saved to {MERGED_DIR}")
 
-model.push_to_hub_merged(
-    repo_id   = "",
-    tokenizer = tokenizer,
-    save_method = "merged_16bit",
-    token     = HF_TOKEN,
-)
+# Optional: push to the Hub. Set WSD_PUSH_TO_HUB=1 and WSD_HUB_REPO=<user>/<repo>.
+if PUSH_TO_HUB:
+    repo_id = os.environ["WSD_HUB_REPO"]
+    model.push_to_hub_merged(
+        repo_id     = repo_id,
+        tokenizer   = tokenizer,
+        save_method = "merged_16bit",
+        token       = HF_TOKEN,
+    )
+    print(f"🚀 Pushed merged model to the Hub: {repo_id}")
 
-print("🚀 Finetuning complete and model pushed to the Hub!")
+print("✅ Finetuning complete.")
