@@ -139,12 +139,21 @@ trainer = SFTTrainer(
 import trl.trainer.sft_config as _sftcfg
 trainer.args.__class__ = _sftcfg.SFTConfig
 
-# Auto-resume from the last checkpoint on Drive (survives Colab disconnects).
+# Auto-resume from the last *complete* checkpoint on Drive (survives Colab
+# disconnects). A checkpoint from a crash/disconnect mid-save lacks
+# trainer_state.json and would break resume, so drop those first.
+import glob, shutil
 _ckpt_root = os.path.join(OUTPUT_DIR, "checkpoints")
-_resume = os.path.isdir(_ckpt_root) and any(
-    d.startswith("checkpoint-") for d in os.listdir(_ckpt_root)
+for _d in glob.glob(os.path.join(_ckpt_root, "checkpoint-*")):
+    if not os.path.isfile(os.path.join(_d, "trainer_state.json")):
+        print(f"⚠️ Removing incomplete checkpoint: {_d}")
+        shutil.rmtree(_d, ignore_errors=True)
+_valid = sorted(
+    glob.glob(os.path.join(_ckpt_root, "checkpoint-*")),
+    key=lambda p: int(p.rsplit("-", 1)[-1]),
 )
-print("▶ Resuming from last checkpoint" if _resume else "▶ Starting fresh")
+_resume = _valid[-1] if _valid else False
+print(f"▶ Resuming from {_resume}" if _resume else "▶ Starting fresh")
 trainer.train(resume_from_checkpoint=_resume)
 
 # ── 6. Save merged 16-bit weights (this is what infer_model.py loads) ─────
