@@ -24,7 +24,7 @@ tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL, token=HF_TOKEN)
 model = AutoModelForCausalLM.from_pretrained(
     BASE_MODEL,
     dtype               = torch.float16,
-    attn_implementation = "eager",      # Gemma2 logit-softcapping needs eager to be correct
+    attn_implementation = "sdpa",       # match finetuning.py (self-consistent train/infer attention)
     token               = HF_TOKEN,
 ).to("cuda")
 model = PeftModel.from_pretrained(model, ADAPTER_DIR)   # attach trained LoRA

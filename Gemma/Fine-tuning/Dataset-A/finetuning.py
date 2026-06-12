@@ -55,7 +55,7 @@ model = AutoModelForCausalLM.from_pretrained(
     BASE_MODEL,
     quantization_config = bnb_config,
     dtype               = COMPUTE_DTYPE,
-    attn_implementation = "eager",      # Gemma2 logit-softcapping needs eager to be correct
+    attn_implementation = "sdpa",       # sdpa handles Gemma2 softcapping correctly here and is ~2x faster than eager
     token               = HF_TOKEN,
 )
 model = prepare_model_for_kbit_training(model)
@@ -134,8 +134,6 @@ training_kwargs = dict(
     fp16                        = not BF16,
     bf16                        = BF16,
     logging_steps               = 20,
-    eval_strategy               = "steps",
-    eval_steps                  = int(os.environ.get("WSD_EVAL_STEPS", 100)),
     save_strategy               = "steps",
     save_steps                  = int(os.environ.get("WSD_SAVE_STEPS", 500)),  # resumable ckpts on Drive
     save_total_limit            = 2,
@@ -151,7 +149,16 @@ if MAX_STEPS > 0:
     training_kwargs["max_steps"] = MAX_STEPS    # quick smoke run to validate the stack
     print(f"⚠️ WSD_MAX_STEPS={MAX_STEPS} — SHORT smoke run, NOT full training")
 else:
-    training_kwargs["num_train_epochs"] = 3
+    training_kwargs["num_train_epochs"] = float(os.environ.get("WSD_EPOCHS", 3))
+
+# Eval is OFF by default: eval_loss isn't used for selection here and the pass is
+# slow (~12 min over the dev split). Set WSD_EVAL_STEPS>0 to re-enable.
+_eval_steps = int(os.environ.get("WSD_EVAL_STEPS", 0))
+if _eval_steps > 0:
+    training_kwargs.update(eval_strategy="steps", eval_steps=_eval_steps)
+else:
+    training_kwargs["eval_strategy"] = "no"
+    print("ℹ️ eval disabled (set WSD_EVAL_STEPS>0 to re-enable)")
 
 training_args = TrainingArguments(**training_kwargs)
 
