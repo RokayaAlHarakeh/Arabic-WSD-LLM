@@ -48,15 +48,23 @@ WSD_INSTRUCTION = (
 )
 
 def build_input_block(sentence, word, senses, dictionary):
-    """Format the block that goes into the '### Input:' section."""
-    senses_lines = [
-        f"- Sense ID: {sid}, Definition: {dictionary.get(sid, '[Missing]')}"
+    """Format the block that goes into the '### Input:' section.
+
+    MUST match create_finetuning_dataset.py byte-for-byte (single quotes,
+    bracketed senses joined by ', ' on one line) — otherwise the model sees an
+    out-of-distribution prompt and never emits a clean ID (all preds → none).
+    """
+    possible_senses = [
+        f"[Sense ID: {sid}, Definition: {dictionary[sid]}]"
         for sid in senses
+        if sid in dictionary
     ]
+    if not possible_senses:
+        possible_senses = ["none"]
     return (
-        f"Sentence: \"{sentence}\"\n"
-        f"Target Word: \"{word}\"\n"
-        f"Possible Senses:\n" + "\n".join(senses_lines)
+        f"Sentence: '{sentence}'\n"
+        f"Target Word: '{word}'\n"
+        f"Possible Senses:\n" + ", ".join(possible_senses)
     )
 
 def make_prompt(sentence, word, senses, dictionary):
@@ -104,20 +112,41 @@ def predict_sense(sentence, word, senses, dictionary):
     sense_id = extract_sense_id(response, set(senses))
     return sense_id if sense_id is not None else "none", response
 
-# ── 4. Batch runner with logging ─────────────────────────────────────────
-def run_prediction(test_path, dict_path, output_path, debug_path):
+# ── 4. Batch runner with logging + resumable checkpoint ──────────────────
+def run_prediction(test_path, dict_path, output_path, debug_path, ckpt_path, limit=None):
     test_data = json.load(open(test_path, encoding="utf-8"))
     dictionary = {
         d["sense_id"]: d["definition"]
         for d in json.load(open(dict_path, encoding="utf-8"))
     }
 
-    predictions = []
-    with open(debug_path, "w", encoding="utf-8") as log:
-        log.write("===== MODEL PREDICTIONS =====\n")
+    if limit is not None:
+        test_data = test_data[:limit]
+        print(f"⚠️ WSD_LIMIT set — running only the first {limit} sentences (smoke test)")
+
+    # ── Resume: reload sentences finished by a previous (interrupted) run. ──
+    # Each sentence is appended to ckpt_path (JSONL) only AFTER all its words
+    # are done, so a disconnect mid-sentence just re-runs that whole sentence.
+    done = {}
+    if os.path.exists(ckpt_path):
+        with open(ckpt_path, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    rec = json.loads(line)
+                    done[rec["sentence_id"]] = rec
+        print(f"▶ Resuming: {len(done)} sentences already done; skipping them")
+
+    fresh = not done
+    with open(debug_path, "w" if fresh else "a", encoding="utf-8") as log, \
+         open(ckpt_path,  "w" if fresh else "a", encoding="utf-8") as ckpt:
+        if fresh:
+            log.write("===== MODEL PREDICTIONS =====\n")
         for sentence in tqdm(test_data, desc="Predicting"):
-            sent_txt  = sentence["sentence"]
             sent_id   = sentence["sentence_id"]
+            if sent_id in done:
+                continue
+            sent_txt  = sentence["sentence"]
             word_preds = []
 
             for w in sentence["words"]:
@@ -140,21 +169,33 @@ def run_prediction(test_path, dict_path, output_path, debug_path):
                 log.write(f"Response:\n{resp}\n")
                 log.write(f"Prediction: {pred_id}\n")
 
-            predictions.append({
+            sent_pred = {
                 "sentence_id": sent_id,
                 "sentence": sent_txt,
                 "words": word_preds,
-            })
+            }
+            done[sent_id] = sent_pred
+            # Persist this sentence immediately so a disconnect can't lose it.
+            ckpt.write(json.dumps(sent_pred, ensure_ascii=False) + "\n")
+            ckpt.flush()
+            log.flush()
 
+    # ── Assemble final predictions in test_set order (eval.py aligns by position). ──
+    predictions = [done[s["sentence_id"]] for s in test_data if s["sentence_id"] in done]
     json.dump(predictions, open(output_path, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
-    print(f"✅ Predictions saved to {output_path}")
+    print(f"✅ Predictions saved to {output_path}  ({len(predictions)} sentences)")
     print(f"🪵 Debug log saved to {debug_path}")
+    print(f"🧷 Resume checkpoint: {ckpt_path}  (delete it to force a clean re-run)")
 
 # ── 5. Run! ──────────────────────────────────────────────────────────────
+# Set WSD_LIMIT=5 for a ~30s smoke test before committing to the full pass.
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+_limit = os.environ.get("WSD_LIMIT")
 run_prediction(
     test_path   = os.path.join(DATA_DIR, "test_set.json"),
     dict_path   = os.path.join(DATA_DIR, "test_dictionary.json"),
     output_path = os.path.join(OUTPUT_DIR, f"predictions_{MODEL_TAG}.json"),
     debug_path  = os.path.join(OUTPUT_DIR, f"debug_{MODEL_TAG}.txt"),
+    ckpt_path   = os.path.join(OUTPUT_DIR, f"predictions_{MODEL_TAG}.partial.jsonl"),
+    limit       = int(_limit) if _limit else None,
 )
