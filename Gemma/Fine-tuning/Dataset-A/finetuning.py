@@ -127,7 +127,7 @@ data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
 training_kwargs = dict(
     output_dir                  = os.path.join(OUTPUT_DIR, "checkpoints"),
     per_device_train_batch_size = 1,
-    per_device_eval_batch_size  = 1,
+    per_device_eval_batch_size  = int(os.environ.get("WSD_EVAL_BATCH", 8)),  # eval is fwd-only; batch up to cut its cost (lower if OOM)
     gradient_accumulation_steps = 8,
     warmup_steps                = 50,
     learning_rate               = 2e-4,
