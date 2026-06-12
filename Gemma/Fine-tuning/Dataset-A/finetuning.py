@@ -12,9 +12,9 @@ from datasets import Dataset
 
 from transformers import (
     AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments,
+    Trainer, DataCollatorForLanguageModeling,
 )
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
-from trl import SFTTrainer
 
 load_dotenv()
 HF_TOKEN = os.environ.get("HF_TOKEN")          # optional for public weights
@@ -115,7 +115,15 @@ eval_ds  = Dataset.from_list(eval_records ).map(add_text_column, batched=True)
 print(f"✅ Train={len(train_ds)}  Eval={len(eval_ds)}")
 print("🔎 Sample formatted text:\n", train_ds[0]["text"][:500], "...")
 
-# ── 4. TrainingArguments + SFTTrainer ────────────────────────────────────
+# Tokenize (causal-LM; the collator builds labels from input_ids).
+def tokenize_fn(batch):
+    return tokenizer(batch["text"], truncation=True, max_length=MAX_SEQ_LEN)
+
+train_ds = train_ds.map(tokenize_fn, batched=True, remove_columns=train_ds.column_names)
+eval_ds  = eval_ds.map(tokenize_fn,  batched=True, remove_columns=eval_ds.column_names)
+data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
+
+# ── 4. TrainingArguments + Trainer ───────────────────────────────────────
 training_kwargs = dict(
     output_dir                  = os.path.join(OUTPUT_DIR, "checkpoints"),
     per_device_train_batch_size = 1,
@@ -147,16 +155,13 @@ else:
 
 training_args = TrainingArguments(**training_kwargs)
 
-trainer = SFTTrainer(
-    model               = model,
-    tokenizer           = tokenizer,
-    train_dataset       = train_ds,
-    eval_dataset        = eval_ds,
-    dataset_text_field  = "text",
-    max_seq_length      = MAX_SEQ_LEN,
-    dataset_num_proc    = 4,
-    packing             = True,
-    args                = training_args,
+trainer = Trainer(
+    model            = model,
+    args             = training_args,
+    train_dataset    = train_ds,
+    eval_dataset     = eval_ds,
+    data_collator    = data_collator,
+    processing_class = tokenizer,
 )
 
 # ── 5. Train (auto-resume from the last *complete* checkpoint on Drive) ───
