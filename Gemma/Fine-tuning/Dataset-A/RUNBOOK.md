@@ -9,9 +9,17 @@ Google Drive at `MyDrive/WSD_Project/`.
 | Script | Role |
 |---|---|
 | `create_finetuning_dataset.py` | builds `fine_tuning_dataset_elrazzaz.jsonl` from the train80 split (already done — output is committed) |
-| `finetuning.py` | Unsloth + LoRA SFT (4-bit) → saves `merged_16bit/` |
-| `infer_model.py` | runs the tuned model over `test_set.json` → `predictions_<tag>.json` |
+| `finetuning.py` | **plain** transformers + PEFT + bitsandbytes QLoRA (4-bit) → saves `adapter/` |
+| `infer_model.py` | loads base + `adapter/` (plain transformers/PEFT) over `test_set.json` → `predictions_<tag>.json` |
 | `eval.py` | accuracy + macro-F1 → `report_<tag>.json` |
+
+> ⚠️ **Do NOT use Unsloth here.** On the current Colab `pip install -U` stack
+> (unsloth 2026.6.6 / transformers 5.5.0) Unsloth's Gemma2 forward is broken:
+> training through it produced a corrupt adapter (garbage / newline-only output),
+> and importing unsloth at inference makes generation emit only newlines. The base
+> model is fine under plain transformers, so both scripts avoid unsloth entirely.
+> Quick-validate the stack with a smoke train (`WSD_MAX_STEPS=60`) → infer
+> (`WSD_LIMIT=5`) before committing to the full 3-epoch run.
 
 All three runnable scripts are **parameterized via env vars** so the same code serves both phases:
 
@@ -26,7 +34,7 @@ Drive layout produced:
 ```
 WSD_Project/
   data/           # Dataset-A json + the training jsonl (staged by the notebook)
-  outputs/<tag>/  # checkpoints/, merged_16bit/, predictions_<tag>.json, report_<tag>.json, debug_<tag>.txt
+  outputs/<tag>/  # checkpoints/, adapter/, predictions_<tag>.json, report_<tag>.json, debug_<tag>.txt
 ```
 
 ## How to run

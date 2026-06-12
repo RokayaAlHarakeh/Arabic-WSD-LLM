@@ -1,9 +1,13 @@
-# ── 0. Imports & model load ──────────────────────────────────────────────
+# ── 0. Imports & model load (plain transformers + PEFT; NO Unsloth) ──────
+# Importing unsloth on this Colab stack globally patches Gemma2's forward and
+# breaks generation (emits only newlines). We load the base + the trained LoRA
+# adapter with plain transformers/PEFT instead. See RUNBOOK + memory.
 import os, re, json
+import torch
 from tqdm import tqdm
 from dotenv import load_dotenv
-from unsloth import FastLanguageModel
-from transformers import GenerationConfig
+from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
+from peft import PeftModel
 load_dotenv()
 HF_TOKEN = os.environ.get("HF_TOKEN")          # optional; passed to from_pretrained
 
@@ -12,21 +16,22 @@ PROJECT_DIR = os.environ.get("WSD_PROJECT_DIR", "/content/drive/MyDrive/WSD_Proj
 DATA_DIR    = os.path.join(PROJECT_DIR, "data")
 MODEL_TAG   = os.environ.get("WSD_MODEL_TAG", "gemma2_2b")
 OUTPUT_DIR  = os.path.join(PROJECT_DIR, "outputs", MODEL_TAG)
-# The merged 16-bit dir written by finetuning.py:
-MODEL_DIR   = os.environ.get("WSD_MODEL_DIR", os.path.join(OUTPUT_DIR, "merged_16bit"))
+BASE_MODEL  = os.environ.get("WSD_BASE_MODEL", "unsloth/gemma-2-2b")
+# The LoRA adapter dir written by finetuning.py:
+ADAPTER_DIR = os.environ.get("WSD_ADAPTER_DIR", os.path.join(OUTPUT_DIR, "adapter"))
 
-model, tokenizer = FastLanguageModel.from_pretrained(
-    model_name=MODEL_DIR,
-    max_seq_length=int(os.environ.get("WSD_MAX_SEQ_LEN", 1024)),
-    load_in_4bit=True,
-    dtype=None,
-    token=HF_TOKEN,
-    local_files_only=True,
-)
-FastLanguageModel.for_inference(model)        # 2× faster kernels
+tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL, token=HF_TOKEN)
+model = AutoModelForCausalLM.from_pretrained(
+    BASE_MODEL,
+    dtype               = torch.float16,
+    attn_implementation = "eager",      # Gemma2 logit-softcapping needs eager to be correct
+    token               = HF_TOKEN,
+).to("cuda")
+model = PeftModel.from_pretrained(model, ADAPTER_DIR)   # attach trained LoRA
+model.eval()
 
 EOS = tokenizer.eos_token
-EOS_ID = tokenizer.eos_token_id       # int, like 128001
+EOS_ID = tokenizer.eos_token_id       # int
 
 
 # ── 1. Alpaca-style prompt template ──────────────────────────────────────
