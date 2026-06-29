@@ -16,6 +16,14 @@ from transformers import (
 )
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 
+# peft on the current Colab stack hard-errors on the old torchao it ships, even
+# though we never use torchao here. Treat it as absent so peft skips that path.
+try:
+    import peft.import_utils as _pi, peft.tuners.lora.torchao as _pt
+    _pi.is_torchao_available = _pt.is_torchao_available = lambda: False
+except Exception:
+    pass
+
 load_dotenv()
 HF_TOKEN = os.environ.get("HF_TOKEN")          # optional for public weights
 
