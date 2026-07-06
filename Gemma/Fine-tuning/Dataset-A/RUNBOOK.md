@@ -84,7 +84,7 @@ warmup 50, seed 3407, 4-bit). One difference: the paper used an **NVIDIA L4**; w
 | Model | Params | Accuracy (%) | Macro-F1 | Source |
 |---|---|---|---|---|
 | Gemma 2-9B | 9B | 89.39 | 81.72 | paper Table 3, Dataset A (target) |
-| Gemma 2-2B | 2B | _(report_gemma2_2b.json)_ | | mine, Phase 1 |
+| **Gemma 2-2B** | 2B | **90.42** | **83.33** | mine, Phase 1 ✅ (beats the 9B) |
 | Gemma 4-E4B | 4B | _(report_gemma4_e4b.json)_ | | mine, Phase 2 |
 
 **Question to answer for the team:** does Gemma 4-E4B beat Gemma 2 on Arabic WSD? Note compute/time
