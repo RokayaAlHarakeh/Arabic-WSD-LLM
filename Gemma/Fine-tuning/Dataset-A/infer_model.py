@@ -30,12 +30,22 @@ BASE_MODEL  = os.environ.get("WSD_BASE_MODEL", "unsloth/gemma-2-2b")
 ADAPTER_DIR = os.environ.get("WSD_ADAPTER_DIR", os.path.join(OUTPUT_DIR, "adapter"))
 
 tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL, token=HF_TOKEN)
-model = AutoModelForCausalLM.from_pretrained(
-    BASE_MODEL,
-    dtype               = torch.float16,
-    attn_implementation = "sdpa",       # match finetuning.py (self-consistent train/infer attention)
-    token               = HF_TOKEN,
-).to("cuda")
+# Set WSD_LOAD_4BIT=1 to 4-bit-quantize the base at load — needed for big models
+# (e.g. Gemma 2-9B) that don't fit a T4 in fp16. The 2B fits fine in fp16.
+if os.environ.get("WSD_LOAD_4BIT", "0") == "1":
+    from transformers import BitsAndBytesConfig
+    _bnb = BitsAndBytesConfig(
+        load_in_4bit=True, bnb_4bit_quant_type="nf4",
+        bnb_4bit_use_double_quant=True, bnb_4bit_compute_dtype=torch.float16,
+    )
+    model = AutoModelForCausalLM.from_pretrained(
+        BASE_MODEL, quantization_config=_bnb, device_map="auto",
+        attn_implementation="sdpa", token=HF_TOKEN,
+    )
+else:
+    model = AutoModelForCausalLM.from_pretrained(
+        BASE_MODEL, dtype=torch.float16, attn_implementation="sdpa", token=HF_TOKEN,
+    ).to("cuda")
 model = PeftModel.from_pretrained(model, ADAPTER_DIR)   # attach trained LoRA
 model.eval()
 
