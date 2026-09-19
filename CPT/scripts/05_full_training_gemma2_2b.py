@@ -59,6 +59,15 @@ try:
 except ImportError:
     boto3 = None
 
+# peft on the current Colab stack hard-errors via is_torchao_available() on the
+# old torchao Colab preinstalls, even though we never use torchao (bnb only).
+# Same guard as Gemma/Fine-tuning/Dataset-A/finetuning.py.
+try:
+    import peft.import_utils as _pi, peft.tuners.lora.torchao as _pt
+    _pi.is_torchao_available = _pt.is_torchao_available = lambda: False
+except Exception:
+    pass
+
 
 # -----------------------------------------------------------------------------
 # Defaults (override any of these on the command line)
