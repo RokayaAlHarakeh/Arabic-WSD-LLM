@@ -7,3 +7,6 @@ packed_2048/
 eval/*.json
 adapters/
 checkpoints/
+__pycache__/
+*.pyc
+figures/

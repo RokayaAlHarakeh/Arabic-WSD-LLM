@@ -17,6 +17,7 @@ adapter, which is what makes the comparison controlled.
 | Part 1.1 — document-level split | ✅ **done** — `scripts/03b_split_by_document.py`, all checks pass |
 | Part 1.2 — repack at 2048 | ⬜ next |
 | Part 1.3 — tokenizer fertility | ⬜ |
+| Cloze probe (timeline Day 7) | ✅ **built** — `scripts/build_legal_cloze.py`, 300 items |
 | Part 2 — adapt training script | ⬜ **read §2 first: the Unsloth fork** |
 | Part 3 — verify, smoke, launch | ⬜ |
 | Part 4 — evaluate | ⬜ |
@@ -284,6 +285,34 @@ same command picks up where it left off with no flags.
 
 **Copy the adapter and logs into the repo the same day.** The Week-1 mistake was leaving
 everything Drive-only; the SFT run artifacts are *still* only in Drive.
+
+---
+
+## Timeline coverage
+
+`FYP_Timeline.pdf` names three metrics and four artifacts for Week 2. All are covered:
+
+| Timeline acceptance criterion | Where |
+|---|---|
+| split manifest with token counts | `reports/03b_split_by_document.txt` |
+| dated hypothesis before first run | notebook §7 (commits it) |
+| `legal_cloze.json` + generation script | `scripts/build_legal_cloze.py`, notebook §5.6 |
+| baseline on all three metrics | notebook §8 (next-token) + §8.1 (cloze) |
+| adapter + logs + **loss curve figure** | notebook §9 + §9.1 |
+| results table, base vs CPT | notebook §10, §10.2, §11 |
+| appendix with Arabic examples | notebook §11.5 (12 prompts) |
+
+**The third metric is doubled deliberately.** The timeline specifies *cloze accuracy*; the
+supervisor's newer `Week2_CPT_Plan.md` replaces it with *next-token accuracy* and ships the
+script for it. Rather than pick one, run both — they measure different things. Next-token
+samples positions at random, where function words and general Arabic dominate and the base
+model already scores well; cloze targets legal terms only, concentrating the measurement
+where CPT should help. Reporting both satisfies the timeline and gives the gate four
+metrics instead of three.
+
+**Report the cloze majority-class baseline.** `statute_term` has four possible answers and
+المرسوم is 40% of them, so 40% is what always guessing scores. Only the margin above the
+baseline is evidence. `score_legal_cloze.py` prints it per category.
 
 ---
 
