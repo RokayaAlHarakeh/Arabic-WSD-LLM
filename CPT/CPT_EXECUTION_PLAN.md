@@ -15,9 +15,11 @@ adapter, which is what makes the comparison controlled.
 |---|---|
 | Part 0 — subsample to 30M tokens | ✅ done by supervisor |
 | Part 1.1 — document-level split | ✅ **done** — `scripts/03b_split_by_document.py`, all checks pass |
-| Part 1.2 — repack at 2048 | ⬜ next |
-| Part 1.3 — tokenizer fertility | ⬜ |
-| Cloze probe (timeline Day 7) | ✅ **built** — `scripts/build_legal_cloze.py`, 300 items |
+| Part 1.2 — repack at 2048 | ✅ **done** — 13,262 / 696 / 719 blocks |
+| Part 1.3 — tokenizer fertility | ✅ **done** — 2.337 tokens/word |
+| Cloze probe (timeline Day 7) | ✅ **done** — 300 items, 253 documents |
+| Eval set (1,000 next-token items) | ✅ **done** — all 7 sources |
+| **Stage A complete** | ✅ 2026-09-19, on a free CPU runtime |
 | Part 2 — adapt training script | ⬜ **read §2 first: the Unsloth fork** |
 | Part 3 — verify, smoke, launch | ⬜ |
 | Part 4 — evaluate | ⬜ |
@@ -30,9 +32,24 @@ adapter, which is what makes the comparison controlled.
 | Documents / records | 43,680 / 45,636 |
 | Train | 39,310 docs, 41,095 records, **27.1M est. tokens** |
 | Val / Test | 2,185 docs each, ~1.43M / ~1.45M est. tokens |
-| Packed blocks at 2048 | ~13,250 (provisional) |
-| Optimizer steps at effective batch 8 | **~1,656** |
+| Packed blocks at 2048 | **13,262** train / 696 val / 719 test |
+| True train tokens (Gemma 2 tokenizer) | **27,162,160** (estimate was off by 0.1%) |
+| Dropped in packing | 1,584 tokens — 0.006% |
+| Optimizer steps at effective batch 8 | **1,658** |
 | Leakage avoided vs record-level split | 5.9% of val, 5.6% of test |
+| Fertility, legal Arabic | **2.337** tokens/word |
+| Fertility, general Arabic (§2.3.3) | 2.079 — legal is **1.124×** worse |
+| Fertility, English (§2.3.3) | 1.163 — legal is **2.009×** worse |
+
+Stage A was reproduced exactly on Colab from the committed scripts: identical document
+counts, token counts, leakage figures and cloze composition as the local run, same seed,
+different OS. That is a reproducibility claim worth one sentence in Chapter 8.
+
+The fertility result confirms the Chapter 2 prediction and is what justifies trying
+`modules_to_save=["embed_tokens"]` in Run B: if legal terms fragment 12% harder than
+general Arabic, a frozen embedding table is representing domain vocabulary poorly. At 2048
+tokens a block holds ~876 legal Arabic words against ~985 of general Arabic or ~1,760 of
+English — same compute, less content.
 
 "Provisional" because `chars / 2.6` was calibrated on the **Gemma 4** tokenizer. The
 packing report in Stage A gives the true count.
