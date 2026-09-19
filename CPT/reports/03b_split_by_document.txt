@@ -1,0 +1,78 @@
+DOCUMENT-LEVEL TRAIN / VALIDATION / TEST SPLIT REPORT
+================================================================================
+INPUT FILE: C:\Users\user\AppData\Local\Temp\claude\c--Users-user-Desktop-FYP-Whitestork-WSD-Arabic-WSD-LLM\38ce04ec-b2d2-4bad-ad59-46a7321ebf97\scratchpad\cpt\legal_corpus_subset.jsonl
+TRAIN FILE: splits\train_doclevel.jsonl
+VAL FILE: splits\val_doclevel.jsonl
+TEST FILE: splits\test_doclevel.jsonl
+TRAIN_RATIO: 0.9
+VAL_RATIO: 0.05
+TEST_RATIO: 0.05
+SEED: 42
+DOCUMENT KEY: (final_cpt_source, source_id)
+
+INPUT QUALITY:
+Input valid records: 45636
+Invalid JSON: 0
+Empty text skipped: 0
+
+LEAKAGE AVOIDED (counterfactual record-level split, same ratios/seed):
+  val: 135 of 2282 held-out records (5.9%) would share a document with train
+  test: 127 of 2282 held-out records (5.6%) would share a document with train
+  document-level split: 0 (asserted above)
+
+FINAL COUNTS:
+Train documents: 39310  records: 41095  est_tokens: 27,136,502
+Validation documents: 2185  records: 2263  est_tokens: 1,433,580
+Test documents: 2185  records: 2278  est_tokens: 1,449,536
+Total written: 45636
+
+FINAL RATIOS (by record % / by est. token %):
+Train: 90.05 / 90.396
+Validation: 4.959 / 4.775
+Test: 4.992 / 4.829
+
+SPLIT PLAN BY SOURCE (documents):
+  adl_rulings                  total:    727  train:    655  val:    36  test:    36
+  associated_studies_ar        total:      7  train:      5  val:     1  test:     1
+  bibliographic_rulings        total:  12356  train:  11120  val:   618  test:   618
+  gazette_legal_core           total:  11319  train:  10187  val:   566  test:   566
+  gazette_section2_sample      total:   4751  train:   4275  val:   238  test:   238
+  legislations                 total:  13426  train:  12084  val:   671  test:   671
+  related_provisions           total:   1094  train:    984  val:    55  test:    55
+
+SOURCE COUNTS - TRAIN:
+  legislations                 docs:  12084  records:  12700  est_tokens:    9,671,129
+  bibliographic_rulings        docs:  11120  records:  11120  est_tokens:    1,939,981
+  gazette_legal_core           docs:  10187  records:  11005  est_tokens:   10,341,416
+  gazette_section2_sample      docs:   4275  records:   4287  est_tokens:    1,846,559
+  related_provisions           docs:    984  records:    984  est_tokens:      435,682
+  adl_rulings                  docs:    655  records:    969  est_tokens:    2,786,591
+  associated_studies_ar        docs:      5  records:     30  est_tokens:      115,144
+
+SOURCE COUNTS - VALIDATION:
+  legislations                 docs:    671  records:    695  est_tokens:      499,076
+  bibliographic_rulings        docs:    618  records:    618  est_tokens:      105,042
+  gazette_legal_core           docs:    566  records:    602  est_tokens:      544,116
+  gazette_section2_sample      docs:    238  records:    238  est_tokens:      104,170
+  related_provisions           docs:     55  records:     55  est_tokens:       24,058
+  adl_rulings                  docs:     36  records:     47  est_tokens:      127,073
+  associated_studies_ar        docs:      1  records:      8  est_tokens:       30,045
+
+SOURCE COUNTS - TEST:
+  legislations                 docs:    671  records:    707  est_tokens:      513,158
+  bibliographic_rulings        docs:    618  records:    618  est_tokens:      109,604
+  gazette_legal_core           docs:    566  records:    593  est_tokens:      515,471
+  gazette_section2_sample      docs:    238  records:    240  est_tokens:      101,219
+  adl_rulings                  docs:     36  records:     56  est_tokens:      150,149
+  related_provisions           docs:     55  records:     55  est_tokens:       24,533
+  associated_studies_ar        docs:      1  records:      9  est_tokens:       35,402
+
+TOTAL WRITTEN SUMMARY:
+Records: 45636
+Documents: 43680
+Chars: 78,051,261
+Estimated tokens: 30,019,618
+
+INVALID JSON EXAMPLES:
+
+EMPTY TEXT EXAMPLES:

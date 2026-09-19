@@ -1,0 +1,39 @@
+GEMMA 4 CPT 10-STEP BENCHMARK
+================================================================================
+
+Model: google/gemma-4-12B
+Maximum sequence length: 4096
+Optimizer steps: 10
+Gradient accumulation: 8
+Microbatch size: 1
+Effective batch size: 8
+Learning rate: 0.0002
+
+STEP TIMES
+--------------------------------------------------------------------------------
+Step 1: 110.7960 seconds
+Step 2: 71.4305 seconds
+Step 3: 35.7614 seconds
+Step 4: 71.4658 seconds
+Step 5: 71.4604 seconds
+Step 6: 35.7561 seconds
+Step 7: 71.4627 seconds
+Step 8: 71.4663 seconds
+Step 9: 35.7545 seconds
+Step 10: 71.4569 seconds
+
+SUMMARY
+--------------------------------------------------------------------------------
+Total training seconds: 648.3717
+Average seconds per optimizer step including warm-up: 64.8372
+Steady-state seconds per optimizer step: 58.0730
+Evaluation seconds: 19.0846
+Final evaluation loss: 1.74221897
+Peak allocated GPU memory: 13.7849 GB
+
+FULL-RUN ESTIMATE
+--------------------------------------------------------------------------------
+Full optimizer steps: 3894
+Estimated seconds: 226136.37
+Estimated hours: 62.82
+Estimated days: 2.62

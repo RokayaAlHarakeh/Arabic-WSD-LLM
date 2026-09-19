@@ -1,0 +1,9 @@
+# Large data — regenerable or supplied by supervisor, never committed
+data/*.jsonl
+data/*.zip
+data/*.gz
+splits/
+packed_2048/
+eval/*.json
+adapters/
+checkpoints/
