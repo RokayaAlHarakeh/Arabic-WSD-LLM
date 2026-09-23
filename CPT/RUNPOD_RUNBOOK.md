@@ -14,17 +14,22 @@ Available in EU-RO-1 with this volume attached:
 
 | GPU | VRAM | $/hr | Arch | Verdict |
 |---|---|---|---|---|
-| **RTX 4090** | 24 GB | **$0.74** | Ada (sm_89) | ✅ **Take this** |
-| L4 | 24 GB | $0.49 | Ada (sm_89) | ✅ safe fallback, ~2× slower |
+| **L4** | 24 GB | **$0.49** | Ada (sm_89) | ✅ **CHOSEN** — 4090 unavailable in EU-RO-1 |
+| RTX 4090 | 24 GB | $0.74 | Ada (sm_89) | ✅ better, but no capacity at deploy time |
 | RTX PRO 4000 | 24 GB | $0.57 | Blackwell | ⚠️ see below |
 | RTX PRO 4500 | 32 GB | $0.72 | Blackwell | ⚠️ see below |
 | RTX PRO 6000 | 96 GB | $2.09 | Blackwell | ❌ 96 GB for a 7 GB job |
 
 All five support bf16, so none is disqualified the way a T4 would be.
 
-**Why the 4090.** Peak VRAM for this run is ~7 GB, so 24 GB is already generous — **VRAM is
-not the constraint, time is**. The 4090 has roughly 3× the memory bandwidth of an L4 and is
-the card the plan's timing estimates were calibrated against.
+**Chosen: L4.** The 4090 was preferable on speed — peak VRAM here is ~7 GB, so 24 GB is
+already generous and **bandwidth decides, not capacity** — but EU-RO-1 returned "Instance not
+available" for every 4090 configuration. The L4 is the same architecture family (Ada,
+sm_89), so the bitsandbytes 4-bit path is identically well-trodden; it is simply slower.
+
+Cheaper per hour almost exactly offsets slower, so the budget is unchanged. What the L4
+costs is a longer day and more exposure to an interruption mid-run — mitigated by
+checkpointing to the volume every 100 steps and automatic resume.
 
 **Why not the RTX PRO cards, despite RTX PRO 4000 being cheaper.** They are Blackwell
 (sm_120), which needs a recent CUDA and a PyTorch built for it. `bitsandbytes` 4-bit kernels
@@ -35,26 +40,23 @@ a run you need to simply work, that is not a variable worth introducing.
 If you want to try one anyway, the smoke test in §6 tells you within five minutes. That is
 what it is for.
 
-**On cost:** L4 at $0.49 looks cheaper per hour, but at roughly twice the wall-clock the
-total for a run lands in the same place — while doubling your exposure to an interruption.
-Take the 4090.
+### Budget at $0.49/hr (L4)
 
-### Budget at $0.74/hr
-
-The setup guide assumed $0.34/hr Community pricing. These are Secure Cloud rates, so
+The setup guide assumed $0.34/hr Community pricing. EU-RO-1 quotes on-demand rates, so
 recompute:
 
 | Activity | Hours | Cost |
 |---|---|---|
-| Smoke test + environment | 0.5 | $0.37 |
-| Baseline: next-token + cloze | 0.75 | $0.56 |
-| **Run A — training** | ~2.5 | **$1.85** |
-| CPT eval: next-token + cloze | 0.5 | $0.37 |
-| Retention, 2 runs | 1.25 | $0.93 |
-| Qualitative | 0.25 | $0.19 |
-| **GPU subtotal** | **~5.75 h** | **~$4.27** |
+| Setup + data prep (CPU-bound; L4 has 6 vCPU) | 1.0 | $0.49 |
+| Smoke test | 0.25 | $0.12 |
+| Baseline: next-token + cloze | 1.0 | $0.49 |
+| **Run A — training, ~1,658 steps** | **~4** | **$1.96** |
+| CPT eval: next-token + cloze | 0.75 | $0.37 |
+| Retention, 2 runs | 1.5 | $0.74 |
+| Qualitative | 0.3 | $0.15 |
+| **GPU subtotal** | **~8.8 h** | **~$4.32** |
 | Volume, 30 GB | — | $2.10/month |
-| **Total** | | **~$6.40** |
+| **Total** | | **~$6.42** |
 
 That leaves ~$3.60 for one retry, and **no room for the optional Run B**. Treat Run B as
 out of scope unless Run A passes first time and credit remains.
@@ -68,13 +70,18 @@ Pods → Deploy:
 | Setting | Value |
 |---|---|
 | Region | **EU-RO-1** (must match the volume) |
-| GPU | RTX 4090, **1×** (not 2) |
-| Template | RunPod PyTorch 2.x |
+| GPU | **L4**, 1× |
+| Template | RunPod PyTorch 2.8.0 |
 | Network volume | `cpt_volume_rokaya` → mounted at `/workspace` |
-| Container disk | 20 GB |
+| Container disk | 20 GB — only ~5 GB is used there |
+
+> If Deploy is greyed out with **"Instance not available"**, that is host capacity, not your
+> configuration. Lower the container disk, clear the Community/Secure filter, or retry.
+> The separate "recommends 50 GB persistent storage" note is a generic template default and
+> can be ignored: actual usage is ~10 GB.
 
 > 🔴 **Terminate the pod whenever you are not actively using the GPU.** RunPod bills every
-> running minute, idle or not. At $0.74/hr a pod left over a weekend is ~$37 — more than the
+> running minute, idle or not. At $0.49/hr a pod left over a weekend is ~$25 — more than the
 > entire budget. Redeploying takes under a minute and `/workspace` survives.
 
 ---
@@ -203,9 +210,9 @@ done
 
 Anything different means the input differs — stop and find out why.
 
-> 💡 This is ~40 minutes of pure CPU work. At $0.74/hr that is ~$0.50 on a 4090 doing
-> nothing. If you want it free, deploy a **CPU-only pod** (the CPU tab at deploy time) with
-> the same volume, run this, terminate, then deploy the 4090.
+> 💡 This is ~50–60 minutes of CPU work on the L4's 6 vCPU. Do NOT split it onto a
+> separate CPU pod: the venv inherits `torch` from the image, and a CPU-only image can
+> pull a CPU build of torch into the venv that then shadows the GPU build here.
 
 > 🔴 **Do not rebuild the eval set or the cloze probe.** Upload those two files. Rebuilding
 > between base and CPT is the one mistake that silently invalidates the whole comparison.
@@ -249,7 +256,9 @@ Four things must hold:
 | loss | finite, decreasing, no NaN |
 | adapter saved | `adapter_config.json` + `adapter_model.safetensors` |
 
-**Write down seconds/step.** Full run ≈ that × 1,658. At 4–7 s/step expect 1.8–3.2 h.
+**Write down seconds/step.** Full run ≈ that × 1,658. On an L4 expect 6–12 s/step, so
+2.8–5.5 h. Much worse than that means something is wrong — stop and check before committing
+to the full run.
 
 ---
 
@@ -320,5 +329,5 @@ Then **terminate the pod**. Leave the network volume alone.
 | Action | Billing | Keeps `/workspace`? |
 |---|---|---|
 | Terminate pod | stops | ✅ |
-| Leave pod idle | $0.74/hr | ✅ |
+| Leave pod idle | $0.49/hr | ✅ |
 | Delete network volume | stops | ❌ everything gone |
