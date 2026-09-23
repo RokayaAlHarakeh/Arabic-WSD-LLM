@@ -49,6 +49,11 @@ import os
 import time
 from pathlib import Path
 
+# Training leaves a large reserved-but-unallocated pool; the eval forward then fails
+# to find one contiguous block for the 256k-vocab logits. Expandable segments let the
+# allocator reuse that pool. Must be set before torch initialises CUDA.
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
+
 import torch
 from datasets import load_dataset
 
@@ -350,7 +355,11 @@ def parse_args():
     # Effective batch = batch_size * grad_accum * num_gpus.
     parser.add_argument("--batch_size", type=int, default=1)
     parser.add_argument("--grad_accum", type=int, default=8)
-    parser.add_argument("--eval_batch_size", type=int, default=4)
+    # Gemma 2 has a 256k vocabulary, so eval logits are ~2 GB PER SEQUENCE at 2048
+    # tokens. Anything above 1 OOMs a 24 GB card during evaluation even though
+    # training at batch 1 fits comfortably. prediction_loss_only does not help --
+    # the logits must be materialised before the loss is computed.
+    parser.add_argument("--eval_batch_size", type=int, default=1)
 
     # Optimization.
     parser.add_argument("--learning_rate", type=float, default=2e-4)
@@ -735,6 +744,7 @@ def main():
     # Final evaluation + save
     # -------------------------------------------------------------------------
     print("\nRunning final evaluation...")
+    torch.cuda.empty_cache()
     final_eval = trainer.evaluate()
     print("Final eval:", final_eval)
 
@@ -783,6 +793,7 @@ def main():
         "num_epochs": args.num_epochs,
         "max_steps": args.max_steps,
         "effective_batch": effective_batch,
+        "eval_batch_size": args.eval_batch_size,
         "learning_rate": args.learning_rate,
         "lr_scheduler_type": args.lr_scheduler_type,
         "warmup": warmup_note,
