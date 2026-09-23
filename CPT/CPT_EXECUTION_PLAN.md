@@ -19,7 +19,9 @@ adapter, which is what makes the comparison controlled.
 | Part 1.3 — tokenizer fertility | ✅ **done** — 2.337 tokens/word |
 | Cloze probe (timeline Day 7) | ✅ **done** — 300 items, 253 documents |
 | Eval set (1,000 next-token items) | ✅ **done** — all 7 sources |
-| **Stage A complete** | ✅ 2026-09-19, on a free CPU runtime |
+| **Stage A complete** | ✅ 2026-09-19 Colab CPU; re-run identically on RunPod 2026-09-23 |
+| Stage B — Unsloth fork | ✅ **resolved: plain transformers**, Unsloth never needed |
+| Part 3 — smoke test | ✅ **passed** 2026-09-23 on RTX PRO 4000 Blackwell |
 | Part 2 — adapt training script | ⬜ **read §2 first: the Unsloth fork** |
 | Part 3 — verify, smoke, launch | ⬜ |
 | Part 4 — evaluate | ⬜ |
@@ -40,6 +42,27 @@ adapter, which is what makes the comparison controlled.
 | Fertility, legal Arabic | **2.337** tokens/word |
 | Fertility, general Arabic (§2.3.3) | 2.079 — legal is **1.124×** worse |
 | Fertility, English (§2.3.3) | 1.163 — legal is **2.009×** worse |
+
+### Measured on the pod (RTX PRO 4000 Blackwell, 24 GB)
+
+| | Value |
+|---|---|
+| Seconds per optimizer step | **8.01** |
+| Projected full run, 1,658 steps | **~3.7 h ≈ $2.10** at $0.57/hr |
+| Peak VRAM | **11.79 GB** of 23.42 |
+| Trainable parameters | 20,766,720 of 2,635,108,608 — **0.7881%** |
+| Initial loss (sanity probe) | **6.359** vs uniform-random 12.453 → ppl **577.8** |
+
+That initial perplexity of 577.8 for base Gemma 2-2B sits beside the **556.01** reported
+for base Gemma 4-12B on this same corpus in `docs/evaluation.md` — different model, nearly
+the same starting point. Useful corroboration that the setup measures what the reference
+measured, and worth a sentence in Chapter 9.
+
+**Stack that works** (record it — this project has been burned by a silent version break):
+torch 2.8.0+cu128, transformers 5.17.0, peft 0.21.0, bitsandbytes 0.50.2, CUDA 12.8,
+sm_120. Two fixes were needed: transformers 5.x dropped `warmup_ratio` (converted to
+`warmup_steps`), and `eval_batch_size` had to drop from 4 to 1 because Gemma 2's 256k
+vocabulary makes eval logits ~2 GB per sequence at 2048 tokens.
 
 Stage A was reproduced exactly on Colab from the committed scripts: identical document
 counts, token counts, leakage figures and cloze composition as the local run, same seed,
