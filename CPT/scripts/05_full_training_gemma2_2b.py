@@ -42,6 +42,7 @@ Smoke test first (always):
 Resume is automatic: re-running the same command picks up the latest checkpoint.
 """
 import argparse
+import inspect
 import json
 import math
 import os
@@ -601,6 +602,22 @@ def main():
     print("Planned optimizer steps:", planned_steps)
     print("Tokens per epoch (approx):", f"{len(train_dataset) * args.max_seq_length:,}")
 
+    # transformers 5.x dropped `warmup_ratio` from TrainingArguments and kept only
+    # `warmup_steps`. Resolve the documented ratio against the planned step count so the
+    # same --warmup_ratio value means the same thing on both 4.x and 5.x.
+    _ta_params = set(inspect.signature(TrainingArguments.__init__).parameters)
+    if "warmup_ratio" in _ta_params:
+        warmup_kwargs = {"warmup_ratio": args.warmup_ratio}
+        warmup_note = f"warmup_ratio={args.warmup_ratio}"
+    else:
+        _warmup_steps = max(0, round(planned_steps * args.warmup_ratio))
+        warmup_kwargs = {"warmup_steps": _warmup_steps}
+        warmup_note = (f"warmup_steps={_warmup_steps} "
+                       f"(ratio {args.warmup_ratio} x {planned_steps} planned steps; "
+                       f"transformers {'5.x' if 'warmup_ratio' not in _ta_params else '4.x'} "
+                       f"has no warmup_ratio)")
+    print("Warmup:", warmup_note)
+
     # -------------------------------------------------------------------------
     # Trainer
     # -------------------------------------------------------------------------
@@ -615,7 +632,7 @@ def main():
         gradient_accumulation_steps=args.grad_accum,
 
         learning_rate=args.learning_rate,
-        warmup_ratio=args.warmup_ratio,
+        **warmup_kwargs,
         weight_decay=args.weight_decay,
         max_grad_norm=args.max_grad_norm,
         lr_scheduler_type=args.lr_scheduler_type,
@@ -768,6 +785,7 @@ def main():
         "effective_batch": effective_batch,
         "learning_rate": args.learning_rate,
         "lr_scheduler_type": args.lr_scheduler_type,
+        "warmup": warmup_note,
         "lora_r": args.lora_r,
         "lora_alpha": args.lora_alpha,
         "target_modules": TARGET_MODULES,
