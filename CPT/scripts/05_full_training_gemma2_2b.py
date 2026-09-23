@@ -44,6 +44,7 @@ Resume is automatic: re-running the same command picks up the latest checkpoint.
 import argparse
 import json
 import math
+import os
 import time
 from pathlib import Path
 
@@ -74,10 +75,14 @@ except Exception:
 # -----------------------------------------------------------------------------
 MODEL_NAME = "google/gemma-2-2b"
 
-TRAIN_FILE = "/content/packed_2048/train_packed_2048.jsonl"
-VAL_FILE = "/content/packed_2048/val_packed_2048.jsonl"
+# RunPod: everything must live under /workspace (the network volume). The container
+# disk is destroyed when the pod is terminated.
+WORKSPACE = os.environ.get("WSD_WORKSPACE", "/workspace")
 
-OUTPUT_DIR = "/content/drive/MyDrive/CPT_Project/adapters/gemma2_2b_cpt_v1"
+TRAIN_FILE = f"{WORKSPACE}/packed_2048/train_packed_2048.jsonl"
+VAL_FILE = f"{WORKSPACE}/packed_2048/val_packed_2048.jsonl"
+
+OUTPUT_DIR = f"{WORKSPACE}/adapters/gemma2_2b_cpt_v1"
 
 MAX_SEQ_LENGTH = 2048
 

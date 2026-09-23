@@ -1,6 +1,6 @@
 # Week 2 — CPT Implementation Plan
 
-**Continued pretraining of Gemma 2-2B on the Lebanese legal corpus, QLoRA, Colab Pro.**
+**Continued pretraining of Gemma 2-2B on the Lebanese legal corpus, QLoRA, RunPod.**
 
 | | |
 |---|---|
@@ -9,6 +9,7 @@
 | Sequence length | 2048 |
 | Corpus | 15–20M token subset of the Lebanese legal corpus |
 | Reference pipeline | `CPT_Ai_lawyer_preprocessing_local` repo |
+| Compute | RunPod, RTX 4090 Community Cloud (~$0.34/hr) — see `RunPod_Setup_Guide.md` |
 | Duration | 3 days, 1–2 GPU sessions |
 
 ---
@@ -136,22 +137,20 @@ Measured compression on this corpus: **4.32×**.
 gzip -9 legal_corpus_subset.jsonl
 ```
 
-## 0.4 Hand over via Google Drive
+## 0.4 Hand over the file
 
-The student works in Colab, which mounts Drive directly — no download-then-reupload cycle.
+At ~38 MB gzipped, any channel works. Two options:
 
-1. Upload `legal_corpus_subset.jsonl.gz` to a Drive folder, e.g. `MyDrive/CPT_Project/`
-2. Share that folder **to her account specifically**, not "anyone with the link". Most of this is public-record material, but the ADL rulings and bibliographic set should not be indexable.
-3. She reads it in Colab with:
+**Google Drive** — upload `legal_corpus_subset.jsonl.gz`, share the folder **to her account specifically**, not "anyone with the link". Most of this is public-record material, but the ADL rulings and bibliographic set should not be indexable.
 
-```python
-from google.colab import drive
-drive.mount('/content/drive')
-!cp /content/drive/MyDrive/CPT_Project/legal_corpus_subset.jsonl.gz /content/
-!gunzip /content/legal_corpus_subset.jsonl.gz
+**Direct upload to the pod** — drag and drop into the JupyterLab file browser at `/workspace`, then:
+
+```bash
+cd /workspace
+gunzip legal_corpus_subset.jsonl.gz
 ```
 
-> ⚠️ **Copy to `/content/` before processing.** Drive is a FUSE mount; streaming a 166 MB JSONL line-by-line from it is far slower than from local disk.
+Either way the file ends up at `/workspace/legal_corpus_subset.jsonl` on the network volume, where it survives pod termination.
 
 ### Acceptance — observed values from the actual run
 
@@ -171,7 +170,7 @@ estimated tokens : 134,264,628  ->  30,019,618  (22.3%)
 
 # PART 1 — Day 1 morning: CPU preparation
 
-**No GPU. Do not start a Colab GPU runtime for any of this.** Burning compute units on tokenization is pure waste.
+**No GPU. Do not deploy a pod for any of this.** Run it on a laptop or in free Colab — paying $0.34/hr to tokenize is pure waste.
 
 Part 0 already pooled the three clean splits and subsampled them to ~30M tokens, so this part is now **~90 minutes, not three hours**. The input is one file:
 
@@ -324,7 +323,7 @@ Copy `02_training/05_full_training_ORIGINAL.py` → `05_full_training_gemma2_2b.
 
 ## 2.1 Make `boto3` optional
 
-Currently imported at module top level; it will fail on Colab.
+Currently imported at module top level; it will fail unless boto3 happens to be installed.
 
 ```python
 try:
@@ -338,7 +337,7 @@ except ImportError:
 ```python
 MODEL_NAME     = "google/gemma-2-2b"          # was google/gemma-4-12B
 MAX_SEQ_LENGTH = 2048                          # was 4096
-OUTPUT_DIR     = "/content/drive/MyDrive/CPT_Project/adapters/gemma2_2b_cpt_v1"
+OUTPUT_DIR     = "/workspace/adapters/gemma2_2b_cpt_v1"
 TRAIN_FILE     = ".../packed_2048/train_packed_2048.jsonl"
 VAL_FILE       = ".../packed_2048/val_packed_2048.jsonl"
 ```
@@ -363,7 +362,7 @@ There is no S3 bucket. Without the flag the script raises at startup:
 ValueError: --s3_bucket is required unless --skip_s3_upload is used.
 ```
 
-Checkpoints go to Drive via `OUTPUT_DIR`.
+Checkpoints go to the network volume via `OUTPUT_DIR`.
 
 ## 2.5 Everything else stays
 
@@ -384,10 +383,10 @@ Keep `packed_data_collator`, `validate_example`, `strip_non_training_columns`, r
 | `max_grad_norm` | 1.0 | |
 | `optim` | adamw_8bit | |
 | `batch_size` / `grad_accum` | 1 / 8 | effective batch 8 |
-| `bf16` | True | **Colab Pro L4/A100 only** — T4 has no bf16 |
+| `bf16` | True | **bf16-capable GPU only** — see Part 7.3 |
 | `num_epochs` | 1 | |
 | `save_steps` | 100 | |
-| `save_total_limit` | 3 | Drive quota |
+| `save_total_limit` | 3 | network volume space |
 
 > **On the learning rate:** earlier guidance said CPT needs 1e-5 to 5e-5. The 12B run in the repo used **2e-4** and took perplexity from 556.01 to 23.28. That number is validated on this exact corpus. Use it.
 
@@ -404,7 +403,7 @@ python training_codes/01_verify_unsloth_env.py
 nvidia-smi
 ```
 
-**Confirm the GPU is L4 or A100.** If Colab assigns a T4, restart the runtime until it doesn't — `bf16=True` will fail there.
+**Confirm `torch.cuda.is_bf16_supported()` returns True.** If the pod was assigned a T4, V100 or P100, terminate it and redeploy — `bf16=True` will fail there. See Part 7.3.
 
 ## 3.2 Dataset validation
 
@@ -445,7 +444,7 @@ Five minutes. It converts the writeup from description into "we predicted X, obs
 python 05_full_training_gemma2_2b.py --skip_s3_upload
 ```
 
-Expected runtime, memory and compute-unit cost are in **Part 7** below. Read it before launching — it also covers what to do if Colab hands her a T4.
+Expected runtime, memory and cost are in **Part 7** below. Read it before launching — it also covers which GPUs are unusable and what to do if the pod gets one.
 
 ---
 
@@ -599,15 +598,17 @@ Cite Gururangan et al. (2020), *"Don't Stop Pretraining"* for the DAPT framing.
 
 ---
 
-# PART 7 — Runtime, memory and compute budget
+# PART 7 — Runtime, memory and cost (RunPod)
+
+**Platform: RunPod, RTX 4090 on Community Cloud.** Colab Pro is not purchasable from Lebanon. Setup steps are in `RunPod_Setup_Guide.md`.
 
 ## 7.1 How the run is sized
 
 ```
-tokens trained on            = T
+tokens trained on           = T
 packed blocks               = T / 2048
-effective batch             = batch_size(1) × grad_accum(8) = 8 blocks
-tokens per optimizer step   = 8 × 2048 = 16,384
+effective batch             = batch_size(1) x grad_accum(8) = 8 blocks
+tokens per optimizer step   = 8 x 2048 = 16,384
 optimizer steps             = T / 16,384
 ```
 
@@ -618,58 +619,40 @@ optimizer steps             = T / 16,384
 
 ## 7.2 Expected wall-clock
 
-Estimates for **Gemma 2-2B, 4-bit QLoRA, r=16, seq 2048, batch 1 × grad_accum 8, gradient checkpointing on**. Real throughput depends on the assigned card and on Unsloth's kernel path, so treat these as planning figures — **the smoke test in Part 3.3 gives the true number.**
+Gemma 2-2B, 4-bit QLoRA, r=16, seq 2048, batch 1 x grad_accum 8, gradient checkpointing on. Planning figures only — **the smoke test in Part 3.3 gives the true seconds-per-step**, and the script writes it to `run_summary.json`.
 
-| GPU | Tier | bf16? | sec / optimizer step | 18M tokens | 27M tokens |
+| GPU | bf16 | Community rate | sec / step | 18M tokens | 27M tokens |
 |---|---|---|---|---|---|
-| **T4 16 GB** | free | ❌ **no** | ~20–35 | **6–11 h** | **9–16 h** |
-| **L4 24 GB** | Pro | ✅ | ~6–12 | **2–4 h** | **3–6 h** |
-| **A100 40 GB** | Pro | ✅ | ~2.5–4.5 | **~1 h** | **~1.5–2 h** |
-
-Once the smoke test reports seconds per step:
+| **RTX 4090 24 GB** | ✅ Ada | **~$0.34/hr** | ~4–7 | **1–2 h** | **1.5–3 h** |
+| RTX A5000 24 GB | ✅ Ampere | ~$0.25/hr | ~6–10 | 1.5–3 h | 2.5–4.5 h |
+| L4 24 GB | ✅ Ada | ~$0.40/hr | ~6–12 | 2–4 h | 3–6 h |
+| A40 48 GB | ✅ Ampere | ~$0.40/hr | ~5–8 | 1.5–2.5 h | 2–4 h |
 
 ```
-full run seconds = sec_per_step × optimizer_steps
+full run seconds = sec_per_step x optimizer_steps
 ```
 
-The script prints this automatically at the end, along with an estimated seconds-per-epoch, and writes it to `run_summary.json`.
+**The 4090 is faster than an A100 40GB on this workload and a fraction of the price.** Take it whenever it is available.
 
-## 7.3 Why the free tier is the wrong choice here
+## 7.3 GPUs that must NOT be used
 
-Three separate problems, in order of severity:
+| GPU | Architecture | Why not |
+|---|---|---|
+| T4 | Turing | **no bf16** |
+| V100 | Volta | **no bf16** |
+| P100 | Pascal | **no bf16** |
 
-1. **T4 has no bf16.** It is Turing architecture. The training script sets `bf16=True`; on a T4 that must become `fp16=True`. Gemma 2 uses logit soft-capping (attention 50.0, final 30.0), and fp16 overflow on this family is a real failure mode. A 6–11 hour run has far more exposure to a loss spike than her 3-epoch SFT run did, and she would find out hours in.
-2. **Session limits.** Free Colab caps sessions at 12 hours and disconnects after roughly 90 minutes idle. A 9–16 hour run at 27M tokens does not fit inside one free session at all.
-3. **Iteration speed.** The plan allows for a baseline pass, Run A, an optional Run B, and a possible retry. At 6–11 hours each that is the entire three-day window. At 1–4 hours she can iterate in a day.
+The training script sets `bf16=True`. Gemma 2 uses logit soft-capping (attention 50.0, final 30.0), and fp16 overflow on this family is a real failure mode. A multi-hour CPT run has far more exposure to it than a short SFT run.
 
-**On Colab Pro, the script runs exactly as written.** No fp16 downgrade, no soft-capping risk, no babysitting.
-
-## 7.4 If Colab assigns a T4 anyway
-
-GPU assignment is not guaranteed on any tier. Check before launching:
+**Check before doing anything else:**
 
 ```bash
-nvidia-smi --query-gpu=name,memory.total --format=csv
+python -c "import torch; print(torch.cuda.is_bf16_supported())"   # must print True
 ```
 
-If it says Tesla T4, **restart the runtime** and try again — that is the first move, not a config change.
+If it prints `False`, terminate the pod and redeploy. Do not "work around" it by switching to fp16.
 
-If a T4 is genuinely unavoidable, the fallback config is:
-
-```python
-bf16 = False
-fp16 = True                          # forced: T4 has no bf16
-max_seq_length = 1024                # halves activation and logit memory
-per_device_train_batch_size = 1
-gradient_accumulation_steps = 16     # keeps effective batch at 16 blocks
-save_steps = 50                      # assume the session dies
-```
-
-Plus: repack at 1024 rather than 2048, cut the training corpus to ~10M tokens, and **watch the first 200 steps for a loss spike or NaN**. If loss goes non-finite, that is the fp16 soft-capping problem and there is no fix on a T4 beyond lowering the learning rate and hoping.
-
-Document the downgrade in the thesis — sequence length and precision both changed, so the run is not directly comparable to a Pro run.
-
-## 7.5 Memory footprint
+## 7.4 Memory footprint
 
 Peak VRAM for Gemma 2-2B, 4-bit base, r=16 adapters, batch 1:
 
@@ -682,52 +665,55 @@ Peak VRAM for Gemma 2-2B, 4-bit base, r=16 adapters, batch 1:
 | Logits + fused cross-entropy | ~1.0 GB | ~2.0 GB |
 | **Peak** | **~5 GB** | **~7 GB** |
 
-Comfortable on all three cards. **Memory is not the constraint at 2B — time is.**
+Comfortable on a 24 GB card. **Memory is not the constraint at 2B — time is.**
 
-If Run B adds `modules_to_save=["embed_tokens"]`, add roughly **+3.5 GB** (a full trainable fp32 copy of the 590M-parameter embedding matrix, plus its gradient and optimizer state). That still fits on L4 and A100; it does not fit comfortably on a T4.
+Run B (`modules_to_save=["embed_tokens"]`) adds roughly **+3.5 GB**: a full trainable fp32 copy of the 590M-parameter embedding matrix plus its gradient and optimizer state. Still fine on 24 GB.
 
-## 7.6 Compute-unit cost
+## 7.5 Cost
 
-Colab Pro is $9.99/month and includes **100 compute units**. Published burn rates:
-
-| GPU | CU / hour | 100 CU covers |
+| Item | Hours | Cost |
 |---|---|---|
-| T4 | ~1.19 | ~84 h |
-| A100 40 GB | ~5.40 | ~18 h |
-| A100 80 GB | ~7.52 | ~13 h |
+| Smoke tests, environment checks | 0.5 | $0.17 |
+| Baseline evaluation (base model) | 0.5 | $0.17 |
+| **Run A — CPT training, 27M tokens** | ~2.5 | $0.85 |
+| Evaluation of Run A | 0.5 | $0.17 |
+| Optional Run B | ~2.5 | $0.85 |
+| Retry margin | ~2.5 | $0.85 |
+| **GPU subtotal** | **~9 h** | **~$3.06** |
+| Network volume, 30 GB, 2 weeks | | ~$2.10 |
+| **Total** | | **~$5.20** |
 
-The L4 rate sits between T4 and A100; Colab displays the live rate in the runtime panel, so check it there rather than assuming.
+**$10 of credit leaves roughly 90% headroom.**
 
-Budget for the whole of Week 2:
+### 🔴 The rule that protects the budget
 
-| Activity | Hours | CU (A100 rate) |
+> **Terminate the pod whenever she is not actively using the GPU.**
+
+RunPod bills for every minute a pod runs, idle or not. A 4090 left running over a weekend is about **$16** — more than the entire budget. Redeploying takes under a minute, packages persist on the network volume, and nothing is lost.
+
+**No GPU is needed for:** the document-level split (Part 1.1), packing (Part 1.2), fertility measurement (Part 1.3), or building the evaluation set (Part 4.2). Do those on a laptop or in free Colab.
+
+## 7.6 Storage — everything under `/workspace`
+
+The container disk is **destroyed when the pod is terminated**. The 30 GB network volume mounted at `/workspace` is not.
+
+| What | Size | Location |
 |---|---|---|
-| Smoke tests and environment checks | ~0.5 | ~3 |
-| Baseline evaluation (base model) | ~0.5 | ~3 |
-| **Run A** (27M tokens) | ~2 | ~11 |
-| Evaluation of Run A | ~0.5 | ~3 |
-| Optional Run B | ~2 | ~11 |
-| Retry margin | ~2 | ~11 |
-| **Total** | **~7.5 h** | **~42 CU** |
+| Corpus subset, gzipped | ~38 MB | `/workspace` |
+| Corpus subset, decompressed | ~166 MB | `/workspace` |
+| Repacked 2048 JSONL, all splits | ~400–600 MB | `/workspace/packed_2048/` |
+| Installed Python packages | ~8–12 GB | `/workspace` (`pip install` from `/workspace`) |
+| One checkpoint | ~130–180 MB | `/workspace/adapters/...` |
+| 3 checkpoints (`save_total_limit=3`) | ~500 MB | same |
+| Final adapter | ~85 MB | same |
 
-**Well under the 100 included units.** No top-ups needed, and roughly half the allowance left spare. On L4 the cost is lower still, at the price of longer runs.
+30 GB is comfortable. Set `OUTPUT_DIR = "/workspace/adapters/gemma2_2b_cpt_v1"`.
 
-## 7.7 Storage
+**No Google Drive, no FUSE mount.** `/workspace` is fast network storage, so the "copy to local disk first" advice that applies on Colab is unnecessary here.
 
-| What | Size | Where |
-|---|---|---|
-| Corpus subset, gzipped | ~38 MB | Drive |
-| Corpus subset, decompressed | ~166 MB | `/content/` (local disk) |
-| Repacked 2048 JSONL, all splits | ~400–600 MB | `/content/` |
-| One checkpoint (adapter + optimizer + tokenizer) | ~130–180 MB | Drive |
-| 3 checkpoints (`save_total_limit=3`) | ~500 MB | Drive |
-| Final adapter | ~85 MB | Drive |
+## 7.7 Evaluation time
 
-**Budget 2 GB of free Drive space.** Keep the packed JSONL on `/content/`, not Drive — it is regenerable in minutes and reading it from a FUSE mount is slow.
-
-## 7.8 Evaluation time
-
-Evaluation is forward-only, so it is fast:
+Forward-only, so fast:
 
 | Task | Time |
 |---|---|
@@ -735,19 +721,19 @@ Evaluation is forward-only, so it is fast:
 | Held-out perplexity | 5–10 min |
 | Dataset A retention, 3,110 items (generative) | 20–40 min |
 
-Budget about an hour per model evaluated, and remember the base model must be evaluated too.
+Budget about an hour per model — and **the base model counts as a model**.
 
-## 7.9 Session management
+## 7.8 Sessions and interruptions
 
-| Tier | Session cap | Background execution |
-|---|---|---|
-| Free | 12 h, ~90 min idle timeout | ❌ |
-| Pro | longer, still interruptible | ✅ |
-| Pro+ | up to 24 h uninterrupted | ✅ |
+No session cap, no idle timeout, no compute-unit arithmetic to track.
 
-The script resumes automatically from the latest checkpoint in `output_dir`, so a dropped session costs at most `save_steps` worth of work. Re-running the same command picks up where it left off — **no flags needed.**
+The one risk is Community Cloud: hosts are independent operators, so a pod can be interrupted with no SLA. Mitigations already in place:
 
-Keep `save_steps=100` on Pro. Drop it to 50 if sessions prove unstable.
+- The training script **resumes automatically** from the latest checkpoint in `OUTPUT_DIR`. Re-running the same command picks up where it stopped — no flags needed.
+- Checkpoints are on the network volume, which survives pod termination.
+- Keep `save_steps=100`. Drop to 50 if interruptions prove frequent.
+
+If interruptions become a real problem, Secure Cloud runs the same 4090 at ~$0.74/hr — roughly double, still under $8 for the whole week.
 
 ---
 
@@ -755,7 +741,7 @@ Keep `save_steps=100` on Pro. Drop it to 50 if sessions prove unstable.
 
 | # | Risk | Symptom | Response |
 |---|---|---|---|
-| 1 | Colab assigns a T4 | `bf16` error at load | Restart runtime until L4/A100 |
+| 1 | Pod assigned a non-bf16 GPU (T4/V100/P100) | `is_bf16_supported()` returns False | Terminate and redeploy on 4090/A5000/L4/A40 — Part 7.3 |
 | 2 | `processor` vs `tokenizer` signature | TypeError at `Trainer` init | Caught by the smoke test; rename |
 | 3 | `boto3` import | ImportError on first line | Fixed in Part 2.1 |
 | 4 | `source_id` missing from data | Re-split impossible | Check in Part 0 acceptance |
@@ -764,7 +750,9 @@ Keep `save_steps=100` on Pro. Drop it to 50 if sessions prove unstable.
 | 5 | Forgot `--append_eos` / `--drop_remainder` | Blocks not exactly 2048 | Packing report catches it |
 | 6 | Wrong tokenizer used for packing | Nonsense loss from step 1 | Verify `MODEL:` line in the packing report header |
 | 6b | Supervisor sent a packed 4096 file and she used it | Nonsense loss from step 1 | Never use a `*_packed_4096.jsonl` — all are Gemma 4 |
-| 7 | Drive fills with checkpoints | Save failure mid-run | `save_total_limit=3` |
+| 7 | Network volume fills up | Save failure mid-run | `save_total_limit=3`; 30 GB is enough |
+| 7b | Work written outside `/workspace` | Lost on pod termination | Everything under `/workspace` — Part 7.6 |
+| 7c | Pod left running idle | ~$8/day burned | Terminate after every session — Part 7.5 |
 | 8 | Eval set rebuilt between base and CPT | Base vs CPT numbers not comparable | Build once in Part 4.2; the script blocks a tokenizer mismatch but not a re-seed |
 | 9 | `--skip_s3_upload` omitted | `ValueError: --s3_bucket is required` at startup | Part 2.4 |
 
@@ -778,16 +766,18 @@ Keep `save_steps=100` on Pro. Drop it to 50 if sessions prove unstable.
 | **2** | Part 4 — baseline + CPT eval | Gate check; qualitative | Part 5 — optional Run B |
 | **3** | Run B results if applicable | Part 6 — write Ch. 8–9 | Ch. 10 discussion |
 
-**Minimum 2 days. Budget 3.** Runtime, memory, compute-unit and storage figures are in Part 7.
+**Minimum 2 days. Budget 3.** Runtime, memory, cost and storage figures are in Part 7.
 
-### GPU time across the whole week
+### Across the whole week
 
-| | Colab Pro (L4/A100) | Free Colab (T4) |
-|---|---|---|
-| Total GPU hours | **~7.5 h** | **~25–40 h** |
-| Fits the 3-day window? | ✅ comfortably | ❌ not with retries |
-| Compute units used | ~42 of 100 | n/a |
-| Risk of fp16 loss spike | none (bf16) | real |
+| | Value |
+|---|---|
+| Total GPU hours | **~9 h** |
+| GPU cost, RTX 4090 Community at $0.34/hr | **~$3.06** |
+| Network volume, 30 GB, 2 weeks | ~$2.10 |
+| **Total** | **~$5.20 of a $10 budget** |
+| Fits the 3-day window? | ✅ comfortably |
+| Risk of fp16 loss spike | none — bf16 on a 4090 |
 
 ---
 
@@ -798,7 +788,7 @@ Keep `save_steps=100` on Pro. Drop it to 50 if sessions prove unstable.
 2.  write + run 03b_split_by_document.py         ->  splits/{train,val,test}_doclevel.jsonl
 3.  02_pack_dataset_4096.py  x3                  ->  packed_2048/*.jsonl
 4.  next_token_eval_gemma.py build               ->  eval/eval_set_1000.json
-5.  01_verify_unsloth_env.py                     ->  GPU is L4 or A100, not T4
+5.  01_verify_unsloth_env.py                     ->  is_bf16_supported() == True
 6.  02_validate_packed_dataset.py                ->  shapes correct
 7.  05_full_training... --dry_run_samples 64     ->  smoke test
 8.  next_token_eval_gemma.py score (base)        ->  eval/results_base.json
@@ -813,5 +803,5 @@ Steps 1–4 need **no GPU**.
 
 # The two rules
 
-1. **Nothing in Part 0 or Part 1 needs a GPU.** Do not burn compute units on subsampling, splitting or tokenization.
+1. **Nothing in Part 0, Part 1 or the eval-set build needs a GPU.** Do those before deploying a pod. And terminate the pod after every session — RunPod bills idle time.
 2. **The smoke test is not optional.** Every failure mode above except #1 is caught by 64 samples and five minutes.
