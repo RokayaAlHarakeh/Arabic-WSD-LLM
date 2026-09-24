@@ -1,0 +1,2757 @@
+{
+ "model_name": "google/gemma-2-2b",
+ "adapter": null,
+ "cloze_file": "/workspace/eval/legal_cloze.json",
+ "n": 300,
+ "accuracy": 0.15,
+ "majority_baseline": 0.1467,
+ "by_category": {
+  "collocation": {
+   "n": 100,
+   "accuracy": 0.12,
+   "majority_baseline": 0.11
+  },
+  "defined_term": {
+   "n": 100,
+   "accuracy": 0.32,
+   "majority_baseline": 0.11
+  },
+  "statute_term": {
+   "n": 100,
+   "accuracy": 0.01,
+   "majority_baseline": 0.4
+  }
+ },
+ "by_source": {
+  "adl_rulings": {
+   "n": 20,
+   "accuracy": 0.3
+  },
+  "associated_studies_ar": {
+   "n": 2,
+   "accuracy": 1.0
+  },
+  "bibliographic_rulings": {
+   "n": 11,
+   "accuracy": 0.1818
+  },
+  "gazette_legal_core": {
+   "n": 100,
+   "accuracy": 0.12
+  },
+  "gazette_section2_sample": {
+   "n": 44,
+   "accuracy": 0.25
+  },
+  "legislations": {
+   "n": 98,
+   "accuracy": 0.1122
+  },
+  "related_provisions": {
+   "n": 25,
+   "accuracy": 0.04
+  }
+ },
+ "predictions": [
+  {
+   "id": 0,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": " يراه مناسب.\n\nم",
+   "predicted": "يراه",
+   "correct": false
+  },
+  {
+   "id": 1,
+   "category": "statute_term",
+   "source": "related_provisions",
+   "answer": "المرسوم",
+   "generated": " قانون المراجعة الادارية",
+   "predicted": "قانون",
+   "correct": false
+  },
+  {
+   "id": 2,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "generated": "بتاريخ ٢٠١٠",
+   "predicted": "بتاريخ",
+   "correct": false
+  },
+  {
+   "id": 3,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "العامة",
+   "generated": " العامة للثقافة وال",
+   "predicted": "العامة",
+   "correct": true
+  },
+  {
+   "id": 4,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "generated": ":\nاسم وكيل طالب",
+   "predicted": "اسم",
+   "correct": false
+  },
+  {
+   "id": 5,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": "مرسوم رقم 1",
+   "predicted": "مرسوم",
+   "correct": false
+  },
+  {
+   "id": 6,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "لبنانية",
+   "generated": " لبنانية، و ّ",
+   "predicted": "لبنانية",
+   "correct": true
+  },
+  {
+   "id": 7,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "generated": " الإستدعاء المقدم",
+   "predicted": "الإستدعاء",
+   "correct": false
+  },
+  {
+   "id": 8,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": "ما يراه ضروريا",
+   "predicted": "ما",
+   "correct": false
+  },
+  {
+   "id": 9,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "رقم",
+   "generated": " رقم /٢٠١/",
+   "predicted": "رقم",
+   "correct": true
+  },
+  {
+   "id": 10,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "الاشتراعي",
+   "generated": " رقم 10 لسنة",
+   "predicted": "رقم",
+   "correct": false
+  },
+  {
+   "id": 11,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "الاشتراعي",
+   "generated": " رقم 12/8",
+   "predicted": "رقم",
+   "correct": false
+  },
+  {
+   "id": 12,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "generated": " المرسوم رقم ٩",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 13,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "التمييز",
+   "generated": " النقض في دعوى",
+   "predicted": "النقض",
+   "correct": false
+  },
+  {
+   "id": 14,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "رقم",
+   "generated": " رقم 100 ",
+   "predicted": "رقم",
+   "correct": true
+  },
+  {
+   "id": 15,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " المرسوم الاشترا",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 16,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": " ما جاء في المادة ",
+   "predicted": "ما",
+   "correct": false
+  },
+  {
+   "id": 17,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "رقم",
+   "generated": " الصادر في 19",
+   "predicted": "الصادر",
+   "correct": false
+  },
+  {
+   "id": 18,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "generated": " :\nإسم وكيل",
+   "predicted": "إسم",
+   "correct": false
+  },
+  {
+   "id": 19,
+   "category": "statute_term",
+   "source": "related_provisions",
+   "answer": "القانون",
+   "generated": " قانون العقود المدني،",
+   "predicted": "قانون",
+   "correct": false
+  },
+  {
+   "id": 20,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "حيث",
+   "generated": " رئيس الجمهورية.\nالم",
+   "predicted": "رئيس",
+   "correct": false
+  },
+  {
+   "id": 21,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": " القانون رقم 100",
+   "predicted": "القانون",
+   "correct": false
+  },
+  {
+   "id": 22,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "والبلديات",
+   "generated": " طلب الاقامة في لبنان",
+   "predicted": "طلب",
+   "correct": false
+  },
+  {
+   "id": 23,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "generated": " طلب شركة مركز كسروان",
+   "predicted": "طلب",
+   "correct": false
+  },
+  {
+   "id": 24,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "generated": " المرسوم رقم ٣",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 25,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " المرسوم رقم 4",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 26,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "التمييز",
+   "generated": " الاستئناف.",
+   "predicted": "الاستئناف",
+   "correct": false
+  },
+  {
+   "id": 27,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "وزير",
+   "generated": " رئيس مجلس ادارة\nالص",
+   "predicted": "رئيس",
+   "correct": false
+  },
+  {
+   "id": 28,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الثانية",
+   "generated": " الثانية :\nيحدد",
+   "predicted": "الثانية",
+   "correct": true
+  },
+  {
+   "id": 29,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": " المادة ٥٣ منه",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 30,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " المرسوم\nرقم",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 31,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": " يقتضيه الأمر.",
+   "predicted": "يقتضيه",
+   "correct": false
+  },
+  {
+   "id": 32,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "generated": ":\nم.س.",
+   "predicted": "م",
+   "correct": false
+  },
+  {
+   "id": 33,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "لبنانية",
+   "generated": "، وحيث إن المدعى",
+   "predicted": "وحيث",
+   "correct": false
+  },
+  {
+   "id": 34,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٩",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 35,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": "مرسوم رقم\n(",
+   "predicted": "مرسوم",
+   "correct": false
+  },
+  {
+   "id": 36,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "تدعو",
+   "generated": "ما كان ضروري.\n",
+   "predicted": "ما",
+   "correct": false
+  },
+  {
+   "id": 37,
+   "category": "collocation",
+   "source": "related_provisions",
+   "answer": "المدنية",
+   "generated": " المدني بمحكمة الن",
+   "predicted": "المدني",
+   "correct": false
+  },
+  {
+   "id": 38,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "ويبلغ",
+   "generated": " في الجريدة الرسمية",
+   "predicted": "في",
+   "correct": false
+  },
+  {
+   "id": 39,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": " المادة الثانية من\nالم",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 40,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "هذا",
+   "generated": " هذا النظام في الجريدة",
+   "predicted": "هذا",
+   "correct": true
+  },
+  {
+   "id": 41,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": " يصدره رئيس بلدية",
+   "predicted": "يصدره",
+   "correct": false
+  },
+  {
+   "id": 42,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "لبنانية",
+   "generated": " سورية.\nالبي",
+   "predicted": "سورية",
+   "correct": false
+  },
+  {
+   "id": 43,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "generated": " إليه المادة\nالأول",
+   "predicted": "إليه",
+   "correct": false
+  },
+  {
+   "id": 44,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٨",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 45,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "هذا",
+   "generated": " القرار رقم 688",
+   "predicted": "القرار",
+   "correct": false
+  },
+  {
+   "id": 46,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "رقم",
+   "generated": " رقم 100/",
+   "predicted": "رقم",
+   "correct": true
+  },
+  {
+   "id": 47,
+   "category": "collocation",
+   "source": "adl_rulings",
+   "answer": "المدنية",
+   "generated": " ان الاختصاص القضائي",
+   "predicted": "ان",
+   "correct": false
+  },
+  {
+   "id": 48,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "التمييز",
+   "generated": " الاساس بتمييز",
+   "predicted": "الاساس",
+   "correct": false
+  },
+  {
+   "id": 49,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "الاشتراعي",
+   "generated": " رقم 107 لس",
+   "predicted": "رقم",
+   "correct": false
+  },
+  {
+   "id": 50,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "الوزراء",
+   "generated": " شورى الدولة - وحيث",
+   "predicted": "شورى",
+   "correct": false
+  },
+  {
+   "id": 51,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "وزير",
+   "generated": " المديرية العامة للتع",
+   "predicted": "المديرية",
+   "correct": false
+  },
+  {
+   "id": 52,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الدستور",
+   "generated": " ما ورد في المرسوم",
+   "predicted": "ما",
+   "correct": false
+  },
+  {
+   "id": 53,
+   "category": "statute_term",
+   "source": "gazette_section2_sample",
+   "answer": "القانون",
+   "generated": " المادة 127",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 54,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": " المادة ٦٣ منه",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 55,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الاشتراعي",
+   "generated": " و ان المرسوم\n",
+   "predicted": "و",
+   "correct": false
+  },
+  {
+   "id": 56,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "حيث",
+   "generated": "ه وزير الداخلية والبلد",
+   "predicted": "ه",
+   "correct": false
+  },
+  {
+   "id": 57,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "generated": ":\nإسم وكيل",
+   "predicted": "إسم",
+   "correct": false
+  },
+  {
+   "id": 58,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "والبلديات",
+   "generated": "\nالامضاء: ن",
+   "predicted": "الامضاء",
+   "correct": false
+  },
+  {
+   "id": 59,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "generated": ":\nم.س.",
+   "predicted": "م",
+   "correct": false
+  },
+  {
+   "id": 60,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "generated": " إعلان الجمعية المسما",
+   "predicted": "إعلان",
+   "correct": false
+  },
+  {
+   "id": 61,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "لبنانية",
+   "generated": " لبنانية\nالتأمين",
+   "predicted": "لبنانية",
+   "correct": true
+  },
+  {
+   "id": 62,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": "مرسوم رقم 1",
+   "predicted": "مرسوم",
+   "correct": false
+  },
+  {
+   "id": 63,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "الحاجة",
+   "generated": " الحاجة إليه.\n\nم",
+   "predicted": "الحاجة",
+   "correct": true
+  },
+  {
+   "id": 64,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "generated": ":\nإسم وكيل",
+   "predicted": "إسم",
+   "correct": false
+  },
+  {
+   "id": 65,
+   "category": "collocation",
+   "source": "related_provisions",
+   "answer": "المدنية",
+   "generated": " المدني بولاية ب",
+   "predicted": "المدني",
+   "correct": false
+  },
+  {
+   "id": 66,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "generated": " المرسوم رقم ٥",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 67,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٤",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 68,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " قانون البلديات.\n\nم",
+   "predicted": "قانون",
+   "correct": false
+  },
+  {
+   "id": 69,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٤",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 70,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "لبنانية",
+   "generated": " لبنانية\nالأسهم",
+   "predicted": "لبنانية",
+   "correct": true
+  },
+  {
+   "id": 71,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "حيث",
+   "generated": " رئيس مجلس الوزراء نسخة منه.",
+   "predicted": "رئيس",
+   "correct": false
+  },
+  {
+   "id": 72,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "generated": ":\nالعلامة التجار",
+   "predicted": "العلامة",
+   "correct": false
+  },
+  {
+   "id": 73,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": "ما كان ضروري.\n\n",
+   "predicted": "ما",
+   "correct": false
+  },
+  {
+   "id": 74,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "القرار",
+   "generated": " القسم يشتمل على",
+   "predicted": "القسم",
+   "correct": false
+  },
+  {
+   "id": 75,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": " يراه\nالمؤس",
+   "predicted": "يراه",
+   "correct": false
+  },
+  {
+   "id": 76,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": " القرار في الجريدة الرسم",
+   "predicted": "القرار",
+   "correct": false
+  },
+  {
+   "id": 77,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "اللبنانية",
+   "generated": " / شكر خاص / ش",
+   "predicted": "شكر",
+   "correct": false
+  },
+  {
+   "id": 78,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "generated": ":\nإيمان ع",
+   "predicted": "إيمان",
+   "correct": false
+  },
+  {
+   "id": 79,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "إلى",
+   "generated": " إلى جدول الآليات المطرو",
+   "predicted": "إلى",
+   "correct": true
+  },
+  {
+   "id": 80,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "generated": "مرسوم رقم 1",
+   "predicted": "مرسوم",
+   "correct": false
+  },
+  {
+   "id": 81,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " القانون, فإذا لم ي",
+   "predicted": "القانون",
+   "correct": false
+  },
+  {
+   "id": 82,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "لبنانية",
+   "generated": " لبنانية، وبالش",
+   "predicted": "لبنانية",
+   "correct": true
+  },
+  {
+   "id": 83,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "generated": " المرسوم رقم ٥",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 84,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "تدعو",
+   "generated": "\nتتضمن :\n",
+   "predicted": "تتضمن",
+   "correct": false
+  },
+  {
+   "id": 85,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " المادة 10 من",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 86,
+   "category": "statute_term",
+   "source": "related_provisions",
+   "answer": "المرسوم",
+   "generated": "مرسوم ملكي رقم",
+   "predicted": "مرسوم",
+   "correct": false
+  },
+  {
+   "id": 87,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "generated": " قرار رقم ٣٤/",
+   "predicted": "قرار",
+   "correct": false
+  },
+  {
+   "id": 88,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "حيث",
+   "generated": " إلى:\n-\n-",
+   "predicted": "إلى",
+   "correct": false
+  },
+  {
+   "id": 89,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "generated": " المرسوم رقم\n٥",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 90,
+   "category": "statute_term",
+   "source": "gazette_section2_sample",
+   "answer": "القانون",
+   "generated": "\nالمادة ٤٠",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 91,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "اقتراح",
+   "generated": " طلب من رئيس الجامعة اللب",
+   "predicted": "طلب",
+   "correct": false
+  },
+  {
+   "id": 92,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "ويبلغ",
+   "generated": " في الجريدة الرسمية",
+   "predicted": "في",
+   "correct": false
+  },
+  {
+   "id": 93,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": "زيادة المادة 3",
+   "predicted": "زيادة",
+   "correct": false
+  },
+  {
+   "id": 94,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الحاجة",
+   "generated": " الجهات المعنية\nل",
+   "predicted": "الجهات",
+   "correct": false
+  },
+  {
+   "id": 95,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": "خصوص العقار رقم 1",
+   "predicted": "خصوص",
+   "correct": false
+  },
+  {
+   "id": 96,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "الحاجة",
+   "generated": " إليه الحاجة.\n\nم",
+   "predicted": "إليه",
+   "correct": false
+  },
+  {
+   "id": 97,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "الداخلية",
+   "generated": " الدولة لشؤون الاعلام",
+   "predicted": "الدولة",
+   "correct": false
+  },
+  {
+   "id": 98,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "generated": " إليه الحاجة.\nالم",
+   "predicted": "إليه",
+   "correct": false
+  },
+  {
+   "id": 99,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "الاشتراعي",
+   "generated": " رقم 1119",
+   "predicted": "رقم",
+   "correct": false
+  },
+  {
+   "id": 100,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "generated": " الوزارة\nللمؤ",
+   "predicted": "الوزارة",
+   "correct": false
+  },
+  {
+   "id": 101,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "التمييز",
+   "generated": " الاساس. ان عدم اخذ",
+   "predicted": "الاساس",
+   "correct": false
+  },
+  {
+   "id": 102,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "الحاجة",
+   "generated": " كل من السيدات والرج",
+   "predicted": "كل",
+   "correct": false
+  },
+  {
+   "id": 103,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "وزير",
+   "generated": " مجلس التعليم العالي في الج",
+   "predicted": "مجلس",
+   "correct": false
+  },
+  {
+   "id": 104,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "القانون",
+   "generated": " البينة3- عدم وجود",
+   "predicted": "البينة",
+   "correct": false
+  },
+  {
+   "id": 105,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "generated": " و محل اقامته\n",
+   "predicted": "و",
+   "correct": false
+  },
+  {
+   "id": 106,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "حيث",
+   "generated": " كل من\nوزير ال",
+   "predicted": "كل",
+   "correct": false
+  },
+  {
+   "id": 107,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "والخبر",
+   "generated": ".\nالمادة 2",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 108,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "generated": " المرسوم رقم 1",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 109,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": " ما جاء في الفقرة الثانية",
+   "predicted": "ما",
+   "correct": false
+  },
+  {
+   "id": 110,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الوزراء",
+   "generated": " الوزراء\nوزير الخارجية والم",
+   "predicted": "الوزراء",
+   "correct": true
+  },
+  {
+   "id": 111,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "generated": " المرسوم رقم 4",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 112,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": " القانون رقم 10/",
+   "predicted": "القانون",
+   "correct": false
+  },
+  {
+   "id": 113,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": "وزارة الداخلية والبلد",
+   "predicted": "وزارة",
+   "correct": false
+  },
+  {
+   "id": 114,
+   "category": "statute_term",
+   "source": "gazette_section2_sample",
+   "answer": "القانون",
+   "generated": "\nالمادة ٢٠ من",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 115,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الثانية",
+   "generated": " الثانية : ينشر هذا القانون",
+   "predicted": "الثانية",
+   "correct": true
+  },
+  {
+   "id": 116,
+   "category": "collocation",
+   "source": "adl_rulings",
+   "answer": "المدنية",
+   "generated": "، كان الزوجان قد عقد",
+   "predicted": "كان",
+   "correct": false
+  },
+  {
+   "id": 117,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": " يقتضيه.\n\n",
+   "predicted": "يقتضيه",
+   "correct": false
+  },
+  {
+   "id": 118,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "generated": " اليه المادة الثالثة.",
+   "predicted": "اليه",
+   "correct": false
+  },
+  {
+   "id": 119,
+   "category": "collocation",
+   "source": "related_provisions",
+   "answer": "المدنية",
+   "generated": " في النزاع رقم ",
+   "predicted": "في",
+   "correct": false
+  },
+  {
+   "id": 120,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "لبنانية",
+   "generated": " لبنانية و ٣٠",
+   "predicted": "لبنانية",
+   "correct": true
+  },
+  {
+   "id": 121,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "generated": ":\nم.د.",
+   "predicted": "م",
+   "correct": false
+  },
+  {
+   "id": 122,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "generated": ":\nم.س.",
+   "predicted": "م",
+   "correct": false
+  },
+  {
+   "id": 123,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": " يقتضيه الأمر.",
+   "predicted": "يقتضيه",
+   "correct": false
+  },
+  {
+   "id": 124,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": " المادة 10 من",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 125,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "وزير",
+   "generated": " رئيس مجلس الوزراء.\n\nالم",
+   "predicted": "رئيس",
+   "correct": false
+  },
+  {
+   "id": 126,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "الأولى",
+   "generated": " الأولى\nتعيين السيد",
+   "predicted": "الأولى",
+   "correct": true
+  },
+  {
+   "id": 127,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "اقتراح",
+   "generated": " المرسوم رقم 4",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 128,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": "مرسوم رئيس الجمهورية",
+   "predicted": "مرسوم",
+   "correct": false
+  },
+  {
+   "id": 129,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٩",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 130,
+   "category": "statute_term",
+   "source": "bibliographic_rulings",
+   "answer": "القانون",
+   "generated": " قانون العقود التجارية،",
+   "predicted": "قانون",
+   "correct": false
+  },
+  {
+   "id": 131,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "حيث",
+   "generated": "ه كل من\nوزير",
+   "predicted": "ه",
+   "correct": false
+  },
+  {
+   "id": 132,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الحاجة",
+   "generated": " به.\n\nمادة ",
+   "predicted": "به",
+   "correct": false
+  },
+  {
+   "id": 133,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٤",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 134,
+   "category": "statute_term",
+   "source": "related_provisions",
+   "answer": "المرسوم",
+   "generated": "مرسوم رقم 1",
+   "predicted": "مرسوم",
+   "correct": false
+  },
+  {
+   "id": 135,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "generated": ":\nاسم وكيل طالب",
+   "predicted": "اسم",
+   "correct": false
+  },
+  {
+   "id": 136,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "التمييز",
+   "generated": " الاساس: 10",
+   "predicted": "الاساس",
+   "correct": false
+  },
+  {
+   "id": 137,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "رقم",
+   "generated": " المذكور، وحيث",
+   "predicted": "المذكور",
+   "correct": false
+  },
+  {
+   "id": 138,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "وزير",
+   "generated": " رئيس بلدية اليمونة",
+   "predicted": "رئيس",
+   "correct": false
+  },
+  {
+   "id": 139,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "الوزراء",
+   "generated": " الوزراء\nبناء على الم",
+   "predicted": "الوزراء",
+   "correct": true
+  },
+  {
+   "id": 140,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "اقتراح",
+   "generated": " المرسوم رقم 1",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 141,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": " المادة 10 من",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 142,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "رقم",
+   "generated": " رقم /٢٠١/",
+   "predicted": "رقم",
+   "correct": true
+  },
+  {
+   "id": 143,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "التمييز",
+   "generated": " النقابة العامة في دع",
+   "predicted": "النقابة",
+   "correct": false
+  },
+  {
+   "id": 144,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "ويبلغ",
+   "generated": " في الجريدة الرسمية",
+   "predicted": "في",
+   "correct": false
+  },
+  {
+   "id": 145,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " أن يكون المشاركون في",
+   "predicted": "أن",
+   "correct": false
+  },
+  {
+   "id": 146,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "generated": ":\nم.س.",
+   "predicted": "م",
+   "correct": false
+  },
+  {
+   "id": 147,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": "مرسوم رقم 2",
+   "predicted": "مرسوم",
+   "correct": false
+  },
+  {
+   "id": 148,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": " المادة ٥ من القانون",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 149,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "لبنانية",
+   "generated": " سورية.\nالبي",
+   "predicted": "سورية",
+   "correct": false
+  },
+  {
+   "id": 150,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "المرسوم",
+   "generated": " طلب السيد رئيس البلدية المه",
+   "predicted": "طلب",
+   "correct": false
+  },
+  {
+   "id": 151,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "إلى",
+   "generated": " إلى جدول الآليات المطرو",
+   "predicted": "إلى",
+   "correct": true
+  },
+  {
+   "id": 152,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "generated": ":\nم.س.",
+   "predicted": "م",
+   "correct": false
+  },
+  {
+   "id": 153,
+   "category": "collocation",
+   "source": "bibliographic_rulings",
+   "answer": "وزير",
+   "generated": " من رئيس الجامعة واع",
+   "predicted": "من",
+   "correct": false
+  },
+  {
+   "id": 154,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٨",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 155,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "generated": " المرسوم رقم ٨",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 156,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": " المادة ٥٣ منه",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 157,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "اقامته",
+   "generated": " تسجيله\nم.",
+   "predicted": "تسجيله",
+   "correct": false
+  },
+  {
+   "id": 158,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "ويبلغ",
+   "generated": " في الجريدة الرسمية",
+   "predicted": "في",
+   "correct": false
+  },
+  {
+   "id": 159,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الوزراء",
+   "generated": " شورى الدولة\nالمذك",
+   "predicted": "شورى",
+   "correct": false
+  },
+  {
+   "id": 160,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": "ناء على المادة الساد",
+   "predicted": "ناء",
+   "correct": false
+  },
+  {
+   "id": 161,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "generated": ":\nالاسم:\n",
+   "predicted": "الاسم",
+   "correct": false
+  },
+  {
+   "id": 162,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "generated": "بتاريخ ٢٠١٢",
+   "predicted": "بتاريخ",
+   "correct": false
+  },
+  {
+   "id": 163,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "وزير",
+   "generated": " مديرية أمن الدولة\n",
+   "predicted": "مديرية",
+   "correct": false
+  },
+  {
+   "id": 164,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "generated": " المرسوم رقم ٥",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 165,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "ويبلغ",
+   "generated": " في الجريدة الرسمية",
+   "predicted": "في",
+   "correct": false
+  },
+  {
+   "id": 166,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "generated": " المرسوم رقم ٤",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 167,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الأولى",
+   "generated": " 1-\nتعد",
+   "predicted": "تعد",
+   "correct": false
+  },
+  {
+   "id": 168,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "الاشتراعي",
+   "generated": " رقم 107 لس",
+   "predicted": "رقم",
+   "correct": false
+  },
+  {
+   "id": 169,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "generated": ":\nإسم وكيل",
+   "predicted": "إسم",
+   "correct": false
+  },
+  {
+   "id": 170,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " المادة 100",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 171,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "ويبلغ",
+   "generated": " في الجريدة الرسمية",
+   "predicted": "في",
+   "correct": false
+  },
+  {
+   "id": 172,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "إلى",
+   "generated": " إلى نظام قانوني أجن",
+   "predicted": "إلى",
+   "correct": true
+  },
+  {
+   "id": 173,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "الوزراء",
+   "generated": " الوزراء،\nتقرر",
+   "predicted": "الوزراء",
+   "correct": true
+  },
+  {
+   "id": 174,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "وزير",
+   "generated": " رئيس الجمهورية،\nب",
+   "predicted": "رئيس",
+   "correct": false
+  },
+  {
+   "id": 175,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "لبنانية",
+   "generated": " .ل . وذلك عن ج",
+   "predicted": "ل",
+   "correct": false
+  },
+  {
+   "id": 176,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الأولى",
+   "generated": " الأولى:\nتتضمن",
+   "predicted": "الأولى",
+   "correct": true
+  },
+  {
+   "id": 177,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": " الدستور.\n\"",
+   "predicted": "الدستور",
+   "correct": false
+  },
+  {
+   "id": 178,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "generated": " إليه الشروط.\nالم",
+   "predicted": "إليه",
+   "correct": false
+  },
+  {
+   "id": 179,
+   "category": "collocation",
+   "source": "related_provisions",
+   "answer": "المدنية",
+   "generated": " المدني بولاية ب",
+   "predicted": "المدني",
+   "correct": false
+  },
+  {
+   "id": 180,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الوزراء",
+   "generated": " الوزراء.\n6. يج",
+   "predicted": "الوزراء",
+   "correct": true
+  },
+  {
+   "id": 181,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " قانون براءات الاختراع",
+   "predicted": "قانون",
+   "correct": false
+  },
+  {
+   "id": 182,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "الوزراء",
+   "generated": " الوزراء\nرئيس مجلس الوزراء",
+   "predicted": "الوزراء",
+   "correct": true
+  },
+  {
+   "id": 183,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٤",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 184,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "generated": "المرسوم رقم ٤",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 185,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "التعميم",
+   "generated": " المرسوم رقم 1",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 186,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "generated": " المرسوم رقم ٤",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 187,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "رقم",
+   "generated": " رقم 1000",
+   "predicted": "رقم",
+   "correct": true
+  },
+  {
+   "id": 188,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": " المرسوم في الجري",
+   "predicted": "المرسوم",
+   "correct": true
+  },
+  {
+   "id": 189,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "رقم",
+   "generated": " رقم / 14 /",
+   "predicted": "رقم",
+   "correct": true
+  },
+  {
+   "id": 190,
+   "category": "collocation",
+   "source": "related_provisions",
+   "answer": "المدنية",
+   "generated": " بولاية نينوى",
+   "predicted": "بولاية",
+   "correct": false
+  },
+  {
+   "id": 191,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٤",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 192,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الحاجة",
+   "generated": " إليه الشروط.\n\nم",
+   "predicted": "إليه",
+   "correct": false
+  },
+  {
+   "id": 193,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "generated": " المرسوم /10",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 194,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٤",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 195,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "حيث",
+   "generated": "\nالمحافظين وال",
+   "predicted": "المحافظين",
+   "correct": false
+  },
+  {
+   "id": 196,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "generated": " إليه\nالمادة الأولى،",
+   "predicted": "إليه",
+   "correct": false
+  },
+  {
+   "id": 197,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "generated": " المرسوم رقم ٩",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 198,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": " يراه ضروري.\n\n",
+   "predicted": "يراه",
+   "correct": false
+  },
+  {
+   "id": 199,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " المرسوم رقم 9",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 200,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": "التعاون مع وزارة المالية.",
+   "predicted": "التعاون",
+   "correct": false
+  },
+  {
+   "id": 201,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٥",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 202,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "ويبلغ",
+   "generated": " في الجريدة الرسمية",
+   "predicted": "في",
+   "correct": false
+  },
+  {
+   "id": 203,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الأولى",
+   "generated": " الأولى:\nتتضمن",
+   "predicted": "الأولى",
+   "correct": true
+  },
+  {
+   "id": 204,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "مجلس",
+   "generated": " مجلس الوزراء\nوزير الخارجية",
+   "predicted": "مجلس",
+   "correct": true
+  },
+  {
+   "id": 205,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": "مرسوم رقم\n(",
+   "predicted": "مرسوم",
+   "correct": false
+  },
+  {
+   "id": 206,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "مجلس",
+   "generated": " مجلس النواب\nالمجلس",
+   "predicted": "مجلس",
+   "correct": true
+  },
+  {
+   "id": 207,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "لبنانية",
+   "generated": " ّ ّ ّ",
+   "predicted": "",
+   "correct": false
+  },
+  {
+   "id": 208,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " القرار.\n\nالمادة ",
+   "predicted": "القرار",
+   "correct": true
+  },
+  {
+   "id": 209,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": " يراه ضروري.\n\n",
+   "predicted": "يراه",
+   "correct": false
+  },
+  {
+   "id": 210,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": " يراه الضروري.",
+   "predicted": "يراه",
+   "correct": false
+  },
+  {
+   "id": 211,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "مجلس",
+   "generated": " مجلس النواب,\nت",
+   "predicted": "مجلس",
+   "correct": true
+  },
+  {
+   "id": 212,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "generated": " المرسوم رقم\n٢",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 213,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "حيث",
+   "generated": " كل من\nالجامعات",
+   "predicted": "كل",
+   "correct": false
+  },
+  {
+   "id": 214,
+   "category": "statute_term",
+   "source": "related_provisions",
+   "answer": "المرسوم",
+   "generated": " قانون العقوبات, وحيث",
+   "predicted": "قانون",
+   "correct": false
+  },
+  {
+   "id": 215,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "اقتراح",
+   "generated": " المرسوم رقم 1",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 216,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "الأولى",
+   "generated": " ٣٥٩ من\n",
+   "predicted": "من",
+   "correct": false
+  },
+  {
+   "id": 217,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "مجلس",
+   "generated": " مصلحة الأبحاث",
+   "predicted": "مصلحة",
+   "correct": false
+  },
+  {
+   "id": 218,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": " المراسيم رقم ٥",
+   "predicted": "المراسيم",
+   "correct": false
+  },
+  {
+   "id": 219,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "generated": " طلب الترخيص بتعاط",
+   "predicted": "طلب",
+   "correct": false
+  },
+  {
+   "id": 220,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": "وزارة الداخلية.\nالم",
+   "predicted": "وزارة",
+   "correct": false
+  },
+  {
+   "id": 221,
+   "category": "statute_term",
+   "source": "gazette_section2_sample",
+   "answer": "القانون",
+   "generated": " المادة ١٢ من قانون",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 222,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "رقم",
+   "generated": " رقم 10/1",
+   "predicted": "رقم",
+   "correct": true
+  },
+  {
+   "id": 223,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": " المادة الثانية من القانون رقم",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 224,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "العامة",
+   "generated": " العامة للترقيم\nوال",
+   "predicted": "العامة",
+   "correct": true
+  },
+  {
+   "id": 225,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "generated": " المرسوم رقم ٣",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 226,
+   "category": "collocation",
+   "source": "associated_studies_ar",
+   "answer": "الوزراء",
+   "generated": " الوزراء، أن يصدر قرار",
+   "predicted": "الوزراء",
+   "correct": true
+  },
+  {
+   "id": 227,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "generated": "\nالجمعية المشار",
+   "predicted": "الجمعية",
+   "correct": false
+  },
+  {
+   "id": 228,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": "ما كان.\nمادة",
+   "predicted": "ما",
+   "correct": false
+  },
+  {
+   "id": 229,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "والخبر",
+   "generated": "\nالذي يحدد",
+   "predicted": "الذي",
+   "correct": false
+  },
+  {
+   "id": 230,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "generated": " المرسوم رقم ٦",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 231,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "generated": ":\nالعميد الدكتور",
+   "predicted": "العميد",
+   "correct": false
+  },
+  {
+   "id": 232,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٧",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 233,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "وزير",
+   "generated": " رئيس مجلس الوزراء،\nب",
+   "predicted": "رئيس",
+   "correct": false
+  },
+  {
+   "id": 234,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "generated": " المراسيم الصادرة",
+   "predicted": "المراسيم",
+   "correct": false
+  },
+  {
+   "id": 235,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "حيث",
+   "generated": " كل من رئيس مجلس النواب",
+   "predicted": "كل",
+   "correct": false
+  },
+  {
+   "id": 236,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "وزير",
+   "generated": " رئيس الجمهورية\nبناء",
+   "predicted": "رئيس",
+   "correct": false
+  },
+  {
+   "id": 237,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": " هذا\nالمرسوم\n",
+   "predicted": "هذا",
+   "correct": false
+  },
+  {
+   "id": 238,
+   "category": "statute_term",
+   "source": "adl_rulings",
+   "answer": "القانون",
+   "generated": " قانون 15/6",
+   "predicted": "قانون",
+   "correct": false
+  },
+  {
+   "id": 239,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": "مرسوم رقم\n(",
+   "predicted": "مرسوم",
+   "correct": false
+  },
+  {
+   "id": 240,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": " يقتضيه الحال",
+   "predicted": "يقتضيه",
+   "correct": false
+  },
+  {
+   "id": 241,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": " قانون الموازنة العامة\n",
+   "predicted": "قانون",
+   "correct": false
+  },
+  {
+   "id": 242,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " المرسوم الاشترا",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 243,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": "وزارة الداخلية.\n\nم",
+   "predicted": "وزارة",
+   "correct": false
+  },
+  {
+   "id": 244,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "تدعو",
+   "generated": "ما كان.\nالمادة",
+   "predicted": "ما",
+   "correct": false
+  },
+  {
+   "id": 245,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "حيث",
+   "generated": " كل جمعية مرخصة\n",
+   "predicted": "كل",
+   "correct": false
+  },
+  {
+   "id": 246,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": " يوجب.\n\nم",
+   "predicted": "يوجب",
+   "correct": false
+  },
+  {
+   "id": 247,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "generated": " المرسوم رقم ٤",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 248,
+   "category": "statute_term",
+   "source": "adl_rulings",
+   "answer": "القرار",
+   "generated": " قانون التجارة، وحيث",
+   "predicted": "قانون",
+   "correct": false
+  },
+  {
+   "id": 249,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": "مرسوم رقم 1",
+   "predicted": "مرسوم",
+   "correct": false
+  },
+  {
+   "id": 250,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "القرار",
+   "generated": " القرار غير صحيح قانونا.",
+   "predicted": "القرار",
+   "correct": true
+  },
+  {
+   "id": 251,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "generated": ":\nإيداع علام",
+   "predicted": "إيداع",
+   "correct": false
+  },
+  {
+   "id": 252,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "generated": " يقتضيه الأمر.",
+   "predicted": "يقتضيه",
+   "correct": false
+  },
+  {
+   "id": 253,
+   "category": "statute_term",
+   "source": "gazette_section2_sample",
+   "answer": "القانون",
+   "generated": "\nالمادة ٩٠",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 254,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "الداخلية",
+   "generated": " الداخلية . خامسا ً",
+   "predicted": "الداخلية",
+   "correct": true
+  },
+  {
+   "id": 255,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "اقتراح",
+   "generated": " المادة 10 من",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 256,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "generated": " المرسوم رقم\n٥",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 257,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "اقتراح",
+   "generated": " طلب الشركة اللبنانية المتحدة",
+   "predicted": "طلب",
+   "correct": false
+  },
+  {
+   "id": 258,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "على",
+   "generated": "، ولهذا السبب",
+   "predicted": "ولهذا",
+   "correct": false
+  },
+  {
+   "id": 259,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الثانية",
+   "generated": " الثانية:\nتعتبر اله",
+   "predicted": "الثانية",
+   "correct": true
+  },
+  {
+   "id": 260,
+   "category": "statute_term",
+   "source": "gazette_section2_sample",
+   "answer": "القانون",
+   "generated": "\nتتقدم بطلب",
+   "predicted": "تتقدم",
+   "correct": false
+  },
+  {
+   "id": 261,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "generated": " المرسوم رقم 1",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 262,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "generated": " المرسوم رقم 2",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 263,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "لبنانية",
+   "generated": " ل .ل. اضافة",
+   "predicted": "ل",
+   "correct": false
+  },
+  {
+   "id": 264,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "generated": ":\nم.س.",
+   "predicted": "م",
+   "correct": false
+  },
+  {
+   "id": 265,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": " هذا القرار، يقرر",
+   "predicted": "هذا",
+   "correct": false
+  },
+  {
+   "id": 266,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": " المرسوم رقم 5",
+   "predicted": "المرسوم",
+   "correct": true
+  },
+  {
+   "id": 267,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "generated": " قرار مجلس إدارة النادي\n",
+   "predicted": "قرار",
+   "correct": false
+  },
+  {
+   "id": 268,
+   "category": "statute_term",
+   "source": "adl_rulings",
+   "answer": "القرار",
+   "generated": " قانون التجارة، ثانيا",
+   "predicted": "قانون",
+   "correct": false
+  },
+  {
+   "id": 269,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "مجلس",
+   "generated": " مجلس الوزراء،\nتقر",
+   "predicted": "مجلس",
+   "correct": true
+  },
+  {
+   "id": 270,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "generated": " المرسوم رقم 1",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 271,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "generated": " المرسوم رقم ٧",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 272,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "generated": " :\nإسم وكيل",
+   "predicted": "إسم",
+   "correct": false
+  },
+  {
+   "id": 273,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "مجلس",
+   "generated": " الجمهورية\nمحمد خليل",
+   "predicted": "الجمهورية",
+   "correct": false
+  },
+  {
+   "id": 274,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "generated": " زيادة معدل الاستثمار الس",
+   "predicted": "زيادة",
+   "correct": false
+  },
+  {
+   "id": 275,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": "وزارة الداخلية والبلد",
+   "predicted": "وزارة",
+   "correct": false
+  },
+  {
+   "id": 276,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "generated": " المرسوم رقم ٤",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 277,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "generated": ":\nإيمان ع",
+   "predicted": "إيمان",
+   "correct": false
+  },
+  {
+   "id": 278,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " المرسوم رقم 1",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 279,
+   "category": "statute_term",
+   "source": "bibliographic_rulings",
+   "answer": "المرسوم",
+   "generated": " قانون العقوبات , كما أن",
+   "predicted": "قانون",
+   "correct": false
+  },
+  {
+   "id": 280,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "حيث",
+   "generated": "ه إلى:\nالباب",
+   "predicted": "ه",
+   "correct": false
+  },
+  {
+   "id": 281,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "والبلديات",
+   "generated": " قد قرر في قراره",
+   "predicted": "قد",
+   "correct": false
+  },
+  {
+   "id": 282,
+   "category": "collocation",
+   "source": "bibliographic_rulings",
+   "answer": "والبلديات",
+   "generated": " طلب الاقامة في لبنان",
+   "predicted": "طلب",
+   "correct": false
+  },
+  {
+   "id": 283,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": " المرسوم في الجري",
+   "predicted": "المرسوم",
+   "correct": true
+  },
+  {
+   "id": 284,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الثانية",
+   "generated": " الثانية : يطبق القرار",
+   "predicted": "الثانية",
+   "correct": true
+  },
+  {
+   "id": 285,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "الداخلية",
+   "generated": " التربية والتعليم وال",
+   "predicted": "التربية",
+   "correct": false
+  },
+  {
+   "id": 286,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الوزراء",
+   "generated": " الوزراء أن يصدر مرس",
+   "predicted": "الوزراء",
+   "correct": true
+  },
+  {
+   "id": 287,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": " القرار رقم 100",
+   "predicted": "القرار",
+   "correct": false
+  },
+  {
+   "id": 288,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الجريدة",
+   "generated": " المادة الثانية من المرس",
+   "predicted": "المادة",
+   "correct": false
+  },
+  {
+   "id": 289,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "هذا",
+   "generated": " هذا القرار في الجريدة",
+   "predicted": "هذا",
+   "correct": true
+  },
+  {
+   "id": 290,
+   "category": "collocation",
+   "source": "related_provisions",
+   "answer": "العدد",
+   "generated": " رقم 1269",
+   "predicted": "رقم",
+   "correct": false
+  },
+  {
+   "id": 291,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " المرسوم رقم 6",
+   "predicted": "المرسوم",
+   "correct": false
+  },
+  {
+   "id": 292,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "generated": " بقاء قيمة دعم الق",
+   "predicted": "بقاء",
+   "correct": false
+  },
+  {
+   "id": 293,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "ويبلغ",
+   "generated": " في الجريدة الرسمية",
+   "predicted": "في",
+   "correct": false
+  },
+  {
+   "id": 294,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "generated": " القانون رقم 62/",
+   "predicted": "القانون",
+   "correct": false
+  },
+  {
+   "id": 295,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الأولى",
+   "generated": " 1 من تاريخ\nالت",
+   "predicted": "من",
+   "correct": false
+  },
+  {
+   "id": 296,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "الأولى",
+   "generated": " 100 من قانون",
+   "predicted": "من",
+   "correct": false
+  },
+  {
+   "id": 297,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "generated": "التحقيق والتصدي",
+   "predicted": "التحقيق",
+   "correct": false
+  },
+  {
+   "id": 298,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "generated": " من هذا الأمر ضرورة مل",
+   "predicted": "من",
+   "correct": false
+  },
+  {
+   "id": 299,
+   "category": "collocation",
+   "source": "associated_studies_ar",
+   "answer": "رقم",
+   "generated": " رقم 100 لس",
+   "predicted": "رقم",
+   "correct": true
+  }
+ ]
+}

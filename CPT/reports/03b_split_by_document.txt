@@ -1,9 +1,9 @@
 DOCUMENT-LEVEL TRAIN / VALIDATION / TEST SPLIT REPORT
 ================================================================================
-INPUT FILE: C:\Users\user\AppData\Local\Temp\claude\c--Users-user-Desktop-FYP-Whitestork-WSD-Arabic-WSD-LLM\38ce04ec-b2d2-4bad-ad59-46a7321ebf97\scratchpad\cpt\legal_corpus_subset.jsonl
-TRAIN FILE: splits\train_doclevel.jsonl
-VAL FILE: splits\val_doclevel.jsonl
-TEST FILE: splits\test_doclevel.jsonl
+INPUT FILE: /workspace/legal_corpus_subset.jsonl
+TRAIN FILE: /workspace/splits/train_doclevel.jsonl
+VAL FILE: /workspace/splits/val_doclevel.jsonl
+TEST FILE: /workspace/splits/test_doclevel.jsonl
 TRAIN_RATIO: 0.9
 VAL_RATIO: 0.05
 TEST_RATIO: 0.05

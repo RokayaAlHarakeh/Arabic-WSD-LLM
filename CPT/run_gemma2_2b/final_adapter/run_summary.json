@@ -1,0 +1,40 @@
+{
+  "model_name": "google/gemma-2-2b",
+  "loader": "transformers",
+  "precision": "bf16",
+  "gpu": "NVIDIA RTX PRO 4000 Blackwell",
+  "output_dir": "/workspace/adapters/gemma2_2b_cpt_v1",
+  "max_seq_length": 2048,
+  "num_epochs": 1.0,
+  "max_steps": -1,
+  "effective_batch": 8,
+  "eval_batch_size": 1,
+  "learning_rate": 0.0002,
+  "lr_scheduler_type": "cosine",
+  "warmup": "warmup_steps=50 (ratio 0.03 x 1658 planned steps; transformers 5.x has no warmup_ratio)",
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj",
+    "gate_proj",
+    "up_proj",
+    "down_proj"
+  ],
+  "completed_steps": 1658,
+  "final_eval_loss": 1.310956,
+  "final_eval_perplexity": 3.7097,
+  "total_training_seconds": 13341.47,
+  "seconds_per_optimizer_step": 8.05,
+  "peak_gpu_memory_gb": 11.79,
+  "dry_run_samples": 0,
+  "initial_loss": 6.359218,
+  "random_loss": 12.452933,
+  "versions": {
+    "torch": "2.8.0+cu128",
+    "transformers": "5.17.0",
+    "peft": "0.21.0"
+  }
+}

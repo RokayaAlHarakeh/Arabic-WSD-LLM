@@ -1,0 +1,88 @@
+{
+  "model_name": "google/gemma-2-2b",
+  "adapter": null,
+  "eval_set": "/workspace/eval/eval_set_1000.json",
+  "n_examples": 1000,
+  "overall": {
+    "n": 1000,
+    "top1": 0.213,
+    "top5": 0.329,
+    "top10": 0.4,
+    "avg_target_probability": 0.18470916251861705,
+    "avg_nll": 6.692661764991936,
+    "perplexity": 806.4660207954319,
+    "avg_target_rank": 1705.24
+  },
+  "by_source": {
+    "adl_rulings": {
+      "n": 22,
+      "top1": 0.22727272727272727,
+      "top5": 0.22727272727272727,
+      "top10": 0.2727272727272727,
+      "avg_target_probability": 0.20080803408768547,
+      "avg_nll": 7.3015581606040625,
+      "perplexity": 1482.6082705313956,
+      "avg_target_rank": 1568.3636363636363
+    },
+    "associated_studies_ar": {
+      "n": 5,
+      "top1": 0.0,
+      "top5": 0.2,
+      "top10": 0.2,
+      "avg_target_probability": 0.010250827928386143,
+      "avg_nll": 6.14331636428833,
+      "perplexity": 465.5950962666084,
+      "avg_target_rank": 70.2
+    },
+    "bibliographic_rulings": {
+      "n": 264,
+      "top1": 0.12121212121212122,
+      "top5": 0.2196969696969697,
+      "top10": 0.3106060606060606,
+      "avg_target_probability": 0.10490673799316938,
+      "avg_nll": 7.5014813898552815,
+      "perplexity": 1810.7228150156739,
+      "avg_target_rank": 1865.253787878788
+    },
+    "gazette_legal_core": {
+      "n": 249,
+      "top1": 0.2570281124497992,
+      "top5": 0.3654618473895582,
+      "top10": 0.43373493975903615,
+      "avg_target_probability": 0.21494904479080343,
+      "avg_nll": 6.210722774260651,
+      "perplexity": 498.0611069722786,
+      "avg_target_rank": 1266.5020080321285
+    },
+    "gazette_section2_sample": {
+      "n": 98,
+      "top1": 0.16326530612244897,
+      "top5": 0.29591836734693877,
+      "top10": 0.336734693877551,
+      "avg_target_probability": 0.137379586775994,
+      "avg_nll": 7.723719164591321,
+      "perplexity": 2261.3543090785165,
+      "avg_target_rank": 2273.326530612245
+    },
+    "legislations": {
+      "n": 340,
+      "top1": 0.2735294117647059,
+      "top5": 0.4176470588235294,
+      "top10": 0.49117647058823527,
+      "avg_target_probability": 0.24371875398328355,
+      "avg_nll": 5.980430496238884,
+      "perplexity": 395.6106403946673,
+      "avg_target_rank": 1674.6529411764707
+    },
+    "related_provisions": {
+      "n": 22,
+      "top1": 0.13636363636363635,
+      "top5": 0.13636363636363635,
+      "top10": 0.13636363636363635,
+      "avg_target_probability": 0.12249385398070232,
+      "avg_nll": 8.371772685151717,
+      "perplexity": 4323.293111429135,
+      "avg_target_rank": 3201.409090909091
+    }
+  }
+}

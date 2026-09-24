@@ -1,0 +1,25 @@
+PACKED CPT DATASET REPORT
+================================================================================
+MODEL: google/gemma-2-2b
+INPUT FILE: /workspace/splits/val_doclevel.jsonl
+OUTPUT FILE: /workspace/packed_2048/val_packed_2048.jsonl
+MAX_SEQ_LENGTH: 2048
+APPEND_EOS: True
+DROP_REMAINDER: True
+
+INPUT QUALITY:
+Input records: 2263
+Invalid JSON: 0
+Empty text skipped: 0
+
+PACKING RESULT:
+Input tokens including EOS: 1426609
+Output blocks: 696
+Output useful tokens: 1425408
+Remainder tokens: 1201
+Dropped tokens: 1201
+Average tokens per packed block: 2048.0
+
+EFFICIENCY:
+Each full block has: 2048 tokens
+Approx optimizer steps with grad_accum=8: 87.0

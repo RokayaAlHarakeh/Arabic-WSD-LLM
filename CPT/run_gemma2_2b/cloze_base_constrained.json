@@ -1,0 +1,3063 @@
+{
+ "model_name": "google/gemma-2-2b",
+ "adapter": null,
+ "cloze_file": "/workspace/eval/legal_cloze.json",
+ "n": 300,
+ "accuracy": 0.4333,
+ "majority_baseline": 0.1467,
+ "by_category": {
+  "collocation": {
+   "n": 100,
+   "accuracy": 0.23,
+   "majority_baseline": 0.11,
+   "n_candidates": 20,
+   "chance": 0.05
+  },
+  "defined_term": {
+   "n": 100,
+   "accuracy": 0.65,
+   "majority_baseline": 0.11,
+   "n_candidates": 24,
+   "chance": 0.0417
+  },
+  "statute_term": {
+   "n": 100,
+   "accuracy": 0.42,
+   "majority_baseline": 0.4,
+   "n_candidates": 4,
+   "chance": 0.25
+  }
+ },
+ "by_source": {
+  "adl_rulings": {
+   "n": 20,
+   "accuracy": 0.65
+  },
+  "associated_studies_ar": {
+   "n": 2,
+   "accuracy": 1.0
+  },
+  "bibliographic_rulings": {
+   "n": 11,
+   "accuracy": 0.6364
+  },
+  "gazette_legal_core": {
+   "n": 100,
+   "accuracy": 0.4
+  },
+  "gazette_section2_sample": {
+   "n": 44,
+   "accuracy": 0.3636
+  },
+  "legislations": {
+   "n": 98,
+   "accuracy": 0.3776
+  },
+  "related_provisions": {
+   "n": 25,
+   "accuracy": 0.6
+  }
+ },
+ "predictions": [
+  {
+   "id": 0,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "تدعو",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 1,
+   "category": "statute_term",
+   "source": "related_provisions",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 2,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 3,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "العامة",
+   "predicted": "العامة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 4,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 5,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 6,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "لبنانية",
+   "predicted": "لبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 7,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 8,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 9,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "رقم",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 10,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "الاشتراعي",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 11,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "الاشتراعي",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 12,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 13,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "التمييز",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 14,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "رقم",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 15,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 16,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 17,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "رقم",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 18,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 19,
+   "category": "statute_term",
+   "source": "related_provisions",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 20,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "حيث",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 21,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 22,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "والبلديات",
+   "predicted": "والبلديات",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 23,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 24,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 25,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 26,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "التمييز",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 27,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "وزير",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 28,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الثانية",
+   "predicted": "الثانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 29,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 30,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 31,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 32,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "predicted": "وشهرته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 33,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "لبنانية",
+   "predicted": "لبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 34,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 35,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 36,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 37,
+   "category": "collocation",
+   "source": "related_provisions",
+   "answer": "المدنية",
+   "predicted": "المدنية",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 38,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "ويبلغ",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 39,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 40,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "هذا",
+   "predicted": "هذا",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 41,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 42,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "لبنانية",
+   "predicted": "لبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 43,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "predicted": "إلى",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 44,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 45,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "هذا",
+   "predicted": "القرار",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 46,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "رقم",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 47,
+   "category": "collocation",
+   "source": "adl_rulings",
+   "answer": "المدنية",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 48,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "التمييز",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 49,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "الاشتراعي",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 50,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "الوزراء",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 51,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "وزير",
+   "predicted": "وزير",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 52,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الدستور",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 53,
+   "category": "statute_term",
+   "source": "gazette_section2_sample",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 54,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 55,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الاشتراعي",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 56,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "حيث",
+   "predicted": "وزير",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 57,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "predicted": "وشهرته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 58,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "والبلديات",
+   "predicted": "والبلديات",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 59,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "predicted": "وشهرته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 60,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 61,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "لبنانية",
+   "predicted": "لبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 62,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 63,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "الحاجة",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 64,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 65,
+   "category": "collocation",
+   "source": "related_provisions",
+   "answer": "المدنية",
+   "predicted": "المدنية",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 66,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 67,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 68,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 69,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 70,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "لبنانية",
+   "predicted": "لبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 71,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "حيث",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 72,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 73,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 74,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "القرار",
+   "predicted": "القرار",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 75,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 76,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 77,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "اللبنانية",
+   "predicted": "اللبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 78,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 79,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "إلى",
+   "predicted": "إلى",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 80,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 81,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "القانون",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 82,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "لبنانية",
+   "predicted": "لبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 83,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 84,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "تدعو",
+   "predicted": "والبلديات",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 85,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 86,
+   "category": "statute_term",
+   "source": "related_provisions",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 87,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "predicted": "اقتراح",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 88,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "حيث",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 89,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 90,
+   "category": "statute_term",
+   "source": "gazette_section2_sample",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 91,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "اقتراح",
+   "predicted": "اقتراح",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 92,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "ويبلغ",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 93,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 94,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الحاجة",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 95,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 96,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "الحاجة",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 97,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "الداخلية",
+   "predicted": "الداخلية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 98,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 99,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "الاشتراعي",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 100,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 101,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "التمييز",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 102,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "الحاجة",
+   "predicted": "الجريدة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 103,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "وزير",
+   "predicted": "مجلس",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 104,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "القانون",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 105,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "predicted": "وشهرته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 106,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "حيث",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 107,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "والخبر",
+   "predicted": "الاشتراعي",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 108,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 109,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 110,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الوزراء",
+   "predicted": "الوزراء",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 111,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 112,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 113,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 114,
+   "category": "statute_term",
+   "source": "gazette_section2_sample",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 115,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الثانية",
+   "predicted": "الثانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 116,
+   "category": "collocation",
+   "source": "adl_rulings",
+   "answer": "المدنية",
+   "predicted": "والبلديات",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 117,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 118,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 119,
+   "category": "collocation",
+   "source": "related_provisions",
+   "answer": "المدنية",
+   "predicted": "الجريدة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 120,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "لبنانية",
+   "predicted": "لبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 121,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "predicted": "وشهرته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 122,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "predicted": "وشهرته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 123,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 124,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 125,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "وزير",
+   "predicted": "وزير",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 126,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "الأولى",
+   "predicted": "الأولى",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 127,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "اقتراح",
+   "predicted": "الاشتراعي",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 128,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 129,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 130,
+   "category": "statute_term",
+   "source": "bibliographic_rulings",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 131,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "حيث",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 132,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الحاجة",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 133,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 134,
+   "category": "statute_term",
+   "source": "related_provisions",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 135,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 136,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "التمييز",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 137,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "رقم",
+   "predicted": "الاشتراعي",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 138,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "وزير",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 139,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "الوزراء",
+   "predicted": "الوزراء",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 140,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "اقتراح",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 141,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 142,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "رقم",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 143,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "التمييز",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 144,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "ويبلغ",
+   "predicted": "الجريدة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 145,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 146,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "predicted": "وشهرته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 147,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 148,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 149,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "لبنانية",
+   "predicted": "لبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 150,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 151,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "إلى",
+   "predicted": "إلى",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 152,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "predicted": "وشهرته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 153,
+   "category": "collocation",
+   "source": "bibliographic_rulings",
+   "answer": "وزير",
+   "predicted": "اقامته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 154,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 155,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 156,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 157,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "اقامته",
+   "predicted": "اقامته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 158,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "ويبلغ",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 159,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الوزراء",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 160,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 161,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 162,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 163,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "وزير",
+   "predicted": "وزير",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 164,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 165,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "ويبلغ",
+   "predicted": "على",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 166,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 167,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الأولى",
+   "predicted": "الأولى",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 168,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "الاشتراعي",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 169,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 170,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 171,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "ويبلغ",
+   "predicted": "الجريدة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 172,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "إلى",
+   "predicted": "إلى",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 173,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "الوزراء",
+   "predicted": "الوزراء",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 174,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "وزير",
+   "predicted": "وزير",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 175,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "لبنانية",
+   "predicted": "لبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 176,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الأولى",
+   "predicted": "الأولى",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 177,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 178,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 179,
+   "category": "collocation",
+   "source": "related_provisions",
+   "answer": "المدنية",
+   "predicted": "المدنية",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 180,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الوزراء",
+   "predicted": "الوزراء",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 181,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "القانون",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 182,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "الوزراء",
+   "predicted": "الوزراء",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 183,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 184,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 185,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "التعميم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 186,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 187,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "رقم",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 188,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 189,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "رقم",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 190,
+   "category": "collocation",
+   "source": "related_provisions",
+   "answer": "المدنية",
+   "predicted": "العدد",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 191,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 192,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الحاجة",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 193,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 194,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 195,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "حيث",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 196,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "predicted": "إلى",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 197,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 198,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 199,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 200,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 201,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 202,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "ويبلغ",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 203,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الأولى",
+   "predicted": "الأولى",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 204,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "مجلس",
+   "predicted": "مجلس",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 205,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 206,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "مجلس",
+   "predicted": "مجلس",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 207,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "لبنانية",
+   "predicted": "لبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 208,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "القرار",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 209,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 210,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 211,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "مجلس",
+   "predicted": "مجلس",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 212,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 213,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "حيث",
+   "predicted": "الاشتراعي",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 214,
+   "category": "statute_term",
+   "source": "related_provisions",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 215,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "اقتراح",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 216,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "الأولى",
+   "predicted": "اللبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 217,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "مجلس",
+   "predicted": "مجلس",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 218,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 219,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 220,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 221,
+   "category": "statute_term",
+   "source": "gazette_section2_sample",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 222,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "رقم",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 223,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 224,
+   "category": "defined_term",
+   "source": "gazette_section2_sample",
+   "answer": "العامة",
+   "predicted": "العامة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 225,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 226,
+   "category": "collocation",
+   "source": "associated_studies_ar",
+   "answer": "الوزراء",
+   "predicted": "الوزراء",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 227,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الحاجة",
+   "predicted": "الجريدة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 228,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 229,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "والخبر",
+   "predicted": "الاشتراعي",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 230,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 231,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 232,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 233,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "وزير",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 234,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 235,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "حيث",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 236,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "وزير",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 237,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 238,
+   "category": "statute_term",
+   "source": "adl_rulings",
+   "answer": "القانون",
+   "predicted": "القانون",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 239,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 240,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 241,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 242,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 243,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 244,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 245,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "حيث",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 246,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 247,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 248,
+   "category": "statute_term",
+   "source": "adl_rulings",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 249,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 250,
+   "category": "defined_term",
+   "source": "bibliographic_rulings",
+   "answer": "القرار",
+   "predicted": "القرار",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 251,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "predicted": "وشهرته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 252,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "تدعو",
+   "predicted": "الحاجة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 253,
+   "category": "statute_term",
+   "source": "gazette_section2_sample",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 254,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "الداخلية",
+   "predicted": "الداخلية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 255,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "اقتراح",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 256,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 257,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "اقتراح",
+   "predicted": "القرار",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 258,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "على",
+   "predicted": "على",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 259,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الثانية",
+   "predicted": "الثانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 260,
+   "category": "statute_term",
+   "source": "gazette_section2_sample",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 261,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 262,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "predicted": "القرار",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 263,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "لبنانية",
+   "predicted": "لبنانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 264,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "predicted": "وشهرته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 265,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 266,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 267,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "اقتراح",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 268,
+   "category": "statute_term",
+   "source": "adl_rulings",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 269,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "مجلس",
+   "predicted": "مجلس",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 270,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 271,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 272,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "ومحل",
+   "predicted": "وشهرته",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 273,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "مجلس",
+   "predicted": "مجلس",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 274,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 275,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 276,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "القانون",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 277,
+   "category": "collocation",
+   "source": "gazette_section2_sample",
+   "answer": "وشهرته",
+   "predicted": "الجريدة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 278,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 279,
+   "category": "statute_term",
+   "source": "bibliographic_rulings",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 280,
+   "category": "collocation",
+   "source": "legislations",
+   "answer": "حيث",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 281,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "والبلديات",
+   "predicted": "والبلديات",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 282,
+   "category": "collocation",
+   "source": "bibliographic_rulings",
+   "answer": "والبلديات",
+   "predicted": "والبلديات",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 283,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  },
+  {
+   "id": 284,
+   "category": "defined_term",
+   "source": "gazette_legal_core",
+   "answer": "الثانية",
+   "predicted": "الثانية",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 285,
+   "category": "defined_term",
+   "source": "related_provisions",
+   "answer": "الداخلية",
+   "predicted": "التمييز",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 286,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الوزراء",
+   "predicted": "الوزراء",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 287,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 288,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "الجريدة",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 289,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "هذا",
+   "predicted": "هذا",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 290,
+   "category": "collocation",
+   "source": "related_provisions",
+   "answer": "العدد",
+   "predicted": "رقم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 291,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 292,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "القرار",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": false
+  },
+  {
+   "id": 293,
+   "category": "collocation",
+   "source": "gazette_legal_core",
+   "answer": "ويبلغ",
+   "predicted": "الجريدة",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": false
+  },
+  {
+   "id": 294,
+   "category": "statute_term",
+   "source": "legislations",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 295,
+   "category": "defined_term",
+   "source": "legislations",
+   "answer": "الأولى",
+   "predicted": "الأولى",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": true
+  },
+  {
+   "id": 296,
+   "category": "defined_term",
+   "source": "adl_rulings",
+   "answer": "الأولى",
+   "predicted": "رقم",
+   "generated": "(constrained over 24 candidates)",
+   "n_candidates": 24,
+   "correct": false
+  },
+  {
+   "id": 297,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "المرسوم",
+   "predicted": "المرسوم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 298,
+   "category": "statute_term",
+   "source": "gazette_legal_core",
+   "answer": "التعميم",
+   "predicted": "التعميم",
+   "generated": "(constrained over 4 candidates)",
+   "n_candidates": 4,
+   "correct": true
+  },
+  {
+   "id": 299,
+   "category": "collocation",
+   "source": "associated_studies_ar",
+   "answer": "رقم",
+   "predicted": "رقم",
+   "generated": "(constrained over 20 candidates)",
+   "n_candidates": 20,
+   "correct": true
+  }
+ ]
+}

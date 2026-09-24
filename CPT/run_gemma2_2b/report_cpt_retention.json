@@ -1,0 +1,7 @@
+{
+    "Accuracy (%)": 36.5,
+    "Precision": 0.2617,
+    "Recall": 0.2825,
+    "F1 Score": 0.2685,
+    "Total Evaluated Instances": 1000
+}
