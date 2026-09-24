@@ -149,10 +149,12 @@ def build_appendix_c(D):
             'peak_learning_rate              = %.3e' % (max(lrs) if lrs else float("nan")),
             'final_learning_rate             = %.3e' % (lrs[-1] if lrs else float("nan")),
         ], caption="Training arguments for the CPT run, with the observed outcome.")
-        D.keypoint("The last two lines are the evidence for the argument in §8.7.2 and §9.1: the cosine "
-                   "schedule ends four orders of magnitude below its peak, so the flat tail of the loss "
-                   "curve is produced by the schedule and says nothing about whether the model had "
-                   "more to learn.")
+        D.keypoint("The last two lines of the listing matter more than they look. The learning rate "
+                   "peaks at 2 × 10⁻⁴ and ends at roughly 1.5 × 10⁻⁸ — four orders of magnitude lower. "
+                   "A model updating that slowly cannot visibly improve, so the fact that the loss curve "
+                   "flattens over the final steps is produced by the schedule rather than by the model "
+                   "running out of things to learn. The flat tail is therefore not evidence of "
+                   "convergence, and it is not evidence against it either.")
 
         # ---- C.4 ---------------------------------------------------
         D.h2("C.4  Held-out loss at every evaluation point")
@@ -177,7 +179,7 @@ def build_appendix_c(D):
         ["Stage", "Output"],
         ["Input records parsed", "45,636 (0 malformed, 0 empty)"],
         ["Documents after composite keying", "43,680"],
-        ["Documents under the supplied `source_id` key", "43,284 — 396 collisions (§8.3.2)"],
+        ["Documents under the supplied `source_id` key", "43,284 — 396 collisions (Section 8.3.2)"],
         ["Split (documents)", "39,310 train / 2,185 val / 2,185 test"],
         ["Split (by token %)", "90.40 / 4.78 / 4.83"],
         ["Leakage avoided, validation", "135 of 2,282 records (5.9%)"],
@@ -220,7 +222,7 @@ def build_appendix_d(D):
         "Greedy decoding, 60 new tokens, no sampling.")
     D.keypoint("These samples illustrate **register and citation form**. They are not evidence of a "
                "capability difference, and in particular they are not evidence that continued "
-               "pre-training repaired the base model's repetition: §9.6.1 shows that 90% of the "
+               "pre-training repaired the base model's repetition: Section 9.6.1 shows that 90% of the "
                "difference in looping between these two columns is attributable to the choice of greedy "
                "decoding rather than to training. Examples where the CPT model produces correct legal "
                "formulae and *then* degenerates are included deliberately — an appendix in which every "
@@ -247,6 +249,6 @@ def build_appendix_d(D):
         D.listing(cpt_lines, arabic_lines=tuple(range(len(cpt_lines))))
 
     D.p("")
-    D.p("The complete set, together with the sampled-decoding run behind §9.6.1 and its per-continuation "
+    D.p("The complete set, together with the sampled-decoding run behind Section 9.6.1 and its per-continuation "
         "repetition metrics, is in `CPT/run_gemma2_2b/qualitative.json` and "
         "`CPT/run_gemma2_2b/qualitative_sampled.json` in the repository.")

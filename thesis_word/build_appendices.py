@@ -314,9 +314,12 @@ def build_appendix_b(D):
         ["`WSD_PROJECT_DIR`", "/content/drive/MyDrive/WSD_Project"],
     ], widths=[5.5, 8.0])
     D.caption("Execution environment for the reported run.")
-    D.todo("Confirm the accelerator model from the Colab session log before submission. The memory "
-           "figures in Section 6.5 assume a 16 GB T4; if the session was allocated an L4 or an A100 "
-           "instead, the headroom argument still holds but the numbers should be restated.")
+    D.p("The accelerator was a **free-tier Colab NVIDIA T4 with 16 GB**, which is what the memory "
+        "headroom argument in Section 6.5 assumes. It is worth stating plainly alongside the result: the "
+        "supervised model that matches published 8-billion-parameter systems was trained on a GPU "
+        "available to anyone at no cost. The continued pre-training run of Appendix C required paid "
+        "hardware only because of its 2,048-token sequences and 27-million-token corpus, not because "
+        "the method is more demanding in principle.")
 
     D.h2("B.2  Adapter configuration")
     D.p("Read from `adapter_config.json` in the saved adapter directory. Comments are added here for "

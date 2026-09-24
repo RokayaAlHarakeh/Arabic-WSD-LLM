@@ -70,7 +70,7 @@ def build_ch8(D):
         "Section 8.6 therefore specifies a per-source breakdown rather than an aggregate alone. Second, "
         "**mean document length varies by a factor of 132** — from 174 tokens for bibliographic ruling "
         "records to 23,029 for the handful of long scholarly studies — which makes document-boundary "
-        "handling a design decision rather than an implementation detail (§8.4).")
+        "handling a design decision rather than an implementation detail (Section 8.4).")
 
     D.h3("8.2.1  Tokenizer fertility")
     D.p("Section 2.3.3 predicted that Arabic fragments more heavily than English under subword "
@@ -79,8 +79,8 @@ def build_ch8(D):
         "sample of the corpus and compared against the figures given in Chapter 2.")
     D.table([
         ["Text", "Fertility (tokens/word)", "Relative to legal Arabic"],
-        ["English (§2.3.3)", "1.163", "2.009× lower"],
-        ["General Arabic (§2.3.3)", "2.079", "1.124× lower"],
+        ["English (Section 2.3.3)", "1.163", "2.009× lower"],
+        ["General Arabic (Section 2.3.3)", "2.079", "1.124× lower"],
         ["**This legal corpus**", "**2.337**", "—"],
     ], widths=[5.6, 4.2, 4.2], align_right={1, 2})
     D.caption("Gemma 2 tokenizer fertility on Lebanese legal Arabic against the Chapter 2 reference figures.")
@@ -88,7 +88,7 @@ def build_ch8(D):
         "and slightly over twice English. Two consequences follow: a fixed token budget buys less legal "
         "text than a raw word count suggests, and many legal terms have no single-token representation, "
         "existing only as sequences of subword fragments. The second is the motivation for the embedding "
-        "variant discussed in §8.8.")
+        "variant discussed in Section 8.8.")
 
     # ---- 8.3 -------------------------------------------------------
     D.h2("8.3  Document-level splitting")
@@ -173,13 +173,13 @@ def build_ch8(D):
         ["Data unit", "one example per sequence", "packed 2,048-token blocks",
          "CPT has no example boundaries to respect"],
         ["Sequence length", "1,024", "2,048", "Legal documents are long; the objective benefits from context"],
-        ["LoRA rank", "32", "**16**", "Supervisor's specification, validated at 12B on this corpus (§8.7)"],
+        ["LoRA rank", "32", "**16**", "Supervisor's specification, validated at 12B on this corpus (Section 8.7)"],
         ["LoRA α / dropout", "32 / 0.05", "32 / 0.0",
          "One epoch over 27M tokens is not an overfitting regime"],
         ["Target modules", "7 attention + MLP projections", "the same 7",
          "Held constant so the comparison isolates the objective"],
-        ["`modules_to_save`", "none", "none", "Embeddings frozen — see §8.8"],
-        ["Learning rate", "2e-4", "**2e-4**", "Validated on this corpus (§8.7)"],
+        ["`modules_to_save`", "none", "none", "Embeddings frozen — see Section 8.8"],
+        ["Learning rate", "2e-4", "**2e-4**", "Validated on this corpus (Section 8.7)"],
         ["Schedule", "cosine", "cosine, 3% warmup, decay 0.01", "Standard"],
         ["Optimiser", "`adamw_8bit`", "`adamw_8bit`", "Memory"],
         ["Epochs", "3", "**1**", "Repeated passes over a domain corpus memorise rather than adapt"],
@@ -198,14 +198,14 @@ def build_ch8(D):
     D.numbered("**Initial-loss probe.** At step zero the loss must fall below ln(vocab_size), the loss of "
                "a uniform random predictor. A model fed corrupted or mis-tokenized data scores at or "
                "above that value. The training script aborts if the probe fails, which is precisely the "
-               "check that would have caught the Gemma 4 vocabulary mismatch of §8.4.")
+               "check that would have caught the Gemma 4 vocabulary mismatch of Section 8.4.")
     D.numbered("**Smoke test.** A 20-step run at full configuration, confirming that loss decreases, "
                "memory fits and checkpoints write correctly.")
 
     # ---- 8.6 -------------------------------------------------------
     D.h2("8.6  Evaluation design")
     D.p("All metrics, their baselines and the pass/fail threshold were fixed **before training began** "
-        "(§8.9). Four measures were specified, each with an explicit baseline, because no single one is "
+        "(Section 8.9). Four measures were specified, each with an explicit baseline, because no single one is "
         "sufficient.")
     D.p("**1. Held-out perplexity** on the test split — the direct measure of the training objective. It "
         "is reported first and trusted least: perplexity falls whenever the output distribution moves "
@@ -222,7 +222,8 @@ def build_ch8(D):
         "probe item appears in training. Items are scored two ways: *free generation*, where the model "
         "produces the masked span, and *constrained scoring*, where a fixed candidate set is ranked by "
         "length-normalised log-probability and the argmax taken. Constrained scoring is the headline "
-        "number for the reasons given in §9.3.2. Arbitrary identifiers such as decree numbers are "
+        "number, because it has a defined chance level and cannot be defeated by a model that knows the "
+        "answer but formats it unexpectedly. Arbitrary identifiers such as decree numbers are "
         "excluded by design: recalling them would measure memorisation, not domain competence.")
     D.p("**4. Retention on Dataset A.** The CPT model, which has received no task training, is evaluated "
         "on the Chapter 7 task to test for catastrophic forgetting. Chapter 9 reports it as a "
@@ -235,16 +236,16 @@ def build_ch8(D):
     D.h3("8.6.1  Why the headline metrics do not involve decoding")
     D.p("Metrics 1, 2 and 3-constrained are **teacher-forced or likelihood-ranked**: none of them samples, "
         "and none depends on a decoding strategy. This was deliberate. Free-text generation quality "
-        "depends heavily on the decoder, and §9.6.1 quantifies how heavily — switching the *base* model "
+        "depends heavily on the decoder, and Section 9.6.1 quantifies how heavily — switching the *base* model "
         "from greedy decoding to nucleus sampling, with no training at all, cuts its degenerate-repetition "
         "rate from 83.3% to 8.3%.")
     D.keypoint("A comparison built on generated text would have confounded the training intervention with "
-               "a decoder setting. The qualitative examples in §9.6 are accordingly presented as "
+               "a decoder setting. The qualitative examples in Section 9.6 are accordingly presented as "
                "illustrations of register and citation form, never as evidence of a capability difference.")
 
     # ---- 8.7 -------------------------------------------------------
     D.h2("8.7  Two specification conflicts, and their resolution")
-    D.p("The configuration in §8.5 conflicts with general CPT guidance — including guidance recorded "
+    D.p("The configuration in Section 8.5 conflicts with general CPT guidance — including guidance recorded "
         "earlier in this project's own planning documents — on two parameters. Both are recorded here "
         "with their resolution, because a reader comparing the two documents will otherwise find the "
         "contradiction unaddressed.")
@@ -256,7 +257,7 @@ def build_ch8(D):
         "rate.")
     D.p("The supervisor's figure is a measurement on the target data, and a measurement outranks general "
         "guidance. The specification was followed — and because the disagreement was specifically about "
-        "forgetting, the retention metric of §8.6 was added to test it directly. Section 9.5 reports the "
+        "forgetting, the retention metric of Section 8.6 was added to test it directly. Section 9.5 reports the "
         "outcome: Dataset A accuracy **rose** rather than fell, so no forgetting occurred at this rate.")
     D.p("That evidence is bounded by what was measured. It covers the base-to-CPT direction only; it does "
         "not establish that the rate is safe in a pipeline where CPT is followed by supervised "
@@ -273,12 +274,12 @@ def build_ch8(D):
         "tail visible in Figure 9.1 is what the schedule produces by construction and carries no "
         "information about capacity.")
     D.keypoint("Whether rank 16 limited the achievable adaptation is an open question that a single run "
-               "at a single rank cannot answer. It is carried forward to the limitations (§11.4) and to "
+               "at a single rank cannot answer. It is carried forward to the limitations (Section 11.4) and to "
                "future work.")
 
     # ---- 8.8 -------------------------------------------------------
     D.h2("8.8  Decisions deliberately not taken")
-    D.p("**Embeddings were not trained.** The fertility measurement of §8.2.1 shows legal terms "
+    D.p("**Embeddings were not trained.** The fertility measurement of Section 8.2.1 shows legal terms "
         "fragmenting into multiple subword units, and allowing the embedding and output layers to train "
         "(`modules_to_save`) is the standard way to let new terminology acquire dedicated "
         "representations. It was not done for two reasons: it substantially increases trainable "
@@ -287,7 +288,7 @@ def build_ch8(D):
     D.p("**No matched-token-budget control.** A fully controlled comparison of the two objectives would "
         "train an instruction-tuned model on the legal corpus at an equal token budget, isolating the "
         "objective from the data. This was not run, and it is the principal limitation of the comparison "
-        "(§11.1). Chapter 10's argument is constructed so as not to depend on it: it claims the two "
+        "(Section 11.1). Chapter 10's argument is constructed so as not to depend on it: it claims the two "
         "objectives change *different things*, not that either outperforms the other.")
     D.p("**One run, one seed.** No variance estimate is available, and all effect sizes are point "
         "estimates from a single run.")
@@ -297,8 +298,7 @@ def build_ch8(D):
     D.p("With several metrics available and only one run affordable, the analysis was exposed to a "
         "specific failure: selecting whichever metric produced the most favourable result after seeing "
         "the outcomes. To prevent it, three explicit predictions and a pass/fail gate were committed to "
-        "the project's version control on **19 September 2026**, four days before training began on "
-        "23 September.")
+        "the project's version control **four days before training began**.")
     D.numbered("Held-out legal perplexity falls substantially.")
     D.numbered("Next-token accuracy rises.")
     D.numbered("Dataset A retention stays roughly flat, because the CPT model receives no task training.")
@@ -324,7 +324,7 @@ def build_ch9(D):
     D.h1("Chapter 9 — Results: Continued Pre-Training")
     D.p("This chapter reports the outcome of the continued pre-training run against the untrained base "
         "model. It proceeds from the training curve, through the three domain metrics, to the retention "
-        "test on Dataset A, and closes by scoring the predictions registered in §8.9 against what "
+        "test on Dataset A, and closes by scoring the predictions registered in Section 8.9 against what "
         "actually happened.")
     D.p("Every comparison in this chapter is **base Gemma 2-2B against CPT Gemma 2-2B**, evaluated in the "
         "same session, on the same hardware, against identical evaluation files.")
@@ -433,7 +433,7 @@ def build_ch9(D):
         "anti-correlated by the filter.")
     D.keypoint("A base-to-CPT delta measured from that floor would have been measuring the filter, not "
                "the model. Constrained scoring removes the artifact and supplies a defined chance level, "
-               "which is why §8.6 designates it the primary measure. This is a methodological point, not "
+               "which is why Section 8.6 designates it the primary measure. This is a methodological point, not "
                "merely a defect: an anti-copying filter that is not checked against a baseline can "
                "manufacture an arbitrarily large apparent improvement.")
 
@@ -448,7 +448,7 @@ def build_ch9(D):
     ], widths=[5.2, 1.9, 1.9, 2.0, 1.9, 2.1], align_right={1, 2, 3, 4, 5})
     D.caption("Published reference figures for Gemma 4-12B. NOT comparable with Table 9.2 — see below.")
     D.keypoint("**These numbers must not be read as a comparison.** They come from a different evaluation "
-               "set, built from a different split of the full 134M-token corpus, while §9.2 reports 1,000 "
+               "set, built from a different split of the full 134M-token corpus, while Section 9.2 reports 1,000 "
                "positions from this project's 27M-token subset. No claim is made here of having "
                "outperformed the 12B run. The defensible statement is that the *direction and scale* of "
                "improvement are consistent with the reference.")
@@ -496,7 +496,7 @@ def build_ch9(D):
         "identifier-shaped tokens. It did not make it better at choosing between two glosses.")
     D.p("Two things follow. **On retention:** QLoRA froze the base weights, and general ability rose "
         "rather than fell, so the question of whether CPT damaged the model is answered emphatically in "
-        "the negative — which is also the empirical resolution of the learning-rate conflict in §8.7.1. "
+        "the negative — which is also the empirical resolution of the learning-rate conflict in Section 8.7.1. "
         "**On the thesis:** CPT changed *form* without changing *task competence*, while supervised "
         "fine-tuning changed both. This is stronger evidence for the dissociation than comparing across "
         "different metrics would be, because both objectives are measured here on the same task, the "
@@ -514,7 +514,7 @@ def build_ch9(D):
     D.keypoint("A retention figure produced by the original extractor would have been **false rather than "
                "merely noisy**, and it would have been false in the direction that made the headline "
                "story neater: an apparent catastrophic forgetting result of 0.0%. It is reported here "
-               "because the decomposition in §9.5.1 depends on the extractor being correct.")
+               "because the decomposition in Section 9.5.1 depends on the extractor being correct.")
 
     # ---- 9.6 -------------------------------------------------------
     D.h2("9.6  Qualitative comparison")
@@ -557,11 +557,11 @@ def build_ch9(D):
         "therefore **not supported**, and is not made. What the examples do support, under identical "
         "decoding, is that CPT changed *what* the model writes — its register, its citation formulae, "
         "its statutory structure. That claim is established independently, and without any decoding "
-        "dependence at all, by the quantitative results in §§9.2–9.3.")
+        "dependence at all, by the quantitative results in Sections 9.2–9.3.")
 
     # ---- 9.7 -------------------------------------------------------
     D.h2("9.7  Pre-registered predictions against outcome")
-    D.p("The three predictions registered on 19 September, four days before training, score as follows.")
+    D.p("The three predictions registered four days before training score as follows.")
     D.table([
         ["Predicted", "Observed", "Outcome"],
         ["Held-out legal perplexity falls", "806.47 → 4.14", "Confirmed"],
@@ -573,7 +573,7 @@ def build_ch9(D):
                "to be flat because QLoRA freezes the base weights. Instead general-task accuracy rose by "
                "11.6 points. Having committed the prediction beforehand is what made that a *noticed "
                "surprise* rather than something rationalised after the fact — and pursuing it produced "
-               "the decomposition of §9.5.1, which is the strongest single piece of evidence for the "
+               "the decomposition of Section 9.5.1, which is the strongest single piece of evidence for the "
                "argument of Chapter 10.")
     D.p("The reasoning behind the wrong prediction was not mistaken so much as incomplete. QLoRA did "
         "freeze the base, and discrimination was indeed unchanged (47.4% → 48.6%, not significant). What "
@@ -583,7 +583,7 @@ def build_ch9(D):
 
     # ---- 9.8 -------------------------------------------------------
     D.h2("9.8  Summary against the acceptance gate")
-    D.p("The gate fixed in §8.9 required CPT to beat the base model on at least two of three metric "
+    D.p("The gate fixed in Section 8.9 required CPT to beat the base model on at least two of three metric "
         "families.")
     D.table([
         ["#", "Metric family", "Result", "Pass"],
@@ -647,7 +647,7 @@ def build_ch10(D):
         "source in the corpus; the cloze probe's `statute_term` category rose from 42.0% — level with a "
         "40.0% majority baseline, i.e. no knowledge at all — to 66.0%, on items where the correct legal "
         "instrument had been removed from the context.")
-    D.p("On the second, §9.5.1 is decisive, and it is decisive precisely because it was not the result "
+    D.p("On the second, Section 9.5.1 is decisive, and it is decisive precisely because it was not the result "
         "that had been predicted. Dataset A accuracy rose by 11.6 points, which read naively looks like "
         "task improvement. Decomposed, the gain is **entirely** in the willingness to emit a parseable "
         "answer (52.5% → 75.1%), while accuracy among answered items moved from 47.4% to 48.6% — a change "
@@ -667,7 +667,7 @@ def build_ch10(D):
     D.p("The lower-left cell is the load-bearing one, and it is measured rather than assumed. It would "
         "have been possible to argue the dissociation weakly, by observing that CPT was evaluated on "
         "legal metrics and SFT on WSD metrics and that each improved on its own. That argument is "
-        "circular. The decomposition in §9.5.1 avoids the circularity by measuring **both objectives on "
+        "circular. The decomposition in Section 9.5.1 avoids the circularity by measuring **both objectives on "
         "the same task, the same test set and the same split of behaviour into format and "
         "discrimination**.")
     D.keypoint("The conclusion holds **independently of effect size**. Even had the CPT perplexity gain "
@@ -694,19 +694,19 @@ def build_ch10(D):
     D.p("Three results of this project concern how the measurements were made rather than what they "
         "showed. Each was found by checking a number that looked satisfactory, and each would have "
         "produced a wrong conclusion in the direction of a tidier story.")
-    D.numbered("**The document-key collision (§8.3.2).** 396 identifiers were shared across source "
+    D.numbered("**The document-key collision (Section 8.3.2).** 396 identifiers were shared across source "
                "collections. Grouping by identifier alone, as specified, would have merged unrelated "
                "documents and silently weakened the leakage guarantee on which every held-out number "
                "depends.")
-    D.numbered("**The extractor failure (§9.5.2).** An extractor written for the supervised output format "
+    D.numbered("**The extractor failure (Section 9.5.2).** An extractor written for the supervised output format "
                "reported 0.0% for any untrained model that was in fact answering correctly. Unchecked, it "
                "would have been reported as catastrophic forgetting — a dramatic and completely false "
                "result.")
-    D.numbered("**The decoding confound (§9.6.1).** The base model's degenerate repetition, which the "
+    D.numbered("**The decoding confound (Section 9.6.1).** The base model's degenerate repetition, which the "
                "qualitative examples appear to show CPT repairing, is 90% attributable to greedy "
                "decoding. Measuring it prevented a claim the data does not support.")
     D.keypoint("The common thread is that each was a number that *looked* like a result. The safeguard "
-               "that caught them was not skill but procedure: pre-registering predictions (§8.9) and "
+               "that caught them was not skill but procedure: pre-registering predictions (Section 8.9) and "
                "requiring a baseline for every figure, so that a surprising number had to be explained "
                "rather than accepted.")
 
@@ -725,7 +725,7 @@ def build_ch11(D):
         "isolating the objective from the data. Without it, the supervised and continued-pre-training "
         "runs differ in objective *and* in data *and* in evaluation simultaneously.")
     D.p("This is the most serious limitation in the report, and Chapter 10's argument is deliberately "
-        "constructed to survive it: the dissociation claim rests on §9.5.1, where **both** objectives are "
+        "constructed to survive it: the dissociation claim rests on Section 9.5.1, where **both** objectives are "
         "measured on the same task and the same test set. That measurement does not require the control. "
         "The control would be required for any claim about relative effectiveness, and no such claim is "
         "made.")
@@ -734,27 +734,27 @@ def build_ch11(D):
     D.p("The continued pre-training result comes from one corpus of Lebanese legal Arabic. Whether it "
         "generalises to other Arabic varieties, to other specialised domains, or to Modern Standard "
         "Arabic of a non-legal register is untested. The corpus is also unusually formulaic, which "
-        "§11.5 notes bounds the interpretation of the perplexity figure.")
+        "Section 11.5 notes bounds the interpretation of the perplexity figure.")
 
     D.h2("11.3  Single model family and size")
     D.p("Both experiments use Gemma 2-2B. The finding that a 2B model matches published 8B results on "
-        "Dataset A is a finding about this dataset and this model, and the mechanism proposed in §10.2 — "
+        "Dataset A is a finding about this dataset and this model, and the mechanism proposed in Section 10.2 — "
         "that the task requires discrimination rather than knowledge — predicts the result would hold "
         "across families, but that prediction is not tested here.")
 
     D.h2("11.4  One run, one seed, one configuration")
     D.p("Neither experiment was repeated. No variance estimate exists, and all effect sizes are point "
         "estimates. Two specific consequences follow. First, differences of roughly one accuracy point on "
-        "the Dataset A test set are not statistically distinguishable (§7.2.1), so the apparent ranking "
+        "the Dataset A test set are not statistically distinguishable (Section 7.2.1), so the apparent ranking "
         "against published models should not be read as one. Second, the LoRA rank question raised in "
-        "§8.7.2 remains open: rank 16 was specified and used, and **no evidence collected here shows "
+        "Section 8.7.2 remains open: rank 16 was specified and used, and **no evidence collected here shows "
         "whether it limited the achievable adaptation.** The flat tail of the loss curve cannot settle "
         "it, because the cosine schedule produces that flatness regardless.")
 
     D.h2("11.5  Corpus scale bounds the achievable effect")
     D.p("Training consumed 27.2M of the roughly 134M tokens in the full corpus, in a single epoch. The "
         "reported gains are therefore a lower bound on what this corpus can yield, and the reference 12B "
-        "figures in §9.4 were obtained on the full corpus — one of several reasons they are not "
+        "figures in Section 9.4 were obtained on the full corpus — one of several reasons they are not "
         "comparable.")
 
     D.h2("11.6  Perplexity measures register, not reasoning")
@@ -779,8 +779,8 @@ def build_ch11(D):
         "better.")
 
     D.h2("11.9  Evaluation-set differences")
-    D.p("Two smaller mismatches should be noted. Retention (§9.5) was measured on 1,000 Dataset A "
+    D.p("Two smaller mismatches should be noted. Retention (Section 9.5) was measured on 1,000 Dataset A "
         "sentences rather than the full 3,110 used for the supervised evaluation, so the denominators "
-        "differ. And three corpus sources in the per-source breakdown of §9.2.1 have fewer than 25 "
+        "differ. And three corpus sources in the per-source breakdown of Section 9.2.1 have fewer than 25 "
         "sampled positions and are not individually interpretable; the conclusion there rests on the "
         "three sources with n ≥ 249.")
