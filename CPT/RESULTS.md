@@ -35,10 +35,15 @@ consequences worth stating:
 
 - **No overfitting.** `load_best_model_at_end=True` selected the final checkpoint because it
   had the lowest eval loss, so the saved adapter is genuinely the best one.
-- **One epoch is not convergence.** The model was still improving when training stopped. The
-  gains below are therefore a **lower bound** on what this corpus can yield. One epoch was
-  the supervisor's specification — chosen to adapt rather than memorise — and the curve shows
-  that call was conservative, not excessive.
+- **The flat tail is the schedule, not convergence.** Eval loss barely moves over the last
+  150 steps (1.3118 → 1.3110 → 1.3110), but the cosine schedule has decayed the learning rate
+  to ~1.5e-8 by step 1650 — four orders of magnitude below peak. A model that is barely
+  updating cannot show improvement, so the flattening is what this schedule produces by
+  construction. **Do not read it as evidence the corpus is exhausted, and do not read it as
+  evidence the model had more to give.** The curve's tail is uninformative either way.
+- **The gains are still a lower bound, but for a different reason.** Not the curve shape —
+  the token budget: one epoch over 27M of the ~134M available tokens. One epoch was the
+  supervisor's specification, chosen to adapt rather than memorise.
 
 Figure: `run_gemma2_2b/cpt_loss_curve.png`.
 
