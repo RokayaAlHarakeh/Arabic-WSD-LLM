@@ -210,7 +210,78 @@ above.
 
 ---
 
-## 6. Gate
+## 6. Qualitative comparison
+
+12 legal prompts, base output vs CPT output. Both columns come from **one loaded model** —
+`disable_adapter()` turns the CPT LoRA off — so the base column is provably the same base
+weights rather than a separate load. Greedy decoding, 60 new tokens.
+Full pairs: `run_gemma2_2b/qualitative.json`.
+
+**The dominant pattern: the base model's characteristic failure is degenerate repetition;
+the CPT model produces legal structure.** Almost every base continuation collapses into a
+loop within 20–30 tokens.
+
+### For the chapter — four clearest contrasts
+
+**(a) وحيث أن الاجتهاد مستقر على** — "whereas settled jurisprudence holds that"
+
+| | |
+|---|---|
+| Base | loops immediately: `ما يقال في هذا الباب` repeated five times. No content. |
+| CPT | cites `المادة 10 من قانون 19/1/1951` and states an actual legal proposition in quotation marks — which court hears an appeal — in the form rulings use. |
+
+**(b) على وزير الداخلية والبلديات** — the most verifiable item
+
+| | |
+|---|---|
+| Base | lists ministers, then degenerates: `ووزير البيئة` five times. |
+| CPT | `بناء على قانون الجمعيات الصادر في 3 آب 1909 ولا سيما المادة السادسة منه` |
+
+The 1909 Ottoman-era Law of Associations **is** the governing Lebanese law for associations,
+and `ولا سيما المادة … منه` ("and in particular Article … thereof") is the exact citation
+formula Lebanese decrees use. Correct instrument, correct invocation.
+
+**(c) الجريدة الرسمية اللبنانية** — format learned precisely
+
+| | |
+|---|---|
+| Base | loops `اللجنة الوطنية للتنمية المستدامة`. |
+| CPT | reproduces the gazette masthead — year, issue number, page range — then a decree with a plausible subject (transfer of appropriation from budget reserve to the Interior Ministry / Internal Security Forces). |
+
+**(d) لجنة الخدمة المدنية** — correct institutional attachment
+
+| | |
+|---|---|
+| Base | hallucinates a news item about 121 dismissals, repeating. |
+| CPT | places it under `وزارة الداخلية والبلديات` with dated decree citations and a parenthetical giving each decree's purpose. |
+
+### For the appendix — include these deliberately
+
+**(e) يعاقب بالحبس من.** CPT produces the Lebanese penal formula exactly —
+`شهر الى سنة وبالغرامة من خمسين الى مئة الف ليرة لبنانية`, imprisonment plus fine — and then
+collapses into `كل من يبيع او يبيع او…`.
+
+**(f) تسري أحكام هذا القانون على.** Correct property-law scope language, then loops on
+`المؤسسات العامة أو البلديات`.
+
+CPT reduced the looping but did not eliminate it. An appendix in which every example flatters
+the model reads as curated; the four quantitative results carry the argument, so these belong
+in it.
+
+### Two caveats to state
+
+1. **Greedy decoding.** `do_sample=False` makes repetition loops substantially more likely on
+   a 2B model. The loops are partly a decoding artifact, not purely a model deficiency.
+2. **Possible memorisation.** `المرسوم رقم 14953 تاريخ 19/7/2005` appears in *both* (c) and
+   (d). That may be a genuinely frequent decree in the corpus rather than recall of one
+   document, but a 12-prompt sample cannot distinguish the two. **Frame these as illustrative
+   of register and citation form, not as evidence of factual recall.** The cloze
+   `statute_term` result (§3.1) is the proper evidence for domain knowledge, because it is
+   measured on held-out documents against a stated baseline.
+
+---
+
+## 7. Gate
 
 Week-2 gate: CPT beats base on ≥ 2 of 3 metric families.
 
@@ -227,7 +298,7 @@ positive rather than flat.
 
 ---
 
-## 7. Limitations
+## 8. Limitations
 
 1. **Register, not reasoning.** Held-out perplexity of 4.14 is low because Lebanese gazette
    and legislation text is extremely formulaic — fixed openers, citation forms and closing
@@ -249,7 +320,7 @@ positive rather than flat.
 
 ---
 
-## 8. Reproducibility
+## 9. Reproducibility
 
 The document-level split reproduced **byte-identically on three machines** — Windows local,
 Colab Linux, RunPod Linux — from the committed scripts at seed 42: same 39,310 / 2,185 /
