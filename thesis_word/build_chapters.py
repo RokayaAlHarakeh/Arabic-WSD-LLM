@@ -1861,7 +1861,7 @@ def build_ch7(D):
     D.p("This interpretation carries directly into the second half of the project. Supervised fine-tuning "
         "here taught a **task format**: read two options, choose one, emit its identifier, stop. It added "
         "no knowledge, because none was needed. Continued pretraining on a specialised corpus addresses "
-        "the opposite problem, and the contrast between them is developed in the discussion.")
+        "the opposite problem, and the contrast between them is developed in Chapter 10.")
 
     # ---- 7.7 -------------------------------------------------------
     D.h2("7.7  Threats to validity")

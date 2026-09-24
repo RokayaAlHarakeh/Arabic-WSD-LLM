@@ -24,7 +24,7 @@ Pick whichever your department expects and delete the other.
 
 ## What's in it
 
-~85 pages, 45 tables, 13 figures, 18 code/data listings.
+~115 pages, 64 tables, 15 figures, 21 code/data listings.
 
 | Part | State |
 |---|---|
@@ -37,15 +37,20 @@ Pick whichever your department expects and delete the other.
 | **Chapter 5 — Related Work** | ✅ Written |
 | **Chapter 6 — Methodology: Supervised Fine-Tuning** | ✅ Written |
 | **Chapter 7 — Results: Supervised Fine-Tuning** | ✅ Written |
-| **General Conclusion** | ✅ Written for the SFT half; extend after CPT |
+| **Chapter 8 — Methodology: Continued Pre-Training** | ✅ Written |
+| **Chapter 9 — Results: Continued Pre-Training** | ✅ Written |
+| **Chapter 10 — Discussion: What Each Objective Changes** | ✅ Written |
+| **Chapter 11 — Limitations** | ✅ Written |
+| **General Conclusion** | ✅ Written, both halves |
 | **Appendix A — Pipeline Source Code** | ✅ Read live from the repo at build time |
 | **Appendix B — Recovered Run Configuration** | ✅ Written |
+| **Appendix C — CPT Run Configuration and Logs** | ✅ Read live from the run artifacts |
+| **Appendix D — Arabic Generation Samples** | ✅ Read live from the run artifacts |
 | References | 29 entries; those marked `[VERIFY]` were reconstructed and must be checked |
-| Chapters on CPT | Not started — deliberately |
 
-Nine red **TODO** notes remain. All nine are things only you can do: personalise the
-acknowledgements, add the CPT results, update the Word fields, replace two equations with Word
-equation objects, manage the citations, and confirm the Colab GPU model.
+
+Four red **TODO** notes remain. All four are things only you can do: personalise the
+acknowledgements, update the Word fields, manage the citations, and confirm the Colab GPU model.
 
 ## Logos
 
@@ -94,8 +99,10 @@ cd thesis_word
 - `build_docx.py` — page setup, styles, the `Doc` helper class, title page, front matter,
   General Introduction, Chapter 1, and the build order
 - `build_chapters.py` — Chapters 2–7, references, data samples, and the section expansions
+- `build_cpt_chapters.py` — Chapters 8–11 (the continued pre-training half)
+- `build_cpt_appendices.py` — Appendices C and D, read from `CPT/run_gemma2_2b/` at build time
 - `build_appendices.py` — General Conclusion, Appendix A, Appendix B
-- `make_figures.py` — regenerates the 13 PNGs in `figures/`
+- `make_figures.py` — regenerates the 15 PNGs in `figures/`
 
 One run writes **both** files. To build only one, call it directly:
 

@@ -853,7 +853,7 @@ def build_ch1(D):
     D.p("Taken together, the last four contributions support the central interpretive claim of the report: "
         "on this benchmark the model is asked to discriminate between two definitions that are already "
         "present in its input, not to retrieve knowledge from its parameters. That is why capacity buys so "
-        "little, and it is the basis for the dissociation drawn in the discussion.")
+        "little, and it is the basis for the dissociation drawn in Chapter 10.")
 
     # ---- 1.5 -------------------------------------------------------
     D.h2("1.5  Report structure")
@@ -875,9 +875,22 @@ def build_ch1(D):
              "published models, the trivial and non-neural baselines established for this dataset, "
              "the demonstration that the standard secondary metric is degenerate on it, a "
              "decomposition of the remaining errors, and the interpretation that follows.")
-    D.bullet("**Appendix A** contains the complete pipeline source code, and **Appendix B** the "
-             "full run configuration recovered from the training artifacts.")
-    D.todo("Extend this list as the CPT and discussion chapters are written.")
+    D.bullet("**Chapter 8** documents the continued pre-training methodology: the legal corpus and its "
+             "composition, the document-level split and the contamination it prevents, packing, the "
+             "training configuration set against the supervised one row by row, the evaluation design, "
+             "and the predictions registered before the run.")
+    D.bullet("**Chapter 9** reports the continued pre-training results: the training curve, perplexity "
+             "and next-token accuracy broken down by corpus source, the legal cloze probe under two "
+             "scoring regimes, the retention test on Dataset A and its decomposition, and the "
+             "pre-registered predictions scored against what happened.")
+    D.bullet("**Chapter 10** draws the two halves together into the dissociation that is the conclusion "
+             "of this project: supervised fine-tuning changes task format, continued pre-training "
+             "changes domain distribution, and the two are not substitutes.")
+    D.bullet("**Chapter 11** states the limitations of both experiments in full.")
+    D.bullet("**Appendix A** contains the complete pipeline source code and **Appendix B** the "
+             "supervised run configuration recovered from the training artifacts; **Appendix C** does "
+             "the same for the continued pre-training run, and **Appendix D** reproduces the Arabic "
+             "generation samples.")
 
 
 if __name__ == "__main__":
