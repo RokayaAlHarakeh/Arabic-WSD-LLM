@@ -281,7 +281,32 @@ in it.
 
 ---
 
-## 7. Gate
+## 7. Pre-registered predictions vs outcome
+
+Three predictions were committed to git in `CPT_EXECUTION_PLAN.md` §C.5 at
+**2026-09-19 11:46** (commit `24063ea`), four days before training began on 2026-09-23.
+The commit timestamp is the evidence; nothing here was written after seeing results.
+
+| Predicted | Observed | |
+|---|---|---|
+| Held-out legal perplexity → **down** | 806.47 → 4.14 | ✅ |
+| Next-token top-1 → **up** | 21.3% → 69.8% | ✅ |
+| Dataset A retention → **roughly flat** | 24.9% → **36.5%** (+11.6pp) | ❌ **wrong** |
+
+**The failed prediction is the most valuable result of the run.** Retention was expected to be
+flat because QLoRA freezes the base; instead general-task accuracy rose by 11.6 points. Having
+committed the prediction beforehand is what made that a noticed surprise rather than something
+rationalised in hindsight — and following it up produced the decomposition in §5, which is the
+strongest evidence for the dissociation thesis.
+
+The reasoning behind the wrong prediction was not wrong, only incomplete: QLoRA did freeze the
+base, and discrimination was indeed unchanged (47.4% → 48.6%, n.s.). What went unanticipated
+was that CPT would change the model's *output behaviour* — its willingness to terminate and to
+emit ID-shaped tokens — enough to move overall accuracy without moving task competence at all.
+
+---
+
+## 8. Gate
 
 Week-2 gate: CPT beats base on ≥ 2 of 3 metric families.
 
@@ -298,7 +323,7 @@ positive rather than flat.
 
 ---
 
-## 8. Limitations
+## 9. Limitations
 
 1. **Register, not reasoning.** Held-out perplexity of 4.14 is low because Lebanese gazette
    and legislation text is extremely formulaic — fixed openers, citation forms and closing
@@ -320,7 +345,7 @@ positive rather than flat.
 
 ---
 
-## 9. Reproducibility
+## 10. Reproducibility
 
 The document-level split reproduced **byte-identically on three machines** — Windows local,
 Colab Linux, RunPod Linux — from the committed scripts at seed 42: same 39,310 / 2,185 /
