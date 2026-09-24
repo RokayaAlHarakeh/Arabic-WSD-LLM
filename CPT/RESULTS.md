@@ -217,9 +217,11 @@ above.
 weights rather than a separate load. Greedy decoding, 60 new tokens.
 Full pairs: `run_gemma2_2b/qualitative.json`.
 
-**The dominant pattern: the base model's characteristic failure is degenerate repetition;
-the CPT model produces legal structure.** Almost every base continuation collapses into a
-loop within 20–30 tokens.
+**Under greedy decoding the base model's characteristic failure is degenerate repetition,
+while the CPT model produces legal structure.** 10 of 12 base continuations collapse into a
+loop within 20–30 tokens, against 1 of 12 for CPT. **§6.1 shows that most of that gap is
+an artifact of greedy decoding, not of training** — read the examples below for register and
+citation form, not as evidence that CPT repaired degenerate generation.
 
 ### For the chapter — four clearest contrasts
 
@@ -268,10 +270,44 @@ CPT reduced the looping but did not eliminate it. An appendix in which every exa
 the model reads as curated; the four quantitative results carry the argument, so these belong
 in it.
 
+---
+
+## 6.1 Is the repetition a decoding artifact? — measured
+
+§6's examples use greedy decoding, which is known to induce loops in small models. Rather
+than hedge about it, the same 12 prompts were re-run with nucleus sampling
+(`top_p=0.9`, `temperature=0.8`, seed 3407), 3 samples per prompt per condition.
+
+**Loop rate** = share of continuations whose most-repeated whitespace 4-gram occurs 3+ times.
+The same metric is applied to the greedy outputs, so the rows are comparable.
+Script: `scripts/sampled_repetition_check.py`. Data: `run_gemma2_2b/qualitative_sampled.json`.
+
+| Decoding | n per condition | Base loop rate | CPT loop rate |
+|---|---|---|---|
+| Greedy (`do_sample=False`) | 12 | **83.3 %** (10/12) | 8.3 % (1/12) |
+| Nucleus (`top_p=0.9`, `T=0.8`) | 36 | **8.3 %** (3/36) | 0.0 % (0/36) |
+
+**Switching the base model's decoder — with no training whatsoever — drops its loop rate from
+83.3 % to 8.3 %.** That single change accounts for almost the whole base-vs-CPT gap seen in
+§6. Under matched sampled decoding the remaining difference, 3/36 vs 0/36, is not
+statistically distinguishable (Fisher exact, two-tailed *p* = 0.24).
+
+### What this licenses, and what it does not
+
+- **Not supported:** “CPT fixed the base model's degenerate repetition.” The greedy comparison
+  confounds training with decoder choice, and the confound explains most of the effect.
+- **Supported:** under *identical* decoding, CPT changes *what* the model writes — register,
+  citation formulae, statute structure. That is the claim §6's examples illustrate, and it is
+  independently established by the quantitative results in §§2–5, which are teacher-forced or
+  constrained and therefore involve no decoding at all.
+
+This is the reason the headline metrics are perplexity, next-token accuracy and constrained
+cloze rather than generated text: none of them depends on a sampling decision.
+
 ### Two caveats to state
 
-1. **Greedy decoding.** `do_sample=False` makes repetition loops substantially more likely on
-   a 2B model. The loops are partly a decoding artifact, not purely a model deficiency.
+1. **Greedy decoding — measured, see §6.1.** The loops are largely a decoding artifact. Do
+   not claim CPT fixed the base model's repetition.
 2. **Possible memorisation.** `المرسوم رقم 14953 تاريخ 19/7/2005` appears in *both* (c) and
    (d). That may be a genuinely frequent decree in the corpus rather than recall of one
    document, but a 12-prompt sample cannot distinguish the two. **Frame these as illustrative
