@@ -626,7 +626,15 @@ def build(variant="sciences", out=OUT):
         "is degenerate on this dataset — it reduces to accuracy rescaled by a denominator the model "
         "inflates through the variety of its own errors. Error analysis shows the fine-tuned model produced "
         "**zero malformed outputs** across the test set and exhibits no positional bias.")
-    D.todo("Add the CPT results once Week 2 completes.")
+    D.p("The continued-pretraining experiment adapts the same base model to a 27.2-million-token corpus "
+        "of Lebanese legal Arabic in a single epoch. Held-out perplexity falls from **806.47 to 4.14** "
+        "and next-token accuracy rises from 21.3% to **69.8%**, improving on every one of the seven "
+        "corpus sources; a 300-item cloze probe constructed from held-out documents rises from 43.3% to "
+        "**84.3%** under constrained scoring, including on statutory-instrument items where the base "
+        "model performs no better than the majority baseline. Evaluated on the word-sense task it was "
+        "never trained for, the adapted model **does not degrade** — accuracy rises from 24.9% to 36.5% "
+        "— but decomposing that rise shows it to be **entirely a gain in format compliance** (52.5% to "
+        "75.1%) with no change in discrimination (47.4% to 48.6%, not significant).")
     D.p("Taken together, the two experiments support a dissociation: **supervised fine-tuning changes task "
         "format, while continued pretraining changes domain distribution**. The two objectives are not "
         "interchangeable, and the distinction holds independently of effect size.")
@@ -695,6 +703,8 @@ def build(variant="sciences", out=OUT):
     build_references(D)
     build_appendix_a(D)
     build_appendix_b(D)
+    build_appendix_c(D)
+    build_appendix_d(D)
 
     saved = D.save(out)
     print(f"Wrote {saved}")
@@ -878,6 +888,7 @@ if __name__ == "__main__":
     from build_appendices import build_conclusion, build_appendix_a, build_appendix_b
     # Chapters 8-11 -- the continued pre-training half
     from build_cpt_chapters import build_ch8, build_ch9, build_ch10, build_ch11
+    from build_cpt_appendices import build_appendix_c, build_appendix_d
     globals().update(dict(build_ch2=build_ch2, build_ch3=build_ch3, build_ch4=build_ch4,
                           build_ch5=build_ch5, build_ch6=build_ch6, build_ch7=build_ch7,
                           build_ch8=build_ch8, build_ch9=build_ch9,
@@ -886,7 +897,9 @@ if __name__ == "__main__":
                           build_references=build_references,
                           build_conclusion=build_conclusion,
                           build_appendix_a=build_appendix_a,
-                          build_appendix_b=build_appendix_b))
+                          build_appendix_b=build_appendix_b,
+                          build_appendix_c=build_appendix_c,
+                          build_appendix_d=build_appendix_d))
     # Two copies of the identical report, differing only in the title page.
     build("sciences", OUT)
     build("engineering", OUT2)

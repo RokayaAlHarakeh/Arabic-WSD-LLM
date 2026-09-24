@@ -81,9 +81,55 @@ def build_conclusion(D):
         "billion parameters as reliably as at eight.")
 
     # ---- what it does not establish ---------------------------------
-    D.h2("What this half of the project does not establish")
-    D.p("The findings above concern one dataset, one language variety, one model family and one training "
-        "run, and three qualifications follow from that.")
+    D.h2("What the continued pre-training experiment established")
+    D.p("The second experiment applied a different objective to a different corpus: one epoch of "
+        "continued pre-training on 27.2 million tokens of Lebanese legal Arabic, under a causal "
+        "language-modelling loss, evaluated against the untrained base model on metrics fixed in writing "
+        "four days beforehand.")
+    D.p("**Domain adaptation succeeded on every measure specified.** Held-out legal perplexity fell from "
+        "806.47 to 4.14; next-token top-1 accuracy rose from 21.3% to 69.8%, improving on **every one of "
+        "the seven corpus sources** rather than only the formulaic ones; and a 300-item cloze probe built "
+        "from held-out documents rose from 43.3% to 84.3% under constrained scoring. The most "
+        "informative category was not the largest: statutory-instrument prediction rose from 42.0%, "
+        "level with its own 40.0% majority baseline and therefore reflecting no knowledge at all, to "
+        "66.0% on items where the correct instrument had been removed from the context.")
+    D.p("**No forgetting occurred.** Evaluated zero-shot on Dataset A, the continued-pre-training model "
+        "scored 36.5% against the base model's 24.9%. This resolves, empirically and in the favourable "
+        "direction, the concern that a 2e-4 learning rate would prove destructive.")
+    D.p("**The most valuable single result was a failed prediction.** Retention had been predicted to "
+        "stay flat. It rose by 11.6 points, and decomposing that rise is what produced the central "
+        "finding of the project: the entire gain lies in the model's willingness to emit a parseable "
+        "answer, which moved from 52.5% to 75.1%, while its accuracy among answered items moved from "
+        "47.4% to 48.6% — 1.2 points against a pooled standard error of 2.8, with both confidence "
+        "intervals containing chance.")
+
+    D.h2("The conclusion the two experiments support together")
+    D.p("Taken together the two halves support a **dissociation**, argued in full in Chapter 10:")
+    D.bullet("**Supervised fine-tuning changed the task format.** The model learned to select a sense "
+             "identifier from candidates already present in its prompt. No knowledge was added because "
+             "none was required — which is why a 2B model matched published 8B results.")
+    D.bullet("**Continued pre-training changed the domain distribution.** The model learned legal "
+             "vocabulary, collocations and register, and gained no task ability whatsoever.")
+    D.p("The two objectives are therefore **not substitutes**, and the choice between them follows from "
+        "what is missing rather than from which is more powerful. The claim is deliberately framed as "
+        "*what each objective changes*, never as which performs better: the two runs differ in data, "
+        "objective and metric simultaneously, so no ranking across them would be meaningful. The "
+        "dissociation holds independently of effect size, which is what makes it the safe conclusion to "
+        "draw from a single run of each.")
+
+    D.h2("What this project does not establish")
+    D.p("The findings above concern one dataset, one legal corpus, one language variety, one model "
+        "family and one training run per objective. Chapter 11 states the limits in full; four "
+        "qualifications matter most.")
+    D.bullet("**The comparison between the two objectives is qualitative, not controlled.** No "
+             "instruction-tuned model was trained on the legal corpus at a matched token budget, so the "
+             "two runs differ on every axis at once. The dissociation argument is built to survive this "
+             "— it rests on the one measurement where both objectives are scored on the same task and "
+             "the same test set — but no claim of relative effectiveness is available.")
+    D.bullet("**Whether LoRA rank 16 limited the continued-pre-training result is unknown.** The natural "
+             "check, that the loss never plateaued, is unavailable: the cosine schedule drives the "
+             "learning rate to 1.5 × 10⁻⁸ by the final steps, so the flat tail of the curve is an "
+             "artefact of the schedule and carries no information about capacity.")
     D.bullet("The discrimination interpretation depends specifically on the **binary candidate structure "
              "of Dataset A**. It should not be carried over to benchmarks with larger sense inventories "
              "without being retested there.")
@@ -119,6 +165,16 @@ def build_conclusion(D):
         "**Audit a benchmark's metrics before trusting them.** The two most substantial contributions of "
         "this half of the project came not from training a better model, but from measuring what the "
         "dataset and its reported metrics actually do.",
+        "**Write the predictions down before the run, and date them.** Three predictions were committed "
+        "to version control four days before continued pre-training began. One was wrong, and because it "
+        "had been recorded it became a surprise that had to be explained rather than a result quietly "
+        "reinterpreted afterwards. Explaining it produced the central finding of the project.",
+        "**A number that looks like a result deserves more scrutiny than one that looks like a bug.** "
+        "Three separate measurement faults were caught this way, and each would have pointed at a "
+        "tidier conclusion than the truth: a document key that silently merged unrelated documents, an "
+        "answer extractor that reported 0.0% for a model that was in fact answering correctly, and a "
+        "qualitative comparison that credited training with an improvement 90% attributable to the "
+        "choice of decoder.",
     ]:
         D.bullet(t)
 
@@ -143,13 +199,19 @@ def build_conclusion(D):
         "**Evaluation on Dataset B and on benchmarks with larger candidate sets**, to test whether the "
         "discrimination interpretation survives once the sense inventory grows beyond two.",
         "**Multiple random seeds**, to replace a single-run figure with a mean and a variance.",
+        "**The full corpus rather than the subset.** This run used 27.2M of roughly 134M available "
+        "tokens in a single epoch, so every reported gain is a lower bound. Scaling the token budget is "
+        "the cheapest available way to test how much of the effect was left on the table.",
+        "**Training the embedding and output layers** (`modules_to_save`) on the legal corpus. The "
+        "measured tokenizer fertility of 2.337 tokens per word shows legal terms fragmenting heavily "
+        "into subword units; letting the embeddings move is the standard remedy, and was deliberately "
+        "held back here so that the adapter remained the only variable.",
     ]:
         D.bullet(t)
 
-    D.todo("Extend this conclusion with the continued-pretraining findings and the SFT/CPT dissociation "
-           "argument once Week 2 completes. The structure above is designed to take them without being "
-           "rewritten: the CPT results become a second subsection under 'What was established', and the "
-           "matched-budget control moves from Future Work into the results.")
+    D.p("The first of these is the single most valuable missing experiment, because it is the one that "
+        "would convert the central comparison of this project from a qualitative argument into a "
+        "controlled one.")
 
 
 # ======================================================================
