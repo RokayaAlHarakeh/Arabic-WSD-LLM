@@ -110,14 +110,52 @@ REGEX_PATTERNS = [
 ]
 
 
+RESPONSE_MARKER = "### Response:"
+
+
+def continuation_only(text):
+    """
+    The model's own output, with the echoed prompt removed.
+
+    generate() returns prompt + continuation, and the prompt lists EVERY candidate
+    sense ID. Any lenient search over the full decode would match those, so the
+    prompt must be cut off first.
+    """
+    idx = text.rfind(RESPONSE_MARKER)
+    return text[idx + len(RESPONSE_MARKER):] if idx >= 0 else text
+
+
 def extract_sense_id(text, sense_candidates):
-    """Return the first valid ID from text that exists in candidate senses."""
+    """
+    Return the first candidate sense ID the model committed to.
+
+    Two passes, because the two model families answer in different formats:
+
+    1. Bare ID on its own line -- what the SFT model was TRAINED to emit.
+    2. ID embedded in prose -- what an untrained model does, e.g.
+       "The correct sense for the target word 'هرب' is Sense ID: 14706, which means".
+
+    Pass 2 exists because pass 1 alone scores every untrained model at exactly 0.0%
+    while it is in fact answering, and often answering correctly. That made the CPT
+    retention check unmeasurable rather than merely low.
+
+    Pass 2 is lenient: it takes the first candidate ID appearing anywhere in the
+    continuation. That is safe here because the continuation is short (see
+    WSD_MAX_NEW_TOKENS) -- too short for a model to re-list the candidates before
+    answering -- but it would become unsafe with a large generation budget.
+    """
+    tail = continuation_only(text)
+
     for pattern in REGEX_PATTERNS:
-        matches = re.findall(pattern, text, flags=re.MULTILINE)
-        for match in matches:
+        for match in re.findall(pattern, tail, flags=re.MULTILINE):
             sid = int(match)
             if sid in sense_candidates:
                 return sid
+
+    for match in re.findall(r"\d+", tail):
+        sid = int(match)
+        if sid in sense_candidates:
+            return sid
     return None
 
 
