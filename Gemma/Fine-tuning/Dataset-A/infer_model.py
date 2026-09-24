@@ -46,7 +46,15 @@ else:
     model = AutoModelForCausalLM.from_pretrained(
         BASE_MODEL, dtype=torch.float16, attn_implementation="sdpa", token=HF_TOKEN,
     ).to("cuda")
-model = PeftModel.from_pretrained(model, ADAPTER_DIR)   # attach trained LoRA
+# WSD_ADAPTER_DIR=none scores the BASE model with no adapter. Needed for the CPT
+# retention baseline: the question is whether base+CPT is worse than base alone
+# zero-shot, and the 90.42% SFT figure is NOT that baseline -- it comes from a
+# model trained on the task.
+if ADAPTER_DIR and ADAPTER_DIR.strip().lower() != "none":
+    model = PeftModel.from_pretrained(model, ADAPTER_DIR)   # attach trained LoRA
+    print(f"adapter attached: {ADAPTER_DIR}")
+else:
+    print("no adapter - scoring the BASE model")
 model.eval()
 
 EOS = tokenizer.eos_token
