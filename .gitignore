@@ -1,0 +1,5 @@
+
+# thesis_word build outputs (regenerate with build_docx.py)
+thesis_word/*.docx
+thesis_word/_backup_*/
+thesis_word/__pycache__/
