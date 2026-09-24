@@ -122,8 +122,15 @@ def extract_sense_id(text, sense_candidates):
 
 
 # ── 3. Prediction helper ────────────────────────────────────────────────
+# 128 was harmless for the SFT model, which was trained to emit the ID then EOS and so
+# stops after a token or two. An UNTRAINED model (base, or a CPT adapter that never saw
+# this task) has no reason to stop, so it generates the full budget on every item --
+# 5.5 s/item, ~4.7 h for the 3,110-item test set. The ID is extracted by regex from the
+# first few tokens, so a small budget costs nothing and is ~8x faster.
+_MAX_NEW = int(os.environ.get("WSD_MAX_NEW_TOKENS", "128"))
+
 GEN_CONFIG = GenerationConfig(
-    max_new_tokens = 128,        # one or two tokens is enough for an ID
+    max_new_tokens = _MAX_NEW,
     do_sample      = False,
     eos_token_id   = EOS_ID,
     pad_token_id   = EOS_ID,
