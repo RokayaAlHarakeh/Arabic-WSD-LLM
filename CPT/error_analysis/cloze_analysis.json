@@ -1,0 +1,81 @@
+{
+  "n": 300,
+  "base_accuracy": 43.3,
+  "cpt_accuracy": 84.3,
+  "contingency": {
+    "both_correct": 117,
+    "cpt_gained": 136,
+    "cpt_regressed": 13,
+    "both_wrong": 34
+  },
+  "mcnemar_exact_p": 5.171576232995757e-27,
+  "by_category": {
+    "defined_term": {
+      "n": 100,
+      "base": 65.0,
+      "cpt": 92.0,
+      "regressions": 3
+    },
+    "statute_term": {
+      "n": 100,
+      "base": 42.0,
+      "cpt": 66.0,
+      "regressions": 9
+    },
+    "collocation": {
+      "n": 100,
+      "base": 23.0,
+      "cpt": 95.0,
+      "regressions": 1
+    }
+  },
+  "by_source": {
+    "gazette_legal_core": {
+      "n": 100,
+      "base": 40.0,
+      "cpt": 89.0,
+      "regressions": 4
+    },
+    "legislations": {
+      "n": 98,
+      "base": 37.8,
+      "cpt": 80.6,
+      "regressions": 5
+    },
+    "gazette_section2_sample": {
+      "n": 44,
+      "base": 36.4,
+      "cpt": 86.4,
+      "regressions": 1
+    },
+    "related_provisions": {
+      "n": 25,
+      "base": 60.0,
+      "cpt": 92.0,
+      "regressions": 0
+    },
+    "adl_rulings": {
+      "n": 20,
+      "base": 65.0,
+      "cpt": 65.0,
+      "regressions": 3
+    },
+    "bibliographic_rulings": {
+      "n": 11,
+      "base": 63.6,
+      "cpt": 81.8,
+      "regressions": 0
+    },
+    "associated_studies_ar": {
+      "n": 2,
+      "base": 100.0,
+      "cpt": 100.0,
+      "regressions": 0
+    }
+  },
+  "cpt_error_categories": {
+    "collocation": 5,
+    "statute_term": 34,
+    "defined_term": 8
+  }
+}

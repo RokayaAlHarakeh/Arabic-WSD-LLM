@@ -1,0 +1,14 @@
+﻿id,category,source,n_candidates,answer,base_pred,cpt_pred,base_correct,cpt_correct,base_free_pred,cpt_free_pred,base_free_correct,cpt_free_correct,outcome
+35,statute_term,gazette_legal_core,4,المرسوم,المرسوم,التعميم,1,0,مرسوم,مرسوم,0,0,CPT regressed
+46,defined_term,adl_rulings,24,رقم,رقم,الاشتراعي,1,0,رقم,رقم,1,1,CPT regressed
+113,statute_term,legislations,4,المرسوم,المرسوم,التعميم,1,0,وزارة,مرسوم,0,0,CPT regressed
+150,collocation,gazette_section2_sample,20,المرسوم,المرسوم,اقتراح,1,0,طلب,اقتراح,0,0,CPT regressed
+187,defined_term,legislations,24,رقم,رقم,الاشتراعي,1,0,رقم,ل,1,0,CPT regressed
+205,statute_term,gazette_legal_core,4,المرسوم,المرسوم,التعميم,1,0,مرسوم,مرسوم,0,0,CPT regressed
+220,statute_term,gazette_legal_core,4,المرسوم,المرسوم,التعميم,1,0,وزارة,مرسوم,0,0,CPT regressed
+222,defined_term,adl_rulings,24,رقم,رقم,الاشتراعي,1,0,رقم,رقم,1,1,CPT regressed
+238,statute_term,adl_rulings,4,القانون,القانون,المرسوم,1,0,قانون,المرسوم,0,0,CPT regressed
+239,statute_term,gazette_legal_core,4,المرسوم,المرسوم,التعميم,1,0,مرسوم,مرسوم,0,0,CPT regressed
+243,statute_term,legislations,4,المرسوم,المرسوم,التعميم,1,0,وزارة,مرسوم,0,0,CPT regressed
+249,statute_term,legislations,4,المرسوم,المرسوم,التعميم,1,0,مرسوم,مرسوم,0,0,CPT regressed
+275,statute_term,legislations,4,المرسوم,المرسوم,التعميم,1,0,وزارة,مرسوم,0,0,CPT regressed

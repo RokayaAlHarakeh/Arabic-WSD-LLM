@@ -437,6 +437,55 @@ def build_ch9(D):
                "merely a defect: an anti-copying filter that is not checked against a baseline can "
                "manufacture an arbitrarily large apparent improvement.")
 
+    D.h3("9.3.3  Paired analysis: is the improvement significant?")
+    D.p("Both models were scored on the **same 300 items, aligned by item identifier**, so the "
+        "comparison is paired and the improvement can be tested rather than merely reported. This is "
+        "possible here and was not possible for the comparison against published models in Chapter 7, "
+        "where the per-item predictions are not released.")
+    D.table([
+        ["", "CPT correct", "CPT wrong", "Total"],
+        ["Base correct", "117", "**13**", "130"],
+        ["Base wrong", "**136**", "34", "170"],
+        ["Total", "253", "47", "300"],
+    ], widths=[3.4, 3.2, 3.2, 2.6], align_right={1, 2, 3})
+    D.caption("Paired outcomes on the 300 cloze items under constrained scoring.")
+    D.p("The two off-diagonal cells are what the test uses. Continued pre-training **gained 136 items "
+        "and lost 13** — a ratio of more than ten to one. Under the null hypothesis that training had "
+        "no effect, each of those 149 discordant items would be an even coin toss.")
+    D.keypoint("**McNemar's exact test gives two-sided *p* < 10⁻¹².** The improvement from 43.3% to "
+               "84.3% is not attributable to sampling variation. Confidence intervals do not overlap "
+               "either: 37.8–49.0% for the base model against 79.8–88.0% for the adapted one.")
+    D.p("The 13 regressions are worth stating rather than hiding. Nine of them are `statute_term` items, "
+        "the category with the highest majority baseline and the smallest gain — consistent with a model "
+        "that has learned a strong prior over which instrument is most commonly cited and occasionally "
+        "applies it where the less common instrument was correct.")
+
+    D.h3("9.3.4  What the adapted model still gets wrong")
+    D.p("Forty-seven items remain incorrect, and they are not evenly distributed.")
+    D.table([
+        ["Category", "CPT errors", "Share of all errors", "CPT accuracy"],
+        ["statute_term", "34", "72%", "66.0%"],
+        ["defined_term", "8", "17%", "92.0%"],
+        ["collocation", "5", "11%", "95.0%"],
+    ], widths=[3.6, 2.8, 3.6, 3.0], align_right={1, 2, 3})
+    D.caption("Distribution of the 47 remaining errors across the three probe categories.")
+    D.p("**Seventy-two percent of what remains is statutory-instrument prediction** — precisely the "
+        "category that requires knowing which legal instrument a citation names rather than how legal "
+        "text is shaped. That is the expected residual: formulaic phrasing is what a domain language "
+        "model absorbs first and most completely, while instrument identity is closer to factual "
+        "knowledge and is bounded by how often each instrument appears in 27 million tokens.")
+    D.p("Thirty-four items were answered incorrectly by **both** models. These represent a hard core "
+        "that one epoch over this corpus did not reach, and they are the natural target for the larger "
+        "token budget proposed in the future work.")
+    D.p("One source is an exception worth recording: `adl_rulings` scores 65.0% before and after, the "
+        "only source showing no gain at all, and it contributes 3 of the 13 regressions. With n = 20 "
+        "probe items this is not individually interpretable, and it is reported rather than interpreted. "
+        "It is also the source where next-token accuracy *did* improve, by 31.8 points, so the two "
+        "measures disagree on it — which is itself a reminder that the two are measuring different "
+        "things.")
+    D.p("The per-item table, the errors, and the regressions are reproduced as CSV files in the "
+        "repository under `CPT/error_analysis/`, produced by `scripts/analyze_cloze_errors.py`.")
+
     # ---- 9.4 -------------------------------------------------------
     D.h2("9.4  Reference figures from the 12B run")
     D.p("The supplied documentation reports a Gemma 4-12B run on the **full** corpus. Those figures are "
