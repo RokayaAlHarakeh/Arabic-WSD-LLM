@@ -8,7 +8,7 @@
 def build_ch2(D):
     D.h1("Chapter 2 — Transformers and Language Models")
     D.p("This chapter establishes the architectural background required by the rest of the report. It is "
-        "deliberately selective. Rather than rederiving the Transformer in full, each section is included "
+        "deliberately selective. Rather than rederiving the Transformer [18] in full, each section is included "
         "because a later design choice or result depends on it: the attention mechanism explains why a "
         "contextual model can perform word sense disambiguation at all; the specific architecture of "
         "Gemma 2 determines the adapter parameter counts of Chapter 4; tokenizer behaviour on Arabic bounds "
@@ -122,10 +122,10 @@ def build_ch2(D):
         "it never saw in training, which is fatal for a morphologically productive language. A "
         "character-level vocabulary generalises perfectly but produces sequences so long that the quadratic "
         "cost of attention becomes prohibitive.")
-    D.p("Byte Pair Encoding (BPE) resolves this by learning a vocabulary from data. Beginning from "
+    D.p("Byte Pair Encoding (BPE) [24] resolves this by learning a vocabulary from data. Beginning from "
         "individual characters, it repeatedly merges the most frequent adjacent pair into a new symbol, for "
         "a fixed number of merges. Frequent words survive as single tokens; rare words decompose into "
-        "frequent fragments. SentencePiece extends this by operating directly on raw text, treating "
+        "frequent fragments. SentencePiece [25] extends this by operating directly on raw text, treating "
         "whitespace as an ordinary character, which removes the dependence on a language-specific "
         "pre-tokenizer. Gemma 2 uses a SentencePiece vocabulary of 256,128 entries.")
     D.p("The critical property is that the vocabulary is learned from a *corpus*. If that corpus is "
@@ -149,7 +149,7 @@ def build_ch2(D):
         "and therefore a smaller effective context in words.")
     D.p("To quantify this for the model and data used here, the Gemma 2 tokenizer was applied to the Arabic "
         "text of the WSD dataset and, for comparison, to an English corpus of the same measured extent. The "
-        "English reference is WikiText-2, a standard benchmark of Wikipedia prose. Words were delimited by "
+        "English reference is WikiText-2 [26], a standard benchmark of Wikipedia prose. Words were delimited by "
         "whitespace and no morphological analyser was used, so the reported figures are a conservative "
         "*lower* bound on true morpheme-level fragmentation.")
     D.table([
@@ -183,7 +183,7 @@ def build_ch2(D):
         "1,024-token limit**, and in fact every example fits within 768. The configured maximum sequence "
         "length was therefore generous rather than restrictive for this dataset.")
     D.p("The measurement remains load-bearing for two other parts of the report. It is the reason the "
-        "alternative benchmark, SALMA (Dataset B), was not used: its sequences reach approximately 4,096 "
+        "alternative benchmark, SALMA (Dataset B) [4], was not used: its sequences reach approximately 4,096 "
         "tokens, and at this fertility the memory required for attention over such sequences exceeds the "
         "compute budget available. It also anticipates the continued-pretraining experiment, where legal "
         "Arabic — with its statute references, fixed formulae, and specialised terminology — is expected to "
@@ -225,12 +225,12 @@ def build_ch2(D):
     D.h2("2.5  Encoder and decoder architectures for classification")
     D.p("Two architectural families have been applied to word sense disambiguation, and the distinction "
         "positions the contribution of this report.")
-    D.p("**Bidirectional encoders** such as BERT remove the causal mask, so every token attends to the "
+    D.p("**Bidirectional encoders** such as BERT [19] remove the causal mask, so every token attends to the "
         "entire sequence in both directions. Trained with masked language modelling, they produce "
         "representations that are then consumed by a task-specific classification head. For WSD this is a "
         "natural fit: the target word can attend to context on both sides, and the sense inventory maps "
-        "onto a fixed label set. This was the dominant approach for Arabic WSD, adopted by AraBERT, "
-        "ArabGlossBERT, and the original El-Razzaz method.")
+        "onto a fixed label set. This was the dominant approach for Arabic WSD, adopted by AraBERT [14], "
+        "ArabGlossBERT [3], and the original El-Razzaz method.")
     D.p("**Decoder-only models** retain the causal mask and are trained purely to predict the next token. "
         "They perform classification not by attaching a head but by *generating* the answer as text. The "
         "advantages are that no architectural modification is required and that the same model serves any "
@@ -249,7 +249,7 @@ def build_ch2(D):
     D.p("This chapter has established the machinery on which the remainder of the report depends. "
         "Self-attention produces context-conditioned token representations, which is the property that "
         "makes word sense disambiguation tractable for a neural model. The specific configuration of "
-        "Gemma 2-2B — 26 layers, grouped-query attention with asymmetric projection widths, and a "
+        "Gemma 2-2B [20] — 26 layers, grouped-query attention [23] with asymmetric projection widths, and a "
         "590-million-parameter tied embedding matrix — determines the adapter parameter arithmetic of "
         "Chapter 4 and the configuration decisions for continued pretraining. A measurement of tokenizer "
         "fertility established that Arabic costs 1.79× more subword tokens per word than English under this "
@@ -346,7 +346,9 @@ def build_ch3(D):
     D.p("Normalisation reduces sparsity and improves string matching, but it carries a cost that is "
         "particularly relevant here. The final row of the table removes exactly the marks that disambiguate. "
         "In a corpus where some diacritics survive — dictionary glosses often retain them — stripping "
-        "diacritics destroys signal the model could otherwise have used.")
+        "diacritics destroys signal the model could otherwise have used. The converse strategy — "
+        "restoring diacritics selectively — has itself been used as a homograph-disambiguation "
+        "method [13].")
     D.keypoint("**Design decision taken in this project.** Model input was **not** normalised. The raw "
                "dataset text was passed to the tokenizer exactly as published, preserving any diacritics "
                "present and preserving comparability with the study being replicated. Normalisation was "
@@ -361,8 +363,8 @@ def build_ch3(D):
     D.p("Two families of pretrained model are available for Arabic, and the choice between them frames this "
         "work.")
     D.p("**Arabic-specific models** are pretrained predominantly or exclusively on Arabic text. AraBERT is "
-        "the most widely used encoder, and CAMeLBERT systematically varies the language variety, model "
-        "size, and task type to study their interaction. On the generative side, Jais and ALLaM are "
+        "the most widely used encoder, and CAMeLBERT [15] systematically varies the language variety, model "
+        "size, and task type to study their interaction. On the generative side, Jais [17] and ALLaM [16] are "
         "large models trained with a strong Arabic focus. The advantage of this family is alignment: their "
         "tokenizers are fitted to Arabic and therefore fragment it far less, and their pretraining data "
         "matches the target language.")
@@ -410,12 +412,12 @@ def build_ch3(D):
 
     D.h3("3.5.3  The Arabic WSD landscape")
     D.p("Reported results on Arabic WSD span a wide range, partly because the datasets differ substantially "
-        "in construction. On the El-Razzaz benchmark used here, the ORCA evaluation suite reports a best "
-        "F1 of 76.68% using AraBERT v2, establishing the encoder baseline. GPTAraEval evaluated ChatGPT on "
+        "in construction. On the El-Razzaz benchmark used here, the ORCA evaluation suite [10] reports a best "
+        "F1 of 76.68% using AraBERT v2, establishing the encoder baseline. GPTAraEval [11] evaluated ChatGPT on "
         "the same data and reached a best F1 of 53.49% in a three-shot setting, a substantial gap that "
         "illustrates the limits of general-purpose prompting on fine-grained disambiguation. More recently, "
-        "AraReasoner reported up to 86.27% F1 with a fine-tuned 14B reasoning model.")
-    D.p("On the SALMA corpus, the ArabicNLU 2024 shared task established a Target Sense Verification "
+        "AraReasoner [12] reported up to 86.27% F1 with a fine-tuned 14B reasoning model.")
+    D.p("On the SALMA corpus, the ArabicNLU 2024 shared task [5] established a Target Sense Verification "
         "baseline at 84.2% accuracy, which no participating system surpassed; the best submission reached "
         "77.82% using a 70B instruction-tuned model with structural prompting. EnhancedBERT offers a "
         "complementary ensemble approach.")
@@ -438,9 +440,9 @@ def build_ch3(D):
          "News and media"],
         ["C — Kaddoura & Nassar (2024a)", "3.7K sentences", "Sense labelling", "Manual + GPT-3.5",
          "Web, multi-domain"],
-        ["D — WSDTN (Saidi et al., 2023)", "27.5K sentences", "Gloss-based", "Fully manual",
+        ["D — WSDTN (Saidi et al., 2023) [9]", "27.5K sentences", "Gloss-based", "Fully manual",
          "DHDA dictionary"],
-        ["E — KSAA-CAD (2024)", "28K pairs", "Gloss, binary", "Semi-automatic", "CAD dictionary"],
+        ["E — KSAA-CAD (2024) [8]", "28K pairs", "Gloss, binary", "Semi-automatic", "CAD dictionary"],
         ["F — Al-Hajj & Jarrar (2021)", "167K pairs", "Gloss, true/false", "Semi-automatic",
          "Arabic Ontology"],
     ], widths=[4.4, 2.6, 3.0, 2.8, 3.0])
@@ -453,7 +455,7 @@ def build_ch3(D):
            "each other on its size, so open the paper and confirm the sentence count, the annotation "
            "method and the source dictionary. Every other row is from the replicated study's own survey "
            "table and is safe.")
-    D.p("**Dataset A**, used throughout this report, was introduced by El-Razzaz et al. to address the "
+    D.p("**Dataset A**, used throughout this report, was introduced by El-Razzaz et al. [2] to address the "
         "shortage of public gloss-based Arabic resources. It provides 15,549 senses for 5,347 unique words, "
         "extracted from a Modern Standard Arabic dictionary, and frames disambiguation as a binary decision "
         "between a correct and an incorrect gloss for a word in context. The replicated study partitions it "
@@ -573,12 +575,12 @@ def build_ch4(D):
 
     D.h2("4.3  LoRA")
     D.h3("4.3.1  The low intrinsic rank hypothesis")
-    D.p("The theoretical basis predates LoRA itself. Aghajanyan et al. showed that fine-tuning objectives "
+    D.p("The theoretical basis predates LoRA itself. Aghajanyan et al. [27] showed that fine-tuning objectives "
         "possess a low *intrinsic dimensionality*: a pretrained model can be adapted to a downstream task "
         "by optimising within a subspace far smaller than its full parameter space, and larger pretrained "
         "models exhibit *lower* intrinsic dimensionality, not higher. The interpretation is that "
         "pretraining has already produced the required capabilities, and fine-tuning largely reorients "
-        "rather than rebuilds them. LoRA operationalises this observation by constraining the weight update "
+        "rather than rebuilds them. LoRA [28] operationalises this observation by constraining the weight update "
         "to be low-rank by construction.")
 
     D.h3("4.3.2  The decomposition")
@@ -650,7 +652,7 @@ def build_ch4(D):
                "full coverage of the linear layers, and — because legal Arabic introduces terminology the "
                "tokenizer fragments heavily — trainable embeddings. That configuration change is a "
                "principled consequence of the rank bound, not an unexplained switch.")
-    D.p("A recent refinement, DoRA, decomposes the pretrained weight into magnitude and direction and "
+    D.p("A recent refinement, DoRA [36], decomposes the pretrained weight into magnitude and direction and "
         "applies the low-rank update only to the direction, reporting improved performance at equal "
         "parameter budget. It was not used here, but is noted as a natural extension.")
 
@@ -669,7 +671,7 @@ def build_ch4(D):
         "other weight is compressed into a handful of the available levels, destroying resolution across "
         "the tensor. The remedy is to quantize in **blocks** — typically 64 elements — each with its own "
         "scale, so an outlier degrades only its own block.")
-    D.p("This is not a hypothetical concern. Dettmers et al. showed that large transformers develop "
+    D.p("This is not a hypothetical concern. Dettmers et al. [30] showed that large transformers develop "
         "*emergent outlier features*: specific hidden dimensions whose activations are orders of magnitude "
         "larger than the rest, appearing consistently once models pass a certain scale. Naive uniform "
         "quantization degrades such models badly, and block-wise schemes exist precisely to contain the "
@@ -678,7 +680,7 @@ def build_ch4(D):
     expand_4_4(D)
 
     D.h2("4.5  QLoRA")
-    D.p("QLoRA combines a quantized frozen base with trainable LoRA adapters. It contributed three distinct "
+    D.p("QLoRA [29] combines a quantized frozen base with trainable LoRA adapters. It contributed three distinct "
         "techniques, described here in full; Section 4.5.4 states which of them this project actually used.")
     D.h3("4.5.1  4-bit NormalFloat (NF4)")
     D.p("Pretrained neural network weights are approximately zero-centred and normally distributed. A "
@@ -747,7 +749,7 @@ def build_ch4(D):
     D.p("In instruction fine-tuning the training sequence contains both the prompt and the desired "
         "response. Two conventions exist: computing the loss over the entire sequence, or masking the "
         "prompt so that gradient is received only from the response tokens.")
-    D.p("The run in this work used the **full sequence**, following the original Alpaca recipe. The "
+    D.p("The run in this work used the **full sequence**, following the original Alpaca recipe [38]. The "
         "consequences can be quantified exactly. Measured with the Gemma 2 tokenizer, the fixed instruction "
         "together with its template wrapper occupies 112 tokens, while the mean complete training example "
         "is 216.1 tokens.")
@@ -792,7 +794,7 @@ def build_ch4(D):
 
     D.h3("4.6.4  Domain-adaptive and task-adaptive pretraining")
     D.p("The practice of continuing pretraining on in-domain text before task fine-tuning was systematised "
-        "by Gururangan et al., who distinguish *domain-adaptive pretraining* (DAPT) on a broad domain "
+        "by Gururangan et al. [37], who distinguish *domain-adaptive pretraining* (DAPT) on a broad domain "
         "corpus from *task-adaptive pretraining* (TAPT) on the unlabelled task data itself, and report "
         "gains from both across several domains. The continued-pretraining experiment in this report is a "
         "DAPT setting: a general Lebanese legal corpus, unrelated to the downstream evaluation task.")
@@ -825,7 +827,7 @@ def build_ch5(D):
     D.p("Noureldien, Mohamed and Attallah (University of Khartoum), published at the Third Arabic Natural "
         "Language Processing Conference in 2025, benchmark generative large language models for Arabic word "
         "sense disambiguation under both zero-shot and fine-tuned conditions. Their evaluation covers one "
-        "proprietary model, GPT-4o, and three open-weight models — LLaMA 3.1-8B, Qwen 2.5-7B and "
+        "proprietary model, GPT-4o, and three open-weight models — LLaMA 3.1-8B [21], Qwen 2.5-7B [22] and "
         "Gemma 2-9B — across two public datasets.")
 
     D.h3("5.1.1  Setup")
@@ -904,7 +906,7 @@ def build_ch5(D):
     D.p("ORCA, a broad Arabic language-understanding benchmark spanning sixty datasets and seven task "
         "types, includes this WSD dataset and reports a best F1 of 76.68% with AraBERT v2. That figure is "
         "the strongest published encoder result on the benchmark and is the natural point of comparison "
-        "for any generative approach. EnhancedBERT, by Kaddoura and Nassar, offers a complementary "
+        "for any generative approach. EnhancedBERT, by Kaddoura and Nassar [6, 7], offers a complementary "
         "feature-rich ensemble.")
 
     # ---- 5.3 -------------------------------------------------------
@@ -976,10 +978,15 @@ def build_ch5(D):
 
 def build_references(D):
     D.h1("References")
-    D.todo("Word does not manage citations automatically here. Two options: (a) use Word's References tab "
-           "→ Manage Sources, and insert citations with Insert Citation; or (b) use Zotero or Mendeley with "
-           "the Word plug-in. Either way, verify every entry below against the published paper before "
-           "submitting — several were reconstructed and are marked.")
+    D.p("Citations in the text are numbered and refer to this list. The numbering is fixed by the order "
+        "below, which is grouped by topic rather than by first appearance, so inserting a new entry "
+        "renumbers the ones after it — add new references at the end of their group and check the "
+        "markers that follow. All forty entries are cited at least once in the text.")
+    D.todo("Two entries still need your eyes. The WSDTN row of Table 3.2 should be checked against "
+           "Saidi et al. [9], for the reason given in the note beside that table. And reference [12], "
+           "AraReasoner, is a preprint — if it has since appeared at a venue, replace the arXiv "
+           "identifier with the published reference. Everything else here has been checked against the "
+           "published source.")
     refs = [
         # --- The replicated study ------------------------------------------------
         "Noureldien, Y., Mohamed, A., Attallah, F. (2025). Zero-Shot and Fine-Tuned Evaluation of "
@@ -2109,7 +2116,7 @@ def expand_4_2(D):
     D.p("The table above compresses each method to a single line. Because the choice of LoRA is a claim "
         "that the alternatives are worse for this application, the mechanisms are set out here.")
 
-    D.p("**Adapter layers.** Small trainable modules are inserted after the attention and feed-forward "
+    D.p("**Adapter layers** [31]**.** Small trainable modules are inserted after the attention and feed-forward "
         "sub-layers of each block. Each is a bottleneck: a down-projection to a small dimension, a "
         "non-linearity, an up-projection back, and a residual connection:")
     D.eq("h ← h + W_up · σ( W_down · h )")
@@ -2118,10 +2125,10 @@ def expand_4_2(D):
         "every forward pass must traverse it. This increases the sequential depth of the network and adds "
         "latency that cannot be removed after training, which matters for any deployed system.")
 
-    D.p("**Prefix tuning.** Rather than modifying weights, a set of trainable vectors is prepended to the "
+    D.p("**Prefix tuning** [32]**.** Rather than modifying weights, a set of trainable vectors is prepended to the "
         "key and value sequences at every attention layer. The model attends to these virtual positions as "
         "though they were real tokens, so they steer behaviour without touching a single pretrained "
-        "parameter. **Prompt tuning** is the simpler variant that prepends learned vectors only at the "
+        "parameter. **Prompt tuning** [33] is the simpler variant that prepends learned vectors only at the "
         "input embedding layer.")
     D.p("Both share a defect that is particularly costly here. The virtual tokens occupy positions in the "
         "attention computation, so they consume part of the context window permanently. Given the Arabic "
@@ -2129,12 +2136,12 @@ def expand_4_2(D):
         "an English word costs — spending further context on virtual tokens is an unattractive trade. Both "
         "methods are also reported to be sensitive to initialisation and harder to optimise reliably.")
 
-    D.p("**BitFit** trains only the bias terms of the network, freezing every weight matrix. The parameter "
+    D.p("**BitFit** [34] trains only the bias terms of the network, freezing every weight matrix. The parameter "
         "count is remarkably small and inference is unaffected. It is inapplicable here for a concrete "
         "reason: as noted in Section 6.4.2, **Gemma 2's linear projections carry no bias terms at all**, "
         "so there is nothing for BitFit to train.")
 
-    D.p("**(IA)³** learns three vectors per layer that rescale the keys, the values, and the intermediate "
+    D.p("**(IA)³** [35] learns three vectors per layer that rescale the keys, the values, and the intermediate "
         "feed-forward activations by element-wise multiplication. The parameter count is lower than LoRA "
         "by an order of magnitude and the rescaling can be folded into adjacent weights, so inference cost "
         "is minimal. Its expressivity is correspondingly limited: a per-dimension scaling cannot represent "

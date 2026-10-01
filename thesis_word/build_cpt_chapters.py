@@ -164,7 +164,7 @@ def build_ch8(D):
         "quantized; only the low-rank adapter matrices are trained.")
     D.p("The intended framework, Unsloth, could not be used: the available build was incompatible with "
         "the transformers version required by the Blackwell-generation GPU, and an earlier run on that "
-        "stack had produced a corrupted adapter. Training therefore drives `transformers`, `peft` and "
+        "stack had produced a corrupted adapter. Training therefore drives `transformers` [39], `peft` [40] and "
         "`bitsandbytes` directly. This costs some throughput and changes no aspect of the method.")
     D.p("**Why a rented GPU rather than the hosted notebook used for Chapter 6.** The supervised run "
         "completed on a free-tier notebook GPU, and the original plan was to run continued pre-training "

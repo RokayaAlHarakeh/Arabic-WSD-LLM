@@ -797,7 +797,7 @@ def build_ch1(D):
     # ---- 1.3 -------------------------------------------------------
     D.h2("1.3  Objectives and scope")
     D.p("The project has four objectives:")
-    D.bullet("Reproduce the Gemma result of the replicated study using Gemma 2-2B in place of Gemma 2-9B, "
+    D.bullet("Reproduce the Gemma result of the replicated study [1] using Gemma 2-2B in place of Gemma 2-9B, "
              "under QLoRA on a single free-tier GPU.")
     D.bullet("Establish the trivial and non-neural baselines that the published literature on this dataset "
              "does not report, so that the reported accuracies can be interpreted.")
