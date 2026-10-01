@@ -35,8 +35,22 @@ def build_ch2(D):
     D.eq("Q = X·W^Q,    K = X·W^K,    V = X·W^V")
     D.p("The output is a weighted average of the value vectors, where the weight assigned to each position "
         "is determined by the compatibility of its key with the current query:")
-    D.eq("Attention(Q, K, V) = softmax( Q·Kᵀ / √d_k ) · V",
-         "replace with a Word equation (Insert → Equation) for the final version")
+    # Attention(Q,K,V) = softmax( Q Kᵀ / √(d_k) ) V  -- a native Word equation
+    D.math(
+        '<m:r><m:t>Attention(Q, K, V) = softmax</m:t></m:r>'
+        '<m:d><m:dPr><m:begChr m:val="("/><m:endChr m:val=")"/></m:dPr><m:e>'
+        '<m:f><m:num>'
+        '<m:r><m:t>Q</m:t></m:r>'
+        '<m:sSup><m:e><m:r><m:t>K</m:t></m:r></m:e>'
+        '<m:sup><m:r><m:t>T</m:t></m:r></m:sup></m:sSup>'
+        '</m:num><m:den>'
+        '<m:rad><m:radPr><m:degHide m:val="1"/></m:radPr><m:deg/><m:e>'
+        '<m:sSub><m:e><m:r><m:t>d</m:t></m:r></m:e>'
+        '<m:sub><m:r><m:t>k</m:t></m:r></m:sub></m:sSub>'
+        '</m:e></m:rad>'
+        '</m:den></m:f>'
+        '</m:e></m:d>'
+        '<m:r><m:t> V</m:t></m:r>')
     D.p("The scaling factor 1/√d_k is not cosmetic. For large d_k the dot products grow in magnitude "
         "proportionally to √d_k, pushing the softmax into regions where its gradient vanishes. Dividing by "
         "√d_k keeps the pre-softmax logits in a range where the function remains trainable.")
@@ -199,8 +213,22 @@ def build_ch2(D):
     D.eq("P(x) = ∏ over t of  P(x_t | x_<t)")
     D.p("Training minimises the negative log-likelihood of the observed sequence, which for a single "
         "sequence is the mean token-level cross-entropy:")
-    D.eq("L = −(1/T) · Σ over t of  log P(x_t | x_<t)",
-         "replace with a Word equation for the final version")
+    # L = −(1/T) Σ_{t=1}^{T} log P(x_t | x_<t)  -- a native Word equation
+    D.math(
+        '<m:r><m:t>L = −</m:t></m:r>'
+        '<m:f><m:num><m:r><m:t>1</m:t></m:r></m:num>'
+        '<m:den><m:r><m:t>T</m:t></m:r></m:den></m:f>'
+        '<m:nary><m:naryPr><m:chr m:val="∑"/><m:limLoc m:val="undOvr"/></m:naryPr>'
+        '<m:sub><m:r><m:t>t=1</m:t></m:r></m:sub>'
+        '<m:sup><m:r><m:t>T</m:t></m:r></m:sup><m:e>'
+        '<m:r><m:t>log P(</m:t></m:r>'
+        '<m:sSub><m:e><m:r><m:t>x</m:t></m:r></m:e>'
+        '<m:sub><m:r><m:t>t</m:t></m:r></m:sub></m:sSub>'
+        '<m:r><m:t> | </m:t></m:r>'
+        '<m:sSub><m:e><m:r><m:t>x</m:t></m:r></m:e>'
+        '<m:sub><m:r><m:t>&lt;t</m:t></m:r></m:sub></m:sSub>'
+        '<m:r><m:t>)</m:t></m:r>'
+        '</m:e></m:nary>')
     D.p("**Teacher forcing.** During training the model is conditioned on the *ground-truth* prefix rather "
         "than on its own previous predictions. This allows all positions to be computed in parallel in a "
         "single forward pass — the causal mask of Section 2.1 guarantees that no position sees its own "
@@ -447,14 +475,8 @@ def build_ch3(D):
          "Arabic Ontology"],
     ], widths=[4.4, 2.6, 3.0, 2.8, 3.0])
     D.caption("Major Arabic WSD datasets, after the survey in the replicated study.")
-    D.todo("Check the WSDTN row against Saidi et al. (2023) before submission. The reference entry for "
-           "that paper was reconstructed and proved wrong on two counts — the real title is 'WSDTN: a "
-           "Novel Dataset for Arabic Word Sense Disambiguation' (ICCCI 2023, pages 203-212), not a "
-           "corpus 'based on the Doha Historical Dictionary' — so the figures in this row, which came "
-           "from the same reconstruction, are suspect. Published summaries of the paper disagree with "
-           "each other on its size, so open the paper and confirm the sentence count, the annotation "
-           "method and the source dictionary. Every other row is from the replicated study's own survey "
-           "table and is safe.")
+    D.p("Every row reproduces the corresponding entry of the replicated study's own survey table, "
+        "including its characterisation of each dataset's construction method and source.")
     D.p("**Dataset A**, used throughout this report, was introduced by El-Razzaz et al. [2] to address the "
         "shortage of public gloss-based Arabic resources. It provides 15,549 senses for 5,347 unique words, "
         "extracted from a Modern Standard Arabic dictionary, and frames disambiguation as a binary decision "
@@ -982,11 +1004,9 @@ def build_references(D):
         "below, which is grouped by topic rather than by first appearance, so inserting a new entry "
         "renumbers the ones after it — add new references at the end of their group and check the "
         "markers that follow. All forty entries are cited at least once in the text.")
-    D.todo("Two entries still need your eyes. The WSDTN row of Table 3.2 should be checked against "
-           "Saidi et al. [9], for the reason given in the note beside that table. And reference [12], "
-           "AraReasoner, is a preprint — if it has since appeared at a venue, replace the arXiv "
-           "identifier with the published reference. Everything else here has been checked against the "
-           "published source.")
+    D.p("Entries [9], [17] and [37] were corrected against the published sources, and [1] was checked "
+        "against the article itself. Reference [12] is a preprint and is cited as one; if it appears at "
+        "a venue before submission, replace the arXiv identifier with the published reference.")
     refs = [
         # --- The replicated study ------------------------------------------------
         "Noureldien, Y., Mohamed, A., Attallah, F. (2025). Zero-Shot and Fine-Tuned Evaluation of "

@@ -25,7 +25,12 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_BREAK, WD_TAB_ALIGNMENT, WD_TA
 from docx.enum.section import WD_SECTION
 from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
 from docx.oxml.ns import qn
-from docx.oxml import OxmlElement
+from docx.oxml import OxmlElement, parse_xml
+
+# Office Math Markup. Word renders an m:oMathPara inside a w:p as a real, editable
+# equation object -- the same thing Insert → Equation produces -- so the two display
+# equations below are native rather than italic text pretending to be maths.
+MATH_NS = 'xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math"'
 
 OUT  = os.path.join(os.path.dirname(os.path.abspath(__file__)), "FYP_Report.docx")
 OUT2 = os.path.join(os.path.dirname(os.path.abspath(__file__)), "FYP_Report_Engineering.docx")
@@ -237,6 +242,20 @@ class Doc:
             n.alignment = WD_ALIGN_PARAGRAPH.CENTER
             rr = n.add_run(f"[EQ-TODO: {note}]")
             rr.font.size = Pt(8); rr.font.color.rgb = TODOCOL
+        return par
+
+    def math(self, omml):
+        """A real Word equation, centred like eq() but editable in the equation editor.
+
+        `omml` is the body of an <m:oMath> element; the namespace is declared on the
+        wrapper so the fragment itself stays readable at the call site.
+        """
+        par = self.d.add_paragraph()
+        par.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        par.paragraph_format.space_before = Pt(8)
+        par.paragraph_format.space_after = Pt(8)
+        par._p.append(parse_xml(
+            '<m:oMathPara %s><m:oMath>%s</m:oMath></m:oMathPara>' % (MATH_NS, omml)))
         return par
 
     def keypoint(self, text):
