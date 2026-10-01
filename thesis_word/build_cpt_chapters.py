@@ -166,6 +166,18 @@ def build_ch8(D):
         "the transformers version required by the Blackwell-generation GPU, and an earlier run on that "
         "stack had produced a corrupted adapter. Training therefore drives `transformers`, `peft` and "
         "`bitsandbytes` directly. This costs some throughput and changes no aspect of the method.")
+    D.p("**Why a rented GPU rather than the hosted notebook used for Chapter 6.** The supervised run "
+        "completed on a free-tier notebook GPU, and the original plan was to run continued pre-training "
+        "on the same platform. Three properties of this workload made that unsuitable. The run is "
+        "continuous for nearly four hours, and hosted notebook sessions disconnect well before that, "
+        "which would have cost the run or forced a checkpoint-and-resume cycle at every drop. The "
+        "sequences are 2,048 tokens rather than 1,024, doubling activation memory at a point where the "
+        "earlier GPU was already near its limit. And the free-tier hardware does not support bfloat16, "
+        "which the quantized compute path assumes.")
+    D.keypoint("The platform change follows from the workload, not from the method. Chapter 6 should "
+               "still be read as showing that the supervised result is reachable at no cost; the "
+               "roughly $5.40 spent here is what domain adaptation over 27 million tokens cost, which "
+               "is small enough that the barrier to repeating this work remains negligible.")
     D.table([
         ["Parameter", "SFT (Ch. 6)", "CPT (this chapter)", "Why it differs"],
         ["Objective", "instruction → response", "causal LM over raw text",
@@ -232,6 +244,16 @@ def build_ch8(D):
         "them is the easiest way to misread this metric.")
     D.p("Majority-class and chance baselines accompany every figure, since an accuracy without a floor is "
         "uninterpretable.")
+
+    D.p("**Why these sample sizes.** The two sampled evaluations use 1,000 positions and 300 items "
+        "respectively, and both numbers were chosen for the width of the interval they buy rather than "
+        "by convention. At n = 1,000 a measured accuracy near 70% carries a 95% confidence interval of "
+        "roughly ±2.9 points; at n = 300 an accuracy near 84% carries one of roughly ±4.1 points. The "
+        "effects being measured are 48.5 and 41.0 points, an order of magnitude larger than either "
+        "interval, so sampling more would have narrowed the intervals without changing a single "
+        "conclusion. The cloze probe is the smaller of the two because each item must be generated and "
+        "filtered automatically from held-out text, and 300 is where the three categories reach 100 "
+        "items each — enough for a per-category figure to be worth reporting.")
 
     D.h3("8.6.1  Why the headline metrics do not involve decoding")
     D.p("Metrics 1, 2 and 3-constrained are **teacher-forced or likelihood-ranked**: none of them samples, "

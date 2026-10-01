@@ -821,6 +821,33 @@ def build_ch1(D):
     ], widths=[3.2, 4.4, 6.4])
     D.caption("Scope of the study, and the reason for each boundary.")
 
+    D.h3("1.3.1  Why Gemma 2-2B")
+    D.p("The choice of base model determines what the comparison in Chapter 7 can establish, so it is "
+        "worth stating the reasoning rather than leaving it to the scope table above. Four considerations "
+        "led to Gemma 2-2B, and the first is the one that matters.")
+    D.numbered("**It is the same family as a model in the replicated study.** That study reports "
+               "fine-tuned results for Gemma 2-9B. Using Gemma 2-2B holds architecture, tokenizer and "
+               "pre-training corpus constant and varies only scale, so a comparison between the two "
+               "isolates the effect of parameter count. Had a different family been chosen — a LLaMA or "
+               "a Qwen model at 2B — any difference would have confounded scale with tokenizer, "
+               "pre-training mixture and architecture at once, and the central claim of Chapter 7 could "
+               "not have been made.")
+    D.numbered("**It is the smallest member of that family that the task plausibly admits.** The "
+               "hypothesis under test is that this task rewards discrimination rather than stored "
+               "knowledge, and therefore does not reward capacity. Testing that hypothesis requires "
+               "going as small as the family allows, not choosing a comfortable size.")
+    D.numbered("**It fits the available hardware.** Under QLoRA a 2-billion-parameter model trains "
+               "within the 16 GB of a free-tier GPU, as Chapter 4 establishes; the 9-billion-parameter "
+               "model does not. The constraint and the research question point the same way here, which "
+               "is convenient but not the reason.")
+    D.numbered("**Its weights are open and its tokenizer is documented**, which the fertility "
+               "measurement of Section 2.3 requires and which a closed model would not permit.")
+    D.p("The same model is then carried unchanged into the continued pre-training experiment of "
+        "Chapter 8. That is itself a design decision: holding the model fixed across both halves is what "
+        "allows the two training objectives to be contrasted without a model-family confound, and it is "
+        "what makes the dissociation of Chapter 10 a statement about objectives rather than about "
+        "architectures.")
+
     # ---- 1.4 -------------------------------------------------------
     D.h2("1.4  Contributions")
     D.p("This work makes six contributions.")
