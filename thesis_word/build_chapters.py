@@ -445,6 +445,14 @@ def build_ch3(D):
          "Arabic Ontology"],
     ], widths=[4.4, 2.6, 3.0, 2.8, 3.0])
     D.caption("Major Arabic WSD datasets, after the survey in the replicated study.")
+    D.todo("Check the WSDTN row against Saidi et al. (2023) before submission. The reference entry for "
+           "that paper was reconstructed and proved wrong on two counts — the real title is 'WSDTN: a "
+           "Novel Dataset for Arabic Word Sense Disambiguation' (ICCCI 2023, pages 203-212), not a "
+           "corpus 'based on the Doha Historical Dictionary' — so the figures in this row, which came "
+           "from the same reconstruction, are suspect. Published summaries of the paper disagree with "
+           "each other on its size, so open the paper and confirm the sentence count, the annotation "
+           "method and the source dictionary. Every other row is from the replicated study's own survey "
+           "table and is safe.")
     D.p("**Dataset A**, used throughout this report, was introduced by El-Razzaz et al. to address the "
         "shortage of public gloss-based Arabic resources. It provides 15,549 senses for 5,347 unique words, "
         "extracted from a Modern Standard Arabic dictionary, and frames disambiguation as a binary decision "
@@ -995,8 +1003,9 @@ def build_references(D):
         "Alshammari, W., Almazrua, A., Al Wazrah, A., Almatham, R., Alhoshan, M., Alosaimy, A. (2024). "
         "KSAA-CAD Shared Task: Contemporary Arabic Dictionary for Reverse Dictionary and Word Sense "
         "Disambiguation. In Proceedings of the Second Arabic NLP Conference, pages 677-685. ACL.",
-        "[VERIFY] Saidi, R. et al. (2023). WSDTN: a large-scale manually annotated Arabic WSD corpus "
-        "based on the Doha Historical Dictionary of Arabic.",
+        "Saidi, R., Jarray, F., Akacha, A., Aribi, W. (2023). WSDTN: a Novel Dataset for Arabic Word "
+        "Sense Disambiguation. In Proceedings of the 15th International Conference on Computational "
+        "Collective Intelligence (ICCCI 2023), pages 203-212. Springer.",
         # --- Arabic benchmarks and evaluations -----------------------------------
         "Elmadany, A., Nagoudi, E. M. B., Abdul-Mageed, M. (2023). ORCA: A Challenging Benchmark for "
         "Arabic Language Understanding. In Findings of ACL 2023, pages 9559-9586. ACL.",
@@ -1014,8 +1023,8 @@ def build_references(D):
         "Size, and Task Type in Arabic Pre-trained Language Models. In Proceedings of the Sixth Arabic "
         "NLP Workshop, pages 92-104. ACL. [CAMeLBERT]",
         "Bari, M. S. et al. (2024). ALLaM: Large Language Models for Arabic and English. arXiv:2407.15390.",
-        "[VERIFY] Sengupta, N. et al. (2023). Jais and Jais-chat: Arabic-Centric Foundation and "
-        "Instruction-Tuned Open Generative Large Language Models.",
+        "Sengupta, N. et al. (2023). Jais and Jais-chat: Arabic-Centric Foundation and "
+        "Instruction-Tuned Open Generative Large Language Models. arXiv:2308.16149.",
         # --- Architecture and pretrained models -----------------------------------
         "Vaswani, A. et al. (2017). Attention Is All You Need. In Advances in Neural Information "
         "Processing Systems (NeurIPS).",
@@ -1056,8 +1065,9 @@ def build_references(D):
         "Liu, H. et al. (2022). Few-Shot Parameter-Efficient Fine-Tuning is Better and Cheaper than "
         "In-Context Learning. In NeurIPS. [(IA)3]",
         "Liu, S.-Y. et al. (2024). DoRA: Weight-Decomposed Low-Rank Adaptation. In Proceedings of ICML.",
-        "Gururangan, S. et al. (2020). Do Not Stop Pretraining: Adapt Language Models to Domains and "
-        "Tasks. In Proceedings of ACL 2020.",
+        "Gururangan, S., Marasovic, A., Swayamdipta, S., Lo, K., Beltagy, I., Downey, D., Smith, N. A. "
+        "(2020). Don't Stop Pretraining: Adapt Language Models to Domains and Tasks. In Proceedings of "
+        "the 58th Annual Meeting of the Association for Computational Linguistics, pages 8342-8360. ACL.",
         "Taori, R. et al. (2023). Stanford Alpaca: An Instruction-following LLaMA Model. GitHub.",
         # --- Tooling ----------------------------------------------------------------
         "Wolf, T. et al. (2020). Transformers: State-of-the-Art Natural Language Processing. In "
