@@ -1,27 +1,31 @@
 # -*- coding: utf-8 -*-
 """
-The defense deck itself. Helpers and palette live in build_slides.py.
+Opening and Part 1 of the defense deck. Helpers live in build_slides.py.
 
-    ../venv/Scripts/python.exe deck.py
-
-Writes FYP_Defense_M2.pptx and FYP_Defense_ULFG.pptx -- identical content,
-differing only in the second logo and the institution block.
+Language is deliberately plain: this is spoken aloud, so short sentences and
+ordinary words beat precise-but-dense ones. The numbers carry the talk.
 """
-import os
-
-from pptx import Presentation
 from pptx.util import Inches, Pt
+from pptx.dml.color import RGBColor
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 from pptx.enum.shapes import MSO_SHAPE
 
 from build_slides import (
     blank, tb, run, para, rect, logo, title_of, takeaway, stat, bullets, table,
-    figure, footer, divider,
-    NAVY, DEEP, INK, GREY, MUTE, TINT, LINE, WHITE, GREEN, RED, HEAD, BODY,
+    figure, ar, ARFONT,
+    NAVY, DEEP, INK, GREY, MUTE, TINT, LINE, WHITE, GREEN, RED, HEAD,
     W, H, M, TY, CY, DEFENSE_DATE, VARIANTS,
 )
 
 WS_LOGO = "whitestork_software_solutions_logo.jpg"
+CODE_BG = RGBColor(0xF7, 0xF9, 0xFB)
+MONO = "Consolas"
+
+# the running example, used on slides 2 and 7 so the jury sees one item end to end
+SENT = "وثمود الذين جابوا الصخر بالواد"
+WORD = "جاب"
+G_OK = "جاب الصخرة نقبها، خرقها"
+G_NO = "جاب الخبر البلاد: عمها"
 
 
 # ============================================================ TITLE =========
@@ -68,163 +72,255 @@ def s_title(prs, v):
     return s
 
 
-# ============================================================ CONTEXT ======
-def s_objectives(prs):
+# ============================================================ 2. THE TASK ==
+def s_task(prs):
+    """Open on something concrete: one real item from the dataset."""
     s = blank(prs)
-    title_of(s, "Adapting one small model under two objectives", kicker="Context")
-    tf = tb(s, M, CY, 6.2, 1.9)
-    p = para(tf, True); p.space_after = Pt(8)
-    run(p, "Word Sense Disambiguation", size=16, color=INK, bold=True)
-    p = para(tf); p.space_after = Pt(10)
-    run(p, "Given a sentence, a target word and candidate definitions, choose the "
-           "intended sense. Arabic makes this harder: rich morphology, attached "
-           "clitics, and diacritics omitted in ordinary writing.", size=14, color=GREY)
+    title_of(s, "The task, in one example", kicker="What the model has to do")
+
+    tf = tb(s, M, CY - 0.02, 5.7, 0.9)
+    p = para(tf, True)
+    run(p, "One Arabic word can mean different things. We give the model a sentence, "
+           "one word in it, and two possible meanings. It picks one.",
+        size=15, color=GREY)
+
+    card = rect(s, M, 2.52, 5.7, 3.5, fill=WHITE, line=LINE)
+    tf = card.text_frame
+    tf.margin_left = tf.margin_right = Inches(0.24); tf.margin_top = Inches(0.2)
+
+    p = tf.paragraphs[0]; p.space_after = Pt(4)
+    run(p, "Sentence", size=11.5, color=MUTE, bold=True)
+    p = tf.add_paragraph(); p.space_after = Pt(14)
+    ar(p, SENT, size=19, color=INK)
+
+    p = tf.add_paragraph(); p.space_after = Pt(4)
+    run(p, "Target word", size=11.5, color=MUTE, bold=True)
+    p = tf.add_paragraph(); p.space_after = Pt(14)
+    ar(p, WORD, size=19, color=NAVY, bold=True)
+
+    p = tf.add_paragraph(); p.space_after = Pt(6)
+    run(p, "Two candidate meanings", size=11.5, color=MUTE, bold=True)
+    p = tf.add_paragraph(); p.space_after = Pt(6)
+    ar(p, G_OK + "   ← 4548", size=15, color=GREEN, bold=True)
+    p = tf.add_paragraph()
+    ar(p, G_NO + "   ← 4549", size=15, color=GREY)
+
+    tf = tb(s, 6.68, 2.52, 6.05, 3.5)
+    p = para(tf, True); p.space_after = Pt(12)
+    run(p, "Here it means ", size=15, color=GREY)
+    run(p, "to bore through rock", size=15, color=GREEN, bold=True)
+    run(p, ", not ", size=15, color=GREY)
+    run(p, "for news to spread", size=15, color=INK, bold=True)
+    run(p, ". The answer is 4548.", size=15, color=GREY)
+    p = para(tf); p.space_after = Pt(12)
+    run(p, "Arabic makes this harder. ", size=15, color=INK, bold=True)
+    run(p, "Words change shape a lot, small words attach to bigger ones, and the short "
+           "vowels that would separate the meanings are simply not written down.",
+        size=15, color=GREY)
+    p = para(tf); p.space_after = Pt(12)
+    run(p, "Notice what the model is handed. ", size=15, color=INK, bold=True)
+    run(p, "Both meanings are already in front of it. It does not need to know "
+           "anything — it needs to choose.", size=15, color=GREY)
     p = para(tf)
-    run(p, "Large models are expensive to adapt. Can a 2B model compete?",
-        size=14.5, color=DEEP, bold=True)
+    run(p, "Remember that. It explains most of Part 1.", size=14.5, color=DEEP,
+        italic=True)
 
-    rows = [["", "Objective 1 — SFT", "Objective 2 — CPT"],
-            ["Data", "9,952 labelled items", "27.2M tokens of legal text"],
-            ["Signal", "gold sense IDs", "none — raw text"],
-            ["Compared to", "a published paper", "the untrained base model"]]
-    table(s, 7.05, CY - 0.04, 5.66, rows, [1.32, 2.0, 2.34], size=12, row_h=0.46)
-
-    tfh = tb(s, M, 3.50, W - 2 * M, 0.32)
-    run(para(tfh, True), "Four objectives", size=16, color=INK, bold=True)
-    bullets(s, M, 3.88, W - 2 * M, [
-        ("Reproduce at 2B. ", "Match the published Gemma 2-9B result with a model "
-         "4.5× smaller, on a free GPU."),
-        ("Establish the floor. ", "The literature on this benchmark reports no "
-         "baselines. Establish them."),
-        ("Audit the metrics. ", "Determine whether the reported scores carry the "
-         "information they are assumed to."),
-        ("Adapt to a domain. ", "Continued pre-training on a Lebanese legal corpus, "
-         "contrasted against SFT."),
-    ], size=14, gap=5, h=2.2)
-    takeaway(s, "The question is never which objective is better — it is "
-                "**what each one changes in the model**.")
+    takeaway(s, "3,110 test items, always **exactly two** choices. We compare against a "
+                "2025 paper that tested GPT-4o and three open models of 7 to 9 billion.")
     return s
 
 
+# ============================================================ 3. WHAT IS FT =
+def s_what_is_ft(prs):
+    s = blank(prs)
+    title_of(s, "What fine-tuning means", kicker="The method, plainly")
+
+    tf = tb(s, M, CY - 0.04, 12.1, 0.85)
+    p = para(tf, True)
+    run(p, "A language model is first ", size=15.5, color=GREY)
+    run(p, "pre-trained", size=15.5, color=INK, bold=True)
+    run(p, " on an enormous amount of general text. That is where it learns language, "
+           "and it costs millions, so nobody repeats it. Instead we take the finished "
+           "model and ", size=15.5, color=GREY)
+    run(p, "nudge it", size=15.5, color=INK, bold=True)
+    run(p, ". That nudge is fine-tuning.", size=15.5, color=GREY)
+
+    cards = [
+        ("1", "Pre-training", "Learn language in general. Done once, by Google, on "
+         "trillions of words. We never touch this step.", GREY),
+        ("2", "Fine-tuning", "Nudge the finished model with a small amount of our own "
+         "data. Hours, not months. This project does it twice.", NAVY),
+        ("3", "Two kinds of nudge", "Show it worked examples of a task — or let it "
+         "keep reading text from a new field. Those are SFT and CPT.", DEEP),
+    ]
+    x = M
+    for num, head, body, col in cards:
+        c = rect(s, x, 2.68, 3.88, 2.45, fill=WHITE, line=LINE)
+        tf = c.text_frame
+        tf.margin_left = tf.margin_right = Inches(0.24); tf.margin_top = Inches(0.2)
+        p = tf.paragraphs[0]; p.space_after = Pt(5)
+        run(p, num, size=26, color=col, bold=True, font=HEAD)
+        p = tf.add_paragraph(); p.space_after = Pt(8)
+        run(p, head, size=16, color=INK, bold=True)
+        p = tf.add_paragraph()
+        run(p, body, size=14, color=GREY)
+        x += 4.105
+
+    tf = tb(s, M, 5.42, 12.1, 0.75)
+    p = para(tf, True)
+    run(p, "The catch: ", size=15.5, color=INK, bold=True)
+    run(p, "even a nudge normally needs far more memory than a free GPU has. "
+           "The next slide shows why — and what gets around it.",
+        size=15.5, color=GREY)
+    return s
+
+
+# ============================================================ 4. MEMORY ====
 def s_finetuning(prs):
     s = blank(prs)
-    title_of(s, "Why fine-tuning a 2B model needs a trick", kicker="Fine-tuning")
+    title_of(s, "Why fine-tuning needs a trick", kicker="The obstacle")
     tf = tb(s, M, CY, 5.9, 1.3)
-    p = para(tf, True); p.space_after = Pt(8)
-    run(p, "Full fine-tuning updates every weight. The weights are not the "
-           "bottleneck — the optimiser state is.", size=15, color=GREY)
+    p = para(tf, True); p.space_after = Pt(9)
+    run(p, "Training touches every weight. But the weights are not what fills the "
+           "memory — the training bookkeeping is.", size=15, color=GREY)
     p = para(tf)
-    run(p, "Adam keeps two moments per trainable parameter, in fp32.",
-        size=14, color=GREY, italic=True)
+    run(p, "The optimiser keeps two extra numbers for every weight it trains.",
+        size=14.5, color=GREY, italic=True)
 
-    stat(s, M, 2.86, 2.8, "41.7 GB", "Full fine-tuning", "training state needed",
+    stat(s, M, 2.86, 2.8, "41.7 GB", "What training needs", "if we train everything",
          color=RED, h=1.55)
-    stat(s, M + 3.0, 2.86, 2.8, "16 GB", "Available", "free-tier Colab T4",
+    stat(s, M + 3.0, 2.86, 2.8, "16 GB", "What we had", "a free Colab GPU",
          color=GREY, h=1.55)
 
-    tfa = tb(s, M, 4.72, 5.8, 1.5)
+    tfa = tb(s, M, 4.72, 5.8, 1.4)
     p = para(tfa, True)
-    run(p, "Only 5.2 GB of that is weights. ", size=14.5, color=GREY)
-    run(p, "36.5 GB is gradients and optimiser state — which scales with the number "
-           "of trainable parameters, not with model size.", size=14.5, color=INK, bold=True)
+    run(p, "Only 5.2 GB of that is the model. ", size=14.5, color=GREY)
+    run(p, "The other 36.5 GB is bookkeeping — and it grows with how many weights "
+           "you train, not with how big the model is.", size=14.5, color=INK, bold=True)
 
     figure(s, "fig_memory.png", 7.05, 1.78, w=5.7)
-    takeaway(s, "So freezing the base is not one option among several. "
-                "**It is the only one that fits.**")
+    takeaway(s, "So train fewer weights and the problem goes away. "
+                "**That is the whole idea behind LoRA.**")
     return s
 
 
+# ============================================================ 5. LoRA ======
 def s_lora(prs):
     s = blank(prs)
-    title_of(s, "LoRA and QLoRA, in one slide", kicker="Method")
-    tf = tb(s, M, CY, 6.0, 2.3)
-    p = para(tf, True); p.space_after = Pt(10)
-    run(p, "LoRA.  ", size=15, color=INK, bold=True)
-    run(p, "Freeze W₀ and learn a low-rank update B·A. Fine-tuning updates are known "
-           "to have low intrinsic rank, so little is given up.", size=15, color=GREY)
-    p = para(tf); p.space_after = Pt(10)
-    run(p, "QLoRA.  ", size=15, color=INK, bold=True)
-    run(p, "Hold the frozen base in 4-bit NF4 with double quantization and compute in "
-           "bfloat16. The adapter itself stays full precision.", size=15, color=GREY)
+    title_of(s, "LoRA and QLoRA", kicker="The trick")
+    tf = tb(s, M, CY, 6.0, 2.4)
+    p = para(tf, True); p.space_after = Pt(11)
+    run(p, "LoRA.  ", size=15.5, color=INK, bold=True)
+    run(p, "Freeze the model. Add two small matrices next to it and train only those. "
+           "The change a model needs for one task turns out to be simple enough to fit "
+           "in them.", size=15, color=GREY)
+    p = para(tf); p.space_after = Pt(11)
+    run(p, "QLoRA.  ", size=15.5, color=INK, bold=True)
+    run(p, "On top of that, store the frozen model in 4 bits instead of 16. A quarter "
+           "of the space, and the small trainable part stays at full precision.",
+        size=15, color=GREY)
     p = para(tf)
-    run(p, "It merges back into the weights after training, so unlike adapters or "
-           "prefix tuning it adds no inference cost.", size=14, color=DEEP, italic=True)
+    run(p, "Afterwards the small part folds back in, so nothing runs slower.",
+        size=14.5, color=DEEP, italic=True)
 
-    stat(s, M, 4.28, 2.8, "1.6%", "of parameters trained", "41.5M of 2.61B", h=1.5)
-    stat(s, M + 3.0, 4.28, 2.8, "16×", "less training memory", "versus full fine-tuning",
+    stat(s, M, 4.34, 2.8, "1.6%", "of the model is trained", "41.5M of 2.61B weights",
+         h=1.5)
+    stat(s, M + 3.0, 4.34, 2.8, "16×", "less memory", "now it fits the free GPU",
          color=GREEN, h=1.5)
     figure(s, "fig_lora.png", 7.1, 1.7, w=5.65)
-    takeaway(s, "Both halves of this project are QLoRA runs on the same base model. "
-                "**Only the training objective changes.**")
+    takeaway(s, "Both halves of this project use QLoRA on the same model. "
+                "**The only thing that changes is what we train it on.**")
     return s
 
 
+# ============================================================ 6. TWO + GOALS
 def s_two(prs):
     s = blank(prs)
-    title_of(s, "Two objectives that change different things",
+    title_of(s, "Two ways to fine-tune, and what we set out to do",
              kicker="The central distinction")
-    rows = [["", "Supervised fine-tuning", "Continued pre-training"],
-            ["Learns from", "instruction → response pairs", "raw text, next-token prediction"],
-            ["Supervision", "gold labels", "none"],
-            ["Sequence unit", "one example per sequence", "packed 2,048-token blocks"],
-            ["LoRA rank · epochs", "32  ·  3", "16  ·  1"],
-            ["Teaches the model", "how to answer", "what the domain looks like"]]
-    table(s, M, CY, W - 2 * M, rows, [2.6, 4.75, 4.74], size=13.5, row_h=0.5,
-          bold_rows=(5,))
-    tf = tb(s, M, 5.12, W - 2 * M, 1.1)
-    p = para(tf, True); p.space_after = Pt(7)
-    run(p, "The last row is the thesis. ", size=15.5, color=INK, bold=True)
-    run(p, "SFT teaches a task format; CPT teaches a domain distribution. The rest of "
-           "this talk measures both, on the same model, to show the difference is real "
-           "and not merely plausible.", size=15, color=GREY)
-    takeaway(s, "They are not substitutes. The choice follows from "
-                "**what is missing — format, or knowledge**.")
+    rows = [["", "Show it worked examples  (SFT)", "Let it read a new field  (CPT)"],
+            ["Learns from", "question → answer pairs", "plain text, nothing labelled"],
+            ["Our data", "9,952 Arabic WSD items", "27.2M words of Lebanese law"],
+            ["Compared against", "a published paper", "the same model, untrained"],
+            ["What it teaches", "how to answer", "what the field sounds like"]]
+    table(s, M, CY, W - 2 * M, rows, [2.55, 4.78, 4.76], size=13.5, row_h=0.48,
+          bold_rows=(4,))
+
+    tfh = tb(s, M, 4.42, W - 2 * M, 0.3)
+    run(para(tfh, True), "Four things this work set out to do", size=16, color=INK,
+        bold=True)
+    bullets(s, M, 4.80, W - 2 * M, [
+        ("Match a 9B model with a 2B one, ", "on a free GPU."),
+        ("Find the real floor — ", "nobody who published on this benchmark reported "
+         "one."),
+        ("Check that the metrics ", "measure what everyone assumes they measure."),
+        ("Teach the model Lebanese law, ", "and find out what that actually changes."),
+    ], size=14, gap=4, h=1.4)
+    takeaway(s, "The question is never which one is better. It is "
+                "**what does each one change**.")
     return s
 
 
 # ============================================================ PART 1 =======
 def s_sft_setup(prs):
     s = blank(prs)
-    title_of(s, "The task, the data, the run", kicker="Part 1 · SFT")
-    table(s, M, CY, 5.7, [["Dataset A — El-Razzaz", ""],
-                          ["Train / dev / test", "9,952 / 2,487 / 3,110"],
-                          ["Candidates per item", "exactly 2 glosses"],
-                          ["Output", "the correct sense ID"]],
-          [3.2, 2.5], size=13, row_h=0.46)
-    table(s, 7.05, CY, 5.68, [["Configuration", ""],
-                              ["Base model", "Gemma 2-2B, 4-bit NF4"],
-                              ["LoRA r / α / dropout", "32 / 32 / 0.05"],
-                              ["Epochs · LR", "3  ·  2e-4, adamw_8bit"],
-                              ["Hardware", "free Colab T4, 16 GB"]],
-          [2.86, 2.82], size=13, row_h=0.46)
+    title_of(s, "What the model actually sees", kicker="Part 1 · SFT")
 
-    tf = tb(s, M, 4.54, W - 2 * M, 1.7)
-    p = para(tf, True); p.space_after = Pt(9)
-    run(p, "Everything the model needs is already in the prompt. ", size=15.5,
-        color=INK, bold=True)
-    run(p, "The sentence, the target word and both candidate definitions are all "
-           "supplied. Nothing has to be recalled from the weights — the model only "
-           "has to choose between two visible strings.", size=15, color=GREY)
-    p = para(tf)
-    run(p, "That single observation is what the whole of Part 1 ends up explaining.",
-        size=14.5, color=DEEP, italic=True)
-    takeaway(s, "A 2B model on a **free** GPU, against published 7–9B models trained "
-                "on an NVIDIA L4.")
+    card = rect(s, M, CY - 0.02, 7.1, 3.56, fill=CODE_BG, line=LINE)
+    tf = card.text_frame
+    tf.margin_left = tf.margin_right = Inches(0.24); tf.margin_top = Inches(0.16)
+    p = tf.paragraphs[0]; p.space_after = Pt(6)
+    run(p, "ONE TRAINING EXAMPLE", size=11, color=MUTE, bold=True)
+    body = [("### Instruction:", NAVY, True, False),
+            ("Choose the correct sense ID for the target word.", GREY, False, False),
+            ("### Input:", NAVY, True, False),
+            ("Sentence:  " + SENT, GREY, False, True),
+            ("Target Word:  " + WORD, GREY, False, True),
+            ("Possible Senses:", GREY, False, False),
+            ("4548:  " + G_OK, GREY, False, True),
+            ("4549:  " + G_NO, GREY, False, True),
+            ("### Response:", NAVY, True, False),
+            ("4548", GREEN, True, False)]
+    for line, col, bold, is_ar in body:
+        p = tf.add_paragraph(); p.space_after = Pt(3)
+        if is_ar:
+            ar(p, line, size=12.5, color=col, bold=bold, align_right=False)
+        else:
+            run(p, line, size=12.5, color=col, bold=bold, font=MONO)
+
+    table(s, 7.86, CY - 0.02, 4.87, [["The run", ""],
+                                     ["Model", "Gemma 2-2B, 4-bit"],
+                                     ["Trained on", "9,952 examples"],
+                                     ["LoRA rank", "32"],
+                                     ["Epochs", "3"],
+                                     ["Hardware", "free Colab GPU"],
+                                     ["Cost", "nothing"]],
+          [2.2, 2.67], size=13, row_h=0.42)
+
+    tf = tb(s, M, 5.34, W - 2 * M, 0.85)
+    p = para(tf, True)
+    run(p, "Both answers are inside the prompt. ", size=15.5, color=INK, bold=True)
+    run(p, "Nothing has to be remembered. The model only has to tell two short pieces "
+           "of text apart — which is why a small model can keep up.",
+        size=15, color=GREY)
+    takeaway(s, "The same prompt is rebuilt at test time, **character for character** "
+                "— checked, 0 mismatches out of 3,110.")
     return s
 
 
 def s_sft_headline(prs):
     s = blank(prs)
-    title_of(s, "90.42% — matching models four times larger", kicker="Part 1 · Result")
-    stat(s, M, CY, 2.72, "90.42%", "Accuracy", "2,812 of 3,110 correct", h=1.5)
-    stat(s, M + 2.92, CY, 2.72, "0.8333", "Macro-F1", "but see the next slide", h=1.5)
-    stat(s, M + 5.84, CY, 2.72, "0", "Malformed outputs", "across the whole test set",
+    title_of(s, "90.42% — as good as models four times bigger",
+             kicker="Part 1 · Result")
+    stat(s, M, CY, 2.72, "90.42%", "Correct", "2,812 of 3,110", h=1.5)
+    stat(s, M + 2.92, CY, 2.72, "0.8333", "Macro-F1", "but see two slides on", h=1.5)
+    stat(s, M + 5.84, CY, 2.72, "0", "Broken answers", "every output was usable",
          color=GREEN, h=1.5)
 
-    table(s, M, 3.36, 8.56, [["Model", "Params", "Accuracy", "Macro-F1"],
-                             ["Gemma 2-9B (published)", "9B", "89.39", "81.72"],
-                             ["LLaMA 3.1-8B (published)", "8B", "90.42", "83.20"],
-                             ["Qwen 2.5-7B (published)", "7B", "90.77", "83.98"],
+    table(s, M, 3.36, 8.56, [["Model", "Size", "Accuracy", "Macro-F1"],
+                             ["Gemma 2-9B (paper)", "9B", "89.39", "81.72"],
+                             ["LLaMA 3.1-8B (paper)", "8B", "90.42", "83.20"],
+                             ["Qwen 2.5-7B (paper)", "7B", "90.77", "83.98"],
                              ["Gemma 2-2B (this work)", "2B", "90.42", "83.33"]],
           [3.46, 1.5, 1.8, 1.8], size=13, row_h=0.42, bold_rows=(4,))
 
@@ -232,93 +328,97 @@ def s_sft_headline(prs):
     tfc = card.text_frame
     tfc.margin_left = tfc.margin_right = Inches(0.18); tfc.margin_top = Inches(0.16)
     p = tfc.paragraphs[0]; p.space_after = Pt(7)
-    run(p, "Is the difference real?", size=14.5, color=INK, bold=True)
+    run(p, "Is that gap real?", size=14.5, color=INK, bold=True)
     p = tfc.add_paragraph(); p.space_after = Pt(7)
-    run(p, "SE = 0.53 pp at n = 3,110\n95% CI ≈ [89.4, 91.4]", size=13, color=GREY)
+    run(p, "With 3,110 items the margin of error is ±0.53 points — so 89.4 to 91.4.",
+        size=13, color=GREY)
     p = tfc.add_paragraph()
-    run(p, "Every published result falls inside it. Differences under one point are "
-           "not distinguishable.", size=12.5, color=RED)
+    run(p, "Every published score sits inside that. Gaps under one point mean nothing "
+           "here.", size=12.5, color=RED)
 
-    takeaway(s, "The defensible claim is not that 2B is better. It is that it is "
-                "**not worse**, at a quarter of the parameters and none of the cost.")
+    takeaway(s, "So I do not say 2B is better. I say it is "
+                "**not worse** — at a quarter the size, and for free.")
     return s
 
 
 def s_sft_baselines(prs):
     s = blank(prs)
-    title_of(s, "The benchmark's real floor is not 50%", kicker="Part 1 · Contribution")
+    title_of(s, "What score do you get with no model at all?",
+             kicker="Part 1 · Finding")
     figure(s, "fig_baselines.png", M, CY + 0.12, w=6.85)
     tf = tb(s, 7.8, CY, 4.93, 3.6)
-    p = para(tf, True); p.space_after = Pt(11)
-    run(p, "Every item offers two candidates, so random choice scores 50%. But the "
-           "gold answer sits in second position ", size=14.5, color=GREY)
-    run(p, "64.95%", size=14.5, color=RED, bold=True)
-    run(p, " of the time.", size=14.5, color=GREY)
-    p = para(tf); p.space_after = Pt(11)
-    run(p, "A one-line program that always picks the second candidate — no model, "
-           "no Arabic — scores 64.95%.", size=14.5, color=INK, bold=True)
-    p = para(tf); p.space_after = Pt(11)
-    run(p, "It is stable across splits (65.74 / 64.94 / 64.95), so it is a property "
-           "of how the dataset was constructed.", size=14, color=GREY)
+    p = para(tf, True); p.space_after = Pt(12)
+    run(p, "Two choices per item, so guessing gets 50%. But the right answer happens "
+           "to be the second one ", size=15, color=GREY)
+    run(p, "64.95%", size=15, color=RED, bold=True)
+    run(p, " of the time.", size=15, color=GREY)
+    p = para(tf); p.space_after = Pt(12)
+    run(p, "A one-line program that always answers “the second one” scores "
+           "64.95%. No model. No Arabic.", size=15, color=INK, bold=True)
+    p = para(tf); p.space_after = Pt(12)
+    run(p, "It is the same on all three splits, so it is baked into how the dataset "
+           "was built.", size=14.5, color=GREY)
     p = para(tf)
-    run(p, "Classical Lesk adds essentially nothing over it.", size=14, color=GREY)
-    takeaway(s, "No baseline appears anywhere in the published literature on this "
-                "dataset. The real gain is **90.42 over 64.95**, not over 50.")
+    run(p, "A classical method from the 1980s adds almost nothing on top of it.",
+        size=14.5, color=GREY)
+    takeaway(s, "No paper on this benchmark reports a baseline. "
+                "**The real result is 90.42 against 64.95 — not against 50.**")
     return s
 
 
 def s_sft_metric(prs):
     s = blank(prs)
-    title_of(s, "The reported secondary metric is degenerate",
-             kicker="Part 1 · Contribution")
+    title_of(s, "The second metric everyone reports is broken",
+             kicker="Part 1 · Finding")
     tf = tb(s, M, CY, 6.4, 2.9)
-    p = para(tf, True); p.space_after = Pt(10)
-    run(p, "Every gold class has a support of exactly one — 3,110 instances, 3,110 "
-           "distinct gold labels.", size=15, color=GREY)
-    p = para(tf); p.space_after = Pt(12)
-    run(p, "Macro-averaging takes the union of true and predicted labels, so a class "
-           "appearing only in the predictions scores zero.", size=15, color=GREY)
+    p = para(tf, True); p.space_after = Pt(12)
+    run(p, "Macro-F1 averages the score over every class. Here every one of the 3,110 "
+           "items has its own unique label — so there are 3,110 classes with one "
+           "item each.", size=15, color=GREY)
+    p = para(tf); p.space_after = Pt(14)
+    run(p, "When the model gives a wrong answer, that wrong label counts as a brand new "
+           "class scoring zero. The more different kinds of mistake, the more classes "
+           "appear.", size=15, color=GREY)
     p = para(tf)
-    run(p, "macro-recall   =   correct  /  | y_true ∪ y_pred |",
-        size=16.5, color=DEEP, bold=True, font=HEAD)
+    run(p, "macro-recall   =   correct  /  number of labels seen",
+        size=16, color=DEEP, bold=True, font=HEAD)
 
     card = rect(s, 7.2, CY - 0.04, 5.53, 2.96, fill=WHITE, line=LINE)
     tfc = card.text_frame
     tfc.margin_left = tfc.margin_right = Inches(0.22); tfc.margin_top = Inches(0.18)
     p = tfc.paragraphs[0]; p.space_after = Pt(8)
-    run(p, "Verify it arithmetically", size=15, color=INK, bold=True)
+    run(p, "You can check it in three lines", size=15, color=INK, bold=True)
     for line, col, bold in [("0.9042 × 3,110  =  2,812 correct", GREY, False),
                             ("2,812 / 0.8379  =  3,356.0  exactly", GREY, False),
-                            ("3,356 − 3,110  =  246 phantom classes", RED, True)]:
+                            ("3,356 − 3,110  =  246 invented labels", RED, True)]:
         p = tfc.add_paragraph(); p.space_after = Pt(7)
         run(p, line, size=14, color=col, bold=bold, font=HEAD)
     p = tfc.add_paragraph()
-    run(p, "Those 246 are created by the model's own wrong answers — the more varied "
-           "its errors, the larger the denominator.", size=12.5, color=GREY)
+    run(p, "Those 246 came from the model's own wrong answers. It is punished for how "
+           "varied its mistakes are, not just how many.", size=12.5, color=GREY)
 
-    takeaway(s, "Macro-F1 here is **accuracy rescaled by a denominator the model "
-                "inflates**. It carries no independent information — and the "
-                "literature reports it as though it does.")
+    takeaway(s, "So macro-F1 here is just **accuracy divided by a number the model "
+                "moves itself**. It adds nothing — and every paper reports it.")
     return s
 
 
 def s_sft_errors(prs):
     s = blank(prs)
-    title_of(s, "What the 298 errors are made of", kicker="Part 1 · Error analysis")
+    title_of(s, "What the 298 mistakes look like", kicker="Part 1 · Error analysis")
     figure(s, "fig_errors.png", M, CY + 0.1, w=6.8)
     tf = tb(s, 7.75, CY, 4.98, 3.7)
     for i, (lead, rest) in enumerate([
-        ("Zero parse failures. ", "All 3,110 outputs were valid sense IDs. The errors "
-         "are genuine confusions, not formatting."),
-        ("No positional bias. ", "Despite the 64.95% second-position skew, errors split "
-         "evenly — the model learned the task, not the shortcut."),
-        ("Close glosses dominate. ", "Errors concentrate where the two definitions share "
-         "vocabulary. Some pairs are near-duplicates that cap the achievable ceiling."),
+        ("Nothing came out broken. ", "All 3,110 answers were real sense IDs. The "
+         "mistakes are genuine confusions, not formatting failures."),
+        ("It did not take the shortcut. ", "The right answer is second 65% of the time, "
+         "yet its mistakes split evenly. It learned the task, not the trick."),
+        ("It fails where the two meanings overlap. ", "Some pairs are near-duplicates "
+         "that a person would also struggle with. That caps how high anyone can score."),
     ]):
         p = para(tf, i == 0); p.space_after = Pt(13)
         run(p, lead, size=14.5, color=INK, bold=True)
         run(p, rest, size=14.5, color=GREY)
-    takeaway(s, "A 2B model matches 9B because this task is **discrimination between "
-                "two visible strings, not knowledge retrieval**. Capacity buys knowledge; "
-                "knowledge is not what is short here.")
+    takeaway(s, "A 2B model keeps up with 9B because this task is "
+                "**telling two visible answers apart, not recalling facts**. "
+                "Size buys knowledge — and knowledge is not what was missing.")
     return s

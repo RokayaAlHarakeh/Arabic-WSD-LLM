@@ -135,6 +135,23 @@ def logo(slide, stem, x, y, h):
     return w
 
 
+ARFONT = "Arial"          # ships with Office, shapes Arabic correctly on a projector
+
+
+def ar(p, text, size=16, color=INK, bold=False, align_right=True):
+    """An Arabic run in a right-to-left paragraph.
+
+    python-pptx has no API for this, so the two attributes go straight onto the
+    paragraph properties. Without rtl the glyphs still shape, but punctuation and
+    any Latin or digits inside the line come out in the wrong order.
+    """
+    pPr = p._p.get_or_add_pPr()
+    pPr.set("rtl", "1")
+    if align_right:
+        pPr.set("algn", "r")
+    return run(p, text, size=size, color=color, bold=bold, font=ARFONT)
+
+
 def blank(prs):
     return prs.slides.add_slide(prs.slide_layouts[6])
 

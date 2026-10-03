@@ -16,25 +16,26 @@ import deck_part2 as D2
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 NOTES = {
-    2: "Open here. The task in one sentence, then the four objectives. Do not dwell - "
-       "the numbers are the talk.",
-    3: "The memory wall is why everything that follows is QLoRA. One minute.",
-    5: "This is the pivot slide. Everything before it is setup; everything after it is "
-       "evidence for the last row.",
-    8: "Lead with 90.42 matching 8B. Then immediately the confidence interval - say "
-       "plainly that you are not claiming to be better.",
-    9: "The strongest contribution of Part 1. Nobody in the literature reports a "
-       "baseline. 64.95 percent with no model at all.",
-    10: "Show the arithmetic on the right. 2812 over 0.8379 is exactly 3356. That is "
-        "the whole argument.",
-    14: "The statute row is the one to narrate. Base is level with its own majority "
-        "baseline, so it knows nothing; CPT clears it by 26 points.",
-    15: "The most important slide in Part 2. Accuracy rose, but decomposing it shows "
-        "the gain is entirely format. Say that CPT made it answer, not reason.",
-    16: "The conclusion. Read the table across, then make the point that the claim "
-        "survives regardless of effect size.",
-    17: "This answers 'what did each one buy me'. Left SFT, right CPT, verdict at the "
-        "bottom of each.",
+    1: "Start concrete. Read the Arabic sentence, point at the two meanings, say which "
+       "one is right. Then the key line: both answers are already in front of the model.",
+    2: "Pre-training is Google's job and costs millions. Fine-tuning is ours and costs "
+       "hours. Two ways to do it - that sets up the whole talk.",
+    3: "One number against another: 41.7 against 16. Then say the memory goes on "
+       "bookkeeping, not on the model.",
+    5: "This is the pivot. Everything before it is setup, everything after is evidence "
+       "for the bottom row. Read the four goals quickly.",
+    7: "Show the prompt, then land the point: both answers are inside it.",
+    8: "Lead with 90.42 matching 8B. Then the margin of error - say plainly you are not "
+       "claiming to be better.",
+    9: "Strongest finding of Part 1. Nobody reports a baseline. 64.95 percent with no "
+       "model at all.",
+    10: "Walk the three lines on the right slowly. 2812 over 0.8379 is exactly 3356.",
+    13: "Show the Arabic document, then the bug you caught before running anything.",
+    16: "The third row. Before training it was level with guessing - so it knew nothing.",
+    17: "The most important slide. The score went up, but all of the gain is answering "
+        "more often, none of it is being right more often.",
+    18: "Read the table across. Then: this holds whatever the effect size.",
+    19: "This answers 'what did each one buy me'. Left, right, verdict under each.",
 }
 
 
@@ -45,10 +46,11 @@ def build(variant_key):
     prs.slide_height = Inches(H)
 
     slides = [D1.s_title(prs, v)]
-    slides.append(D1.s_objectives(prs))
+    slides.append(D1.s_task(prs))          # one real item, in Arabic
+    slides.append(D1.s_what_is_ft(prs))    # what fine-tuning is, before the obstacle
     slides.append(D1.s_finetuning(prs))
     slides.append(D1.s_lora(prs))
-    slides.append(D1.s_two(prs))
+    slides.append(D1.s_two(prs))           # SFT vs CPT + the four goals
 
     slides.append(divider(prs, "1", "Supervised fine-tuning", [
         "Arabic Word Sense Disambiguation, Dataset A",
@@ -76,7 +78,7 @@ def build(variant_key):
     slides.append(D2.s_thanks(prs, v))
 
     # footers on content slides only -- not the title, dividers or the closing slide
-    plain = {0, 5, 11, len(slides) - 1}
+    plain = {0, 6, 12, len(slides) - 1}
     for i, s in enumerate(slides):
         if i not in plain:
             footer(s, i + 1)
