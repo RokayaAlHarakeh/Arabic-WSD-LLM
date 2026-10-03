@@ -72,11 +72,56 @@ def s_title(prs, v):
     return s
 
 
-# ============================================================ 2. THE TASK ==
-def s_task(prs):
-    """Open on something concrete: one real item from the dataset."""
+# ============================================================ 2. OBJECTIVES =
+def s_objectives(prs):
+    """Opens the talk: why this matters, what I set out to do, what it cost."""
     s = blank(prs)
-    title_of(s, "The task, in one example", kicker="What the model has to do")
+    title_of(s, "What this project set out to do", kicker="Objectives")
+
+    tf = tb(s, M, CY - 0.02, 6.1, 2.4)
+    p = para(tf, True); p.space_after = Pt(11)
+    run(p, "Large language models are very good at Arabic tasks — and very expensive "
+           "to adapt. The published work on this benchmark all uses models of seven "
+           "billion parameters and up.", size=15, color=GREY)
+    p = para(tf); p.space_after = Pt(11)
+    run(p, "This project asks whether a model four times smaller can keep up, and what "
+           "it actually takes to adapt one.", size=15, color=INK, bold=True)
+    p = para(tf)
+    run(p, "Everything here runs on one small model, Gemma 2-2B, adapted in two "
+           "completely different ways.", size=15, color=GREY)
+
+    card = rect(s, 7.0, CY - 0.02, 5.73, 2.4, fill=WHITE, line=LINE)
+    tfc = card.text_frame
+    tfc.margin_left = tfc.margin_right = Inches(0.24); tfc.margin_top = Inches(0.18)
+    p = tfc.paragraphs[0]; p.space_after = Pt(9)
+    run(p, "Four things I set out to do", size=15, color=INK, bold=True)
+    for n, (lead, rest) in enumerate([
+            ("Match a 9B model with a 2B one, ", "on a free GPU."),
+            ("Find the real floor — ", "nobody who published on this benchmark "
+             "reported one."),
+            ("Check the metrics ", "measure what everyone assumes."),
+            ("Teach it Lebanese law, ", "and find out what that changes.")], 1):
+        p = tfc.add_paragraph(); p.space_after = Pt(7)
+        run(p, "%d.  " % n, size=14, color=NAVY, bold=True)
+        run(p, lead, size=14, color=INK, bold=True)
+        run(p, rest, size=14, color=GREY)
+
+    tfh = tb(s, M, 4.18, W - 2 * M, 0.3)
+    run(para(tfh, True), "Where it ended up", size=16, color=INK, bold=True)
+    stat(s, M, 4.58, 2.87, "90.42%", "on Arabic word senses", "equal to 8B models",
+         color=GREEN, h=1.5)
+    stat(s, M + 3.073, 4.58, 2.87, "4.14", "perplexity on legal text",
+         "down from 806", color=GREEN, h=1.5)
+    stat(s, M + 6.146, 4.58, 2.87, "$0", "for the first half", "free Colab GPU", h=1.5)
+    stat(s, M + 9.219, 4.58, 2.87, "$5.40", "for the second half", "rented GPU", h=1.5)
+    return s
+
+
+# ============================================================ PART 1 OPENER ==
+def s_task(prs):
+    """Opens Part 1: one real item from the dataset, before any numbers."""
+    s = blank(prs)
+    title_of(s, "The task, in one example", kicker="Part 1 · SFT")
 
     tf = tb(s, M, CY - 0.02, 5.7, 0.9)
     p = para(tf, True)
@@ -236,7 +281,7 @@ def s_lora(prs):
 # ============================================================ 6. TWO + GOALS
 def s_two(prs):
     s = blank(prs)
-    title_of(s, "Two ways to fine-tune, and what we set out to do",
+    title_of(s, "Two ways to fine-tune the same model",
              kicker="The central distinction")
     rows = [["", "Show it worked examples  (SFT)", "Let it read a new field  (CPT)"],
             ["Learns from", "question → answer pairs", "plain text, nothing labelled"],
@@ -246,16 +291,18 @@ def s_two(prs):
     table(s, M, CY, W - 2 * M, rows, [2.55, 4.78, 4.76], size=13.5, row_h=0.48,
           bold_rows=(4,))
 
-    tfh = tb(s, M, 4.42, W - 2 * M, 0.3)
-    run(para(tfh, True), "Four things this work set out to do", size=16, color=INK,
+    tf = tb(s, M, 4.46, W - 2 * M, 1.5)
+    p = para(tf, True); p.space_after = Pt(10)
+    run(p, "The bottom row is the point of the whole talk. ", size=15.5, color=INK,
         bold=True)
-    bullets(s, M, 4.80, W - 2 * M, [
-        ("Match a 9B model with a 2B one, ", "on a free GPU."),
-        ("Find the real floor — ", "nobody who published on this benchmark reported "
-         "one."),
-        ("Check that the metrics ", "measure what everyone assumes they measure."),
-        ("Teach the model Lebanese law, ", "and find out what that actually changes."),
-    ], size=14, gap=4, h=1.4)
+    run(p, "One of these teaches the model how to answer a question. The other teaches "
+           "it what a field of writing sounds like. They are not interchangeable, and "
+           "the rest of this talk measures both to show the difference is real.",
+        size=15, color=GREY)
+    p = para(tf)
+    run(p, "Part 1 is the first column. Part 2 is the second.", size=15, color=DEEP,
+        italic=True)
+
     takeaway(s, "The question is never which one is better. It is "
                 "**what does each one change**.")
     return s

@@ -16,26 +16,29 @@ import deck_part2 as D2
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 NOTES = {
-    1: "Start concrete. Read the Arabic sentence, point at the two meanings, say which "
-       "one is right. Then the key line: both answers are already in front of the model.",
+    1: "Open here. The problem in two lines, the four goals, then point at the row of "
+       "numbers: that is where the talk ends up.",
     2: "Pre-training is Google's job and costs millions. Fine-tuning is ours and costs "
-       "hours. Two ways to do it - that sets up the whole talk.",
-    3: "One number against another: 41.7 against 16. Then say the memory goes on "
-       "bookkeeping, not on the model.",
-    5: "This is the pivot. Everything before it is setup, everything after is evidence "
-       "for the bottom row. Read the four goals quickly.",
-    7: "Show the prompt, then land the point: both answers are inside it.",
-    8: "Lead with 90.42 matching 8B. Then the margin of error - say plainly you are not "
+       "hours. Two ways to do it - that sets up everything after.",
+    3: "One number against another: 41.7 against 16. The memory goes on bookkeeping, "
+       "not on the model itself.",
+    5: "The pivot slide. Everything before is setup, everything after is evidence for "
+       "the bottom row.",
+    7: "Start Part 1 concrete. Read the Arabic sentence, point at the two meanings, say "
+       "which is right. Then: both answers are already in front of the model.",
+    8: "Show the prompt, then land the point - both answers are inside it.",
+    9: "Lead with 90.42 matching 8B. Then the margin of error; say plainly you are not "
        "claiming to be better.",
-    9: "Strongest finding of Part 1. Nobody reports a baseline. 64.95 percent with no "
-       "model at all.",
-    10: "Walk the three lines on the right slowly. 2812 over 0.8379 is exactly 3356.",
-    13: "Show the Arabic document, then the bug you caught before running anything.",
-    16: "The third row. Before training it was level with guessing - so it knew nothing.",
-    17: "The most important slide. The score went up, but all of the gain is answering "
-        "more often, none of it is being right more often.",
-    18: "Read the table across. Then: this holds whatever the effect size.",
-    19: "This answers 'what did each one buy me'. Left, right, verdict under each.",
+    10: "Strongest finding of Part 1. Nobody reports a baseline. 64.95 percent with no "
+        "model at all.",
+    11: "Walk the three lines on the right slowly. 2812 over 0.8379 is exactly 3356.",
+    14: "Show the Arabic document first, then the bug you caught before running "
+        "anything.",
+    17: "The third row. Before training it was level with guessing, so it knew nothing.",
+    18: "The most important slide. The score went up, but all of the gain is answering "
+        "more often - none of it is being right more often.",
+    19: "Read the table across. Then: this holds whatever the effect size.",
+    20: "This answers 'what did each one buy me'. Left, right, verdict under each.",
 }
 
 
@@ -46,16 +49,17 @@ def build(variant_key):
     prs.slide_height = Inches(H)
 
     slides = [D1.s_title(prs, v)]
-    slides.append(D1.s_task(prs))          # one real item, in Arabic
-    slides.append(D1.s_what_is_ft(prs))    # what fine-tuning is, before the obstacle
-    slides.append(D1.s_finetuning(prs))
-    slides.append(D1.s_lora(prs))
-    slides.append(D1.s_two(prs))           # SFT vs CPT + the four goals
+    slides.append(D1.s_objectives(prs))    # why, what I set out to do, what it cost
+    slides.append(D1.s_what_is_ft(prs))    # what fine-tuning is
+    slides.append(D1.s_finetuning(prs))    # why it needs a trick
+    slides.append(D1.s_lora(prs))          # LoRA and QLoRA
+    slides.append(D1.s_two(prs))           # the SFT / CPT distinction
 
     slides.append(divider(prs, "1", "Supervised fine-tuning", [
         "Arabic Word Sense Disambiguation, Dataset A",
         "Benchmarked against a published study",
         "What a 2B model can do when the answer is already in the prompt"]))
+    slides.append(D1.s_task(prs))          # the Arabic example opens Part 1
     slides.append(D1.s_sft_setup(prs))
     slides.append(D1.s_sft_headline(prs))
     slides.append(D1.s_sft_baselines(prs))
@@ -78,7 +82,7 @@ def build(variant_key):
     slides.append(D2.s_thanks(prs, v))
 
     # footers on content slides only -- not the title, dividers or the closing slide
-    plain = {0, 6, 12, len(slides) - 1}
+    plain = {0, 6, 13, len(slides) - 1}
     for i, s in enumerate(slides):
         if i not in plain:
             footer(s, i + 1)
@@ -86,7 +90,15 @@ def build(variant_key):
             s.notes_slide.notes_text_frame.text = NOTES[i]
 
     out = os.path.join(HERE, v["file"])
-    prs.save(out)
+    try:
+        prs.save(out)
+    except PermissionError:
+        # open in PowerPoint -- write beside it rather than losing the build
+        out = out.replace(".pptx", "_NEW.pptx")
+        prs.save(out)
+        print("!! %s was open; wrote %s instead"
+              % (v["file"], os.path.basename(out)))
+        return out
     print("wrote %-26s %2d slides" % (v["file"], len(slides)))
     return out
 
