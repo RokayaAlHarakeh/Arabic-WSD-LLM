@@ -3,3 +3,7 @@
 thesis_word/*.docx
 thesis_word/_backup_*/
 thesis_word/__pycache__/
+
+# slide deck build outputs (regenerate with slides/make_deck.py)
+slides/*.pptx
+slides/__pycache__/
