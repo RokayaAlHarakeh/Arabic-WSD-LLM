@@ -187,15 +187,15 @@ def s_what_is_ft(prs):
     run(p, " on an enormous amount of general text. That is where it learns language, "
            "and it costs millions, so nobody repeats it. Instead we take the finished "
            "model and ", size=15.5, color=GREY)
-    run(p, "nudge it", size=15.5, color=INK, bold=True)
-    run(p, ". That nudge is fine-tuning.", size=15.5, color=GREY)
+    run(p, "adapt it", size=15.5, color=INK, bold=True)
+    run(p, " to what we need. That is fine-tuning.", size=15.5, color=GREY)
 
     cards = [
         ("1", "Pre-training", "Learn language in general. Done once, by Google, on "
          "trillions of words. We never touch this step.", GREY),
-        ("2", "Fine-tuning", "Nudge the finished model with a small amount of our own "
+        ("2", "Fine-tuning", "Adapt the finished model using a small amount of our own "
          "data. Hours, not months. This project does it twice.", NAVY),
-        ("3", "Two kinds of nudge", "Show it worked examples of a task — or let it "
+        ("3", "Two ways to adapt", "Show it worked examples of a task — or let it "
          "keep reading text from a new field. Those are SFT and CPT.", DEEP),
     ]
     x = M
@@ -214,8 +214,8 @@ def s_what_is_ft(prs):
     tf = tb(s, M, 5.42, 12.1, 0.75)
     p = para(tf, True)
     run(p, "The catch: ", size=15.5, color=INK, bold=True)
-    run(p, "even a nudge normally needs far more memory than a free GPU has. "
-           "The next slide shows why — and what gets around it.",
+    run(p, "adapting even a finished model normally needs far more memory than a free "
+           "GPU has. The next slide shows why — and what gets around it.",
         size=15.5, color=GREY)
     return s
 
@@ -310,41 +310,49 @@ def s_two(prs):
 
 # ============================================================ PART 1 =======
 def s_sft_setup(prs):
+    """The real prompt, verbatim from create_finetuning_dataset.py."""
     s = blank(prs)
     title_of(s, "What the model actually sees", kicker="Part 1 · SFT")
 
-    card = rect(s, M, CY - 0.02, 7.1, 3.56, fill=CODE_BG, line=LINE)
+    card = rect(s, M, CY - 0.04, 8.02, 3.92, fill=CODE_BG, line=LINE)
     tf = card.text_frame
-    tf.margin_left = tf.margin_right = Inches(0.24); tf.margin_top = Inches(0.16)
-    p = tf.paragraphs[0]; p.space_after = Pt(6)
-    run(p, "ONE TRAINING EXAMPLE", size=11, color=MUTE, bold=True)
-    body = [("### Instruction:", NAVY, True, False),
-            ("Choose the correct sense ID for the target word.", GREY, False, False),
-            ("### Input:", NAVY, True, False),
-            ("Sentence:  " + SENT, GREY, False, True),
-            ("Target Word:  " + WORD, GREY, False, True),
-            ("Possible Senses:", GREY, False, False),
-            ("4548:  " + G_OK, GREY, False, True),
-            ("4549:  " + G_NO, GREY, False, True),
-            ("### Response:", NAVY, True, False),
-            ("4548", GREEN, True, False)]
-    for line, col, bold, is_ar in body:
-        p = tf.add_paragraph(); p.space_after = Pt(3)
-        if is_ar:
-            ar(p, line, size=12.5, color=col, bold=bold, align_right=False)
-        else:
-            run(p, line, size=12.5, color=col, bold=bold, font=MONO)
+    tf.margin_left = tf.margin_right = Inches(0.22); tf.margin_top = Inches(0.14)
+    p = tf.paragraphs[0]; p.space_after = Pt(5)
+    run(p, "ONE TRAINING EXAMPLE, EXACTLY AS BUILT", size=10.5, color=MUTE, bold=True)
 
-    table(s, 7.86, CY - 0.02, 4.87, [["The run", ""],
+    def line(text, col=GREY, bold=False, is_ar=False, size=11, after=2):
+        q = tf.add_paragraph(); q.space_after = Pt(after)
+        if is_ar:
+            ar(q, text, size=size, color=col, bold=bold, align_right=False)
+        else:
+            run(q, text, size=size, color=col, bold=bold, font=MONO)
+
+    line("### Instruction:", NAVY, True, after=3)
+    line("You are tasked with performing Word Sense Disambiguation (WSD). Your job is "
+         "to analyze the given sentence and identify the correct sense for the target "
+         "word based on the context. For each sense, you are provided with a Sense ID "
+         "and its definition. Using the context of the sentence, choose the most "
+         "appropriate sense definition and provide the corresponding Sense ID.",
+         GREY, after=8)
+    line("### Input:", NAVY, True, after=3)
+    line("Sentence: '" + SENT + "'", GREY, is_ar=True)
+    line("Target Word: '" + WORD + "'", GREY, is_ar=True)
+    line("Possible Senses:", GREY)
+    line("[Sense ID: 4548, Definition: " + G_OK + "],", GREY, is_ar=True)
+    line("[Sense ID: 4549, Definition: " + G_NO + "]", GREY, is_ar=True, after=8)
+    line("### Response:", NAVY, True, after=3)
+    line("4548", GREEN, True, size=12)
+
+    table(s, 8.86, CY - 0.04, 3.85, [["The run", ""],
                                      ["Model", "Gemma 2-2B, 4-bit"],
-                                     ["Trained on", "9,952 examples"],
+                                     ["Examples", "9,952"],
                                      ["LoRA rank", "32"],
                                      ["Epochs", "3"],
                                      ["Hardware", "free Colab GPU"],
                                      ["Cost", "nothing"]],
-          [2.2, 2.67], size=13, row_h=0.42)
+          [1.75, 2.1], size=12.5, row_h=0.42)
 
-    tf = tb(s, M, 5.34, W - 2 * M, 0.85)
+    tf = tb(s, M, 5.42, W - 2 * M, 0.78)
     p = para(tf, True)
     run(p, "Both answers are inside the prompt. ", size=15.5, color=INK, bold=True)
     run(p, "Nothing has to be remembered. The model only has to tell two short pieces "
